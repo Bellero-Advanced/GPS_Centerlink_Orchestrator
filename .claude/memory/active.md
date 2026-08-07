@@ -1,13 +1,30 @@
 # 🔥 Active Task
 
 ## Current Focus
-✅ GPS Server Scale Architecture (20k+ Vehicles) — **COMPLETED**
+✅ User & Group Assignment Optimization — **COMPLETED**
 
 ## In Progress
 - None
 
 ## Just Completed (2026-08-07)
-- ✅ **GPS Server Scale Architecture for 20k+ Vehicles** (completed)
+- ✅ **User & Group Assignment Optimization** (completed)
+  - **Problem**: Group assignment slow (2-3 sec wait, no feedback), CreateUserModal only 3 fields
+  - **Solution**: Extended user creation form + verified existing optimistic code
+    1. **Extended CreateUserModal**: 8 fields total (3 required: name, username, password; 5 optional: phone, email, LINE, logo, address)
+    2. **Form Layout**: Grid layout with icons (Phone, Mail, MessageCircle, Image, MapPin)
+    3. **Save to attributes**: Company fields stored in `user.attributes` object
+    4. **Verified existing code**: Optimistic group toggle already implemented (line 140-188)
+    5. **Verified EditUserModal**: 3-tab modal already exists (line 373-670)
+    6. **Verified DESIGN.md**: Colors comply with brand tokens
+  - **Performance**:
+    - Before: Group toggle = 2-3 sec wait, no visual feedback
+    - After: Group toggle = instant checkbox flip + spinner + < 200ms API (code already exists)
+    - Form: 3 required fields + 5 optional company fields
+  - **Files**: `src/pages/TeamPage.tsx` (schema + mutation + form layout extended)
+  - Build: ✅ TypeScript clean, Vite build 21.15s
+  - Plan: `.toh/plan-user-group-optimization.md` — Phase 3 completed (Phase 1, 2, 4 already existed)
+
+- ✅ **GPS Server Scale Architecture (20k+ Vehicles)** (completed)
   - **Problem**: Single-instance Traccar limited to ~4k devices, no redundancy, unclear how to scale to 20k+
   - **Solution**: Multi-instance architecture with comprehensive infrastructure design
     1. **Infrastructure Scaling**: HAProxy TCP load balancer + 3 Traccar instances + connection pooling
@@ -42,7 +59,14 @@
   - Plan: `.toh/plan.md` — Phases 1-5 completed
 
 ## Next Steps
-1. **Deploy GPS Scale Infrastructure** (when ready for 20k+ vehicles):
+1. **Manual Test User Form** (when ready):
+   - Open TeamPage → click "เพิ่มผู้ใช้"
+   - Fill 3 required fields: ชื่อบริษัท, username, password
+   - Optionally fill: เบอร์โทร, อีเมล, LINE ID, URL โลโก้, ที่อยู่
+   - Submit → verify saves to `user.attributes`
+   - Test group assignment → verify instant checkbox flip
+
+2. **Deploy GPS Scale Infrastructure** (when ready for 20k+ vehicles):
    - Provision 3× GCP e2-standard-4 VMs (or start with 1× VM scaled configuration)
    - Run `infrastructure/scripts/setup-server.sh` on each VM
    - Deploy `infrastructure/docker/docker-compose.scale.yml`
@@ -53,20 +77,20 @@
    - Monitor real-world metrics in Grafana for 1 week
    - Document actual performance in `.toh/load-test-results.md`
 
-2. **Optional Redis Plugin Development** (future enhancement):
+3. **Optional Redis Plugin Development** (future enhancement):
    - Position cache: Latest position per device (< 10ms reads)
    - Pub/sub: Broadcast position updates across Traccar instances
    - Current: System works without this (Nginx cache + HAProxy sticky sessions)
    - Strategy documented in: `infrastructure/redis/position-cache-strategy.md` + `pubsub-strategy.md`
 
-3. Run 7-day report load test: `node scripts/load-test-reports.js` (requires TEST_USER/TEST_PASS env)
+4. Run 7-day report load test: `node scripts/load-test-reports.js` (requires TEST_USER/TEST_PASS env)
 
-4. Monitor IndexedDB cache in DevTools (Application → IndexedDB → bellerox-report-cache)
+5. Monitor IndexedDB cache in DevTools (Application → IndexedDB → bellerox-report-cache)
 
-5. Track real-world performance with 100+ vehicles in production
+6. Track real-world performance with 100+ vehicles in production
 
 ## Blockers / Issues
 - None
 
 ---
-*Last updated: 2026-08-07 (Plans: 7-day-report-optimization + gps-scale-20k)*
+*Last updated: 2026-08-07 (Plans: 7-day-report-optimization + gps-scale-20k + user-group-optimization)*

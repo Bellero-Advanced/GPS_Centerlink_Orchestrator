@@ -1,0 +1,45 @@
+# .gitignore — Bellerox GPS TMS (root)
+
+# Infrastructure secrets
+infrastructure/.env
+infrastructure/**/*.env
+
+# SEC-001: traccar.xml contains hardcoded DB password — never commit
+infrastructure/docker/traccar/traccar.xml
+
+# Local SSL certs
+*.pem
+*.key
+*.crt
+*.p12
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Node
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Editor
+.idea/
+.vscode/
+*.swp
+
+# Traccar logs (if running locally)
+traccar-other-*/logs/
+traccar-other-*/data/
+
+# Docker volumes
+*.volume/
+
+# GCP service account keys (NEVER commit)
+*.json
+!package.json
+!package-lock.json
+!tsconfig*.json
+!vitest.config.json

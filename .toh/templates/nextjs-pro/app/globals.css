@@ -1,0 +1,169 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * Tailwind CSS v4 setup (no tailwind.config.js needed).
+ * Dark mode is class-based: add `dark` to <html> to enable it.
+ */
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design tokens live as CSS variables on :root / .dark, and are exposed to
+ * Tailwind utilities (bg-primary, text-muted-foreground, border-border, ...)
+ * through the @theme inline block below.
+ *
+ * Professional color system:
+ * ไม่ใช้ purple/violet เป็น primary (AI red flag) — ใช้ blue (trustworthy, professional)
+ */
+:root {
+  /* Background & Surface */
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(222.2 84% 4.9%);
+
+  /* Card & Popover */
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(222.2 84% 4.9%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(222.2 84% 4.9%);
+
+  /* Primary: Blue */
+  --primary: hsl(221.2 83.2% 53.3%);
+  --primary-foreground: hsl(210 40% 98%);
+
+  /* Secondary: Slate */
+  --secondary: hsl(210 40% 96.1%);
+  --secondary-foreground: hsl(222.2 47.4% 11.2%);
+
+  /* Muted */
+  --muted: hsl(210 40% 96.1%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+
+  /* Accent */
+  --accent: hsl(210 40% 96.1%);
+  --accent-foreground: hsl(222.2 47.4% 11.2%);
+
+  /* Destructive: Red */
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+
+  /* Success: Green */
+  --success: hsl(142.1 76.2% 36.3%);
+  --success-foreground: hsl(355.7 100% 97.3%);
+
+  /* Warning: Amber */
+  --warning: hsl(45.4 93.4% 47.5%);
+  --warning-foreground: hsl(26 83.3% 14.1%);
+
+  /* Border, Input & Ring */
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(221.2 83.2% 53.3%);
+
+  /* Radius (kept moderate — no oversized corners) */
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: hsl(222.2 84% 4.9%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(222.2 84% 4.9%);
+  --card-foreground: hsl(210 40% 98%);
+  --popover: hsl(222.2 84% 4.9%);
+  --popover-foreground: hsl(210 40% 98%);
+  --primary: hsl(217.2 91.2% 59.8%);
+  --primary-foreground: hsl(222.2 47.4% 11.2%);
+  --secondary: hsl(217.2 32.6% 17.5%);
+  --secondary-foreground: hsl(210 40% 98%);
+  --muted: hsl(217.2 32.6% 17.5%);
+  --muted-foreground: hsl(215 20.2% 65.1%);
+  --accent: hsl(217.2 32.6% 17.5%);
+  --accent-foreground: hsl(210 40% 98%);
+  --destructive: hsl(0 62.8% 30.6%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --success: hsl(142.1 70.6% 45.3%);
+  --success-foreground: hsl(144.9 80.4% 10%);
+  --warning: hsl(45.4 93.4% 47.5%);
+  --warning-foreground: hsl(26 83.3% 14.1%);
+  --border: hsl(217.2 32.6% 17.5%);
+  --input: hsl(217.2 32.6% 17.5%);
+  --ring: hsl(224.3 76.3% 48%);
+}
+
+/*
+ * Map the CSS variables above onto Tailwind's color/radius scales so utilities
+ * like bg-primary, text-muted-foreground, border-border, rounded-lg resolve.
+ * `inline` keeps the var() references so .dark overrides apply automatically.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  /*
+   * Tailwind v4's default border/ring color is `currentColor`, so restore the
+   * design-token default here — bare `border`, `border-b`, etc. use the token.
+   */
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply p-4 md:p-6 lg:p-8 space-y-6;
+  }
+  .page-header {
+    @apply flex flex-col gap-4 md:flex-row md:items-center md:justify-between;
+  }
+  .card-grid {
+    @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+  .stat-card {
+    @apply rounded-lg border bg-card p-4 md:p-6;
+  }
+  .empty-state {
+    @apply flex flex-col items-center justify-center py-12 text-center;
+  }
+  .skeleton {
+    @apply animate-pulse rounded-md bg-muted;
+  }
+}

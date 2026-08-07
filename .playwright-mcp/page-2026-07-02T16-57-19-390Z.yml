@@ -1,0 +1,28 @@
+- generic [ref=e2]:
+  - status [ref=e51]: อีเมลหรือรหัสผ่านไม่ถูกต้อง (เหลือ 3 ครั้ง)
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - img "GPS Global Tracker" [ref=e13]
+        - paragraph [ref=e14]: ระบบติดตาม GPS สำหรับธุรกิจขนส่ง
+      - paragraph [ref=e15]: เข้าสู่ระบบ
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]: อีเมล
+          - textbox "admin@company.com" [ref=e19]
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - generic [ref=e22]: รหัสผ่าน
+            - link "ลืมรหัสผ่าน?" [ref=e23] [cursor=pointer]:
+              - /url: /forgot-password
+          - generic [ref=e24]:
+            - textbox "••••••••" [ref=e25]: admin
+            - button [ref=e26] [cursor=pointer]:
+              - img [ref=e27]
+        - button "เข้าสู่ระบบ" [ref=e30] [cursor=pointer]
+      - generic [ref=e31]:
+        - text: ยังไม่มีบัญชี?
+        - link "สมัครสมาชิก" [ref=e32] [cursor=pointer]:
+          - /url: /register
+    - paragraph [ref=e33]: © 2026 GPS Global Tracker · GPS Fleet Management
+  - status [ref=e57]: อีเมลหรือรหัสผ่านไม่ถูกต้อง (เหลือ 3 ครั้ง)

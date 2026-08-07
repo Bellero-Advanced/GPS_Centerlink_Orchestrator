@@ -1,0 +1,35 @@
+- main [ref=e4]:
+  - img [ref=e6]:
+    - generic "Traccar" [ref=e16]
+  - generic [ref=e25]:
+    - generic [ref=e26]:
+      - button [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+      - generic [ref=e31]:
+        - combobox [ref=e32] [cursor=pointer]:
+          - img [ref=e34]
+          - text: English
+        - textbox: en
+        - img
+        - group
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - text: Email
+          - generic [ref=e38]: "*"
+        - generic [ref=e39]:
+          - textbox "Email" [invalid] [ref=e40]: admin@bellerox.com
+          - group:
+            - generic: Email *
+        - paragraph [ref=e51]: Invalid username or password
+      - generic [ref=e41]:
+        - generic:
+          - text: Password
+          - generic: "*"
+        - generic [ref=e42]:
+          - textbox "Password" [invalid] [ref=e43]
+          - button [ref=e45] [cursor=pointer]:
+            - img [ref=e46]
+          - group:
+            - generic: Password *
+      - button "Login" [disabled]

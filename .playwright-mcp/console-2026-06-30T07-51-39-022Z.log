@@ -1,0 +1,2 @@
+[    9899ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:18082/api/session:0
+[   78426ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:18082/api/session:0

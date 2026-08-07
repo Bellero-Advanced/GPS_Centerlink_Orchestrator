@@ -1,0 +1,58 @@
+- generic [ref=f12e1]:
+  - generic [ref=f12e3]:
+    - generic [ref=f12e4]:
+      - generic [ref=f12e6]:
+        - generic [ref=f12e7]: Loading
+        - progressbar [ref=f12e8]
+      - main [ref=f12e15]:
+        - generic [ref=f12e16]:
+          - generic [ref=f12e18]:
+            - generic [ref=f12e19]:
+              - img [ref=f12e21]
+              - generic [ref=f12e26]: Sign in with Google
+            - img "Cloudflare Dashboard" [ref=f12e27]
+          - generic [ref=f12e28]:
+            - heading "Sign in" [level=1] [ref=f12e29]
+            - generic [ref=f12e31]:
+              - text: to continue to
+              - button "Cloudflare Dashboard" [ref=f12e32] [cursor=pointer]
+        - generic [ref=f12e35]:
+          - generic [ref=f12e40]:
+            - generic [ref=f12e45]:
+              - textbox "Email or phone" [active] [ref=f12e46]: ฟก
+              - generic: Email or phone
+            - button "Forgot email?" [ref=f12e50] [cursor=pointer]
+          - generic [ref=f12e53]:
+            - text: Before using this app, you can review Cloudflare Dashboard’s
+            - link "Privacy Policy" [ref=f12e54] [cursor=pointer]:
+              - /url: https://www.cloudflare.com/privacypolicy/
+            - text: and
+            - link "Terms of Service" [ref=f12e55] [cursor=pointer]:
+              - /url: https://www.cloudflare.com/website-terms/
+            - text: .
+        - generic [ref=f12e57]:
+          - button "Next" [ref=f12e61]:
+            - generic [ref=f12e64]: Next
+          - button "Create account" [ref=f12e69]:
+            - generic [ref=f12e72]: Create account
+    - contentinfo [ref=f12e76]:
+      - combobox "Change language English (United States)" [ref=f12e80] [cursor=pointer]:
+        - generic:
+          - generic: English (United States)
+        - generic:
+          - img
+      - list [ref=f12e82]:
+        - listitem [ref=f12e83]:
+          - link "Open Google Account Help Center (external, opens in a new window)" [ref=f12e84] [cursor=pointer]:
+            - /url: https://support.google.com/accounts?hl=en-US&p=account_iph
+            - text: Help
+        - listitem [ref=f12e85]:
+          - link "Privacy Policy (external, opens in a new window)" [ref=f12e86] [cursor=pointer]:
+            - /url: https://accounts.google.com/TOS?loc=TH&hl=en-US&privacy=true
+            - text: Privacy
+        - listitem [ref=f12e87]:
+          - link "Google Terms of Service (external, opens in a new window)" [ref=f12e88] [cursor=pointer]:
+            - /url: https://accounts.google.com/TOS?loc=TH&hl=en-US
+            - text: Terms
+  - iframe [ref=f12e89]:
+    

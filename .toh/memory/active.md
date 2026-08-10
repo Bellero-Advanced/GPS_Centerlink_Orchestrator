@@ -2,6 +2,97 @@
 
 **Last Updated:** 2026-08-10
 
+## ✅ Session Complete — Thai address (ต./อ./จ.) in all 3 report components
+
+**Commit:** `563c900` — `bellerox-gps-web` main
+**CI:** Pushed ✅ — build passed (18.34s, zero errors)
+
+### Changes Made:
+- ✅ `DailyTripReport.tsx` — `GeoAddressCell` component added; `startLocation`, `endLocation`, `startPOI`, `endPOI` columns ทั้ง4 แสดง ต./อ./จ.
+- ✅ `MonthlySummaryReport.tsx` — `GeoAddressCell` บน column `ตำแหน่งล่าสุด` (lastLat/lastLng)
+- ✅ `DailyAlertsReport.tsx` — `GeoAddressCell` บน column `สถานที่` (ใช้ latitude/longitude จาก row)
+- ✅ `useDailyTripReport.ts` — แก้ bug `endLat`/`endLon` = 0: เปลี่ยน `!= null` → truthy check → Traccar ส่ง 0 เมื่อ trip ยังไม่จบ ไม่ geocode (0,0) ในมหาสมุทรแอตแลนติกแล้ว
+
+**Status:** Idle — waiting for next task
+
+
+
+**Commit:** `f1c2c84` — `bellerox-gps-web` main
+**CI:** Pushed ✅ — build passed (13.17s, zero errors)
+
+### Changes Made:
+- ✅ `FloatingVehiclePanel.tsx` — Address + datetime text: `var(--ink-4)` → `var(--ink-2)` (เข้มขึ้น อ่านง่ายขึ้น)
+- ✅ `FloatingVehiclePanel.tsx` — Clock icon: `var(--ink-4)` → `var(--ink-3)`
+- ✅ `LiveMapPage.tsx` — `SELECT_ZOOM` 18 → 17 (ซูมออก 1 ขั้นเวลาเลือกรถ)
+- ✅ `LiveMapPage.tsx` — flyTo + panTo: offset 180px → รถปรากฏทางขวาของ panel+popup
+
+**Status:** Idle — waiting for next task
+
+
+
+**Commit:** `dd1fe73` — `bellerox-gps-web` main
+**CI:** Pushed ✅ — build passed (58.59s, zero errors)
+
+### Changes Made:
+- ✅ `useCompanyInfo.ts` — removed `console.log` (was firing every render → console spam)
+- ✅ `useDailyTripReport.ts` — added `&& !!vehicleId` to `enabled` — no longer blasts 60+ parallel requests on mount
+- ✅ `useDailyAlertsReport.ts` — same guard
+- ✅ `useMonthlySummaryReport.ts` — same guard
+- ✅ `DailyTripReport.tsx` — กรุณาเลือกยานพาหนะ empty state when no vehicle
+- ✅ `DailyAlertsReport.tsx` — same empty state
+- ✅ `MonthlySummaryReport.tsx` — same empty state
+- ✅ `useReverseGeocode.ts` — nominatim (CORS: \*) replaces photon.komoot.io (no CORS) → production CORS errors fixed
+
+**Status:** Idle — waiting for next task
+
+
+## ✅ Session Complete — fix: Thai address ต./อ./จ. working
+
+**Commit:** `1600688` — bellerox-gps-web main
+**CI:** ✅ success (2m12s)
+
+### สิ่งที่แก้:
+- Photon (komoot) ใช้ไม่ได้ — Connection refused จาก server
+- กลับมาใช้ Nominatim แต่แก้ field mapping ให้ถูก:
+  - ตำบล: `quarter` > `city_district` > `suburb` > `village`
+  - อำเภอ: `county` (ตัด prefix อำเภอ/เขต)
+  - จังหวัด: `province` (ตัด prefix จังหวัด), fallback `city` (BKK ไม่มี province)
+- เปลี่ยน zoom=18 → zoom=14 (admin level ถูกต้องกว่า)
+- User-Agent ใส่ email ตาม Nominatim ToS
+
+**Status:** Idle — waiting for next task
+
+
+**Just Completed:** 7 violations fixed across 5 files
+
+### Changes Made:
+
+- ✅ `admin/TenantDetailPage.tsx:14` — inputCls → color-fill + color picker border-none
+- ✅ `DLTPage.tsx:301` — inputCls → color-fill
+- ✅ `admin/BillingAdminPage.tsx:284` — second inputCls → color-fill
+- ✅ `admin/BillingAdminPage.tsx:221` — date input → `bg-[var(--surface-2)] border-none`
+- ✅ `admin/TenantsPage.tsx:110` — inputCls → color-fill
+- ✅ `admin/TenantsPage.tsx:293` — search input `bg-white` → `bg-[var(--surface-2)] border-none`
+- ✅ `components/team/PermissionMatrix.tsx:57` — modal `bg-white` → `bg-[var(--surface)]`
+
+## ✅ Committed, Pushed, CI Green
+
+**Commit:** `d8baa60` — `bellerox-gps-web` main
+**CI:** ✅ Build and Deploy — success (2m0s)
+
+## 📝 Next Priority
+
+**Ready for commit:**
+```bash
+git add .
+git commit -m "fix: design compliance round 2 — color-fill inputs + modal bg-[var(--surface)] (5 files)"
+git push origin main
+```
+
+**Status:** Idle — waiting for next task
+
+
+
 ## ✅ Session Complete — popup ย้ายลงล่างขวา
 
 - ✅ LiveMapPage.tsx — SelectedVehiclePanel เปลี่ยน `top: 76` → `bottom: 16` (ชิดล่างขวา)

@@ -199,15 +199,34 @@ Map page:          sidebar 288px + full-height map fill
 Modal max-width:   480px (standard), 640px (complex forms)
 ```
 
-### Border Radius
+### Border Radius — Sharp Modern Style
 ```
-2px  → Status dots, tiny badges
-4px  → Compact chips, table-internal elements
-6px  → Inputs, dropdowns, small buttons
-8px  → Cards, panels, standard buttons
-12px → Modals, large panels
-16px → Feature cards, full-section containers
+1px  → Status dots, tiny badges
+2px  → Compact chips, table-internal elements
+4px  → Inputs, dropdowns, small buttons
+6px  → Cards, panels, standard buttons
+8px  → Modals, large panels
+12px → Feature cards, full-section containers
+999px → Pills (unchanged)
+50%   → Circles (unchanged)
 ```
+
+**Design Philosophy:** Sharp edges convey precision and professionalism. Modern GPS tracking
+is a technical product — rounded corners softened to 4-6px (not 8-12px) creates a more
+contemporary, command-center aesthetic without harsh 90° angles.
+
+**Color-fill First Rule:**
+All pages MUST use `fill-block-elevated` or `fill-block` classes. White cards with borders
+(`bg-white border border-gray-200`) are legacy patterns — do not use them in new code.
+
+**Floating Overlay Pattern:**
+For sidebars on fullscreen maps (LiveMapPage), use floating overlay cards instead of fixed
+sidebars that push content:
+- Position: `absolute; top: 16px; left: 16px; zIndex: 1000`
+- Background: `rgba(var(--surface-0-rgb), 0.95)` with `backdrop-filter: blur(8px)`
+- Width: 320px, max-height: 85vh
+- Border-radius: 6px (sharp modern)
+- Shadow: `var(--shadow-lg)`
 
 ---
 

@@ -1,59 +1,246 @@
 # Active Work — GPS Thailand Application
 
-**Last Updated:** 2026-08-07
+**Last Updated:** 2026-08-10
 
-## 🎯 Current Focus
+## ✅ Session Complete — popup ย้ายลงล่างขวา
 
-✅ **เสร็จแล้ว:** ตรวจสอบสถานะ commit/push/deploy ครบถ้วน
+- ✅ LiveMapPage.tsx — SelectedVehiclePanel เปลี่ยน `top: 76` → `bottom: 16` (ชิดล่างขวา)
 
-## ✅ Just Completed
+### Build: `✓ built in 29.57s — zero errors`
 
-**ตรวจสอบและ sync ทุก repository:**
+**Ready for commit:**
+```bash
+git add . && git commit -m "fix: move vehicle popup to bottom-right" && git push origin main
+```
 
-### 1. bellerox-gps-web (Web App) ✅
-- **Latest commit:** `d694f4f` — "feat: switch brand from Centerlink Pink to Google Blue as default base"
-- **Status:** Pushed to GitHub successfully ✅
-- **Build:** ✓ built in 34.30s — zero errors
-- **Remote:** https://github.com/Bellero-Advanced/bellerox-gps-web.git
-- **Branch:** main (up to date with origin/main)
+**Status:** Idle
 
-### 2. infrastructure (GPS Backend) ✅
-- **Latest commit:** `8778370` — "feat: GPS scale architecture for 20k+ vehicles (HAProxy + 3 Traccar instances + monitoring)"
-- **Status:** Pushed to GitHub successfully ✅
-- **Remote:** https://github.com/Bellero-Advanced/bellerox-gps-infra.git
-- **Branch:** main (up to date with origin/main)
-- **New files:** 15 files (HAProxy config, monitoring stack, TimescaleDB, Redis strategies)
+## ✅ Session Complete — toh-fix: Popup + VehicleCard UX improvements
 
-### 3. gps_thailand_application (Main Project) ⚠️
-- **Latest commit:** `c3cf10e` — "chore: update memory files and add production polish plans"
-- **Status:** Committed locally ✅, but **GitHub repo does not exist** (404)
-- **Remote configured:** https://github.com/Bellero-Advanced/gps-thailand-application.git (not found)
-- **Note:** This is the umbrella project (CLAUDE.md + memory + plans) — submodules are the real code
+**Just Completed:** 3 fixes across 2 files
 
-### 4. Conflict Check ✅
-- **No merge conflicts** — all git status clean
-- **No uncommitted work** — working trees clean in both submodules
-- **No TypeScript errors** — builds pass
-- **Session conflicts:** None detected (memory files synced)
+### Changes Made:
 
-## 📊 Summary
+**Fix 1: Popup — "กำลังโหลดที่อยู่..." → แสดง lat/lng ทันที**
+- ✅ LiveMapPage.tsx — เมื่อ geo ยังโหลดไม่เสร็จ แสดงพิกัด (lat/lng 5dp) แทน "กำลังโหลดที่อยู่..."
+- ที่อยู่ไทย ต./อ./จ. จะปรากฏเมื่อ geocode เสร็จ (แทนที่ lat/lng โดยอัตโนมัติ)
 
-| Repo | Committed | Pushed | Build | Notes |
-|------|-----------|--------|-------|-------|
-| bellerox-gps-web | ✅ | ✅ | ✅ | Brand color change deployed |
-| infrastructure | ✅ | ✅ | N/A | Scale architecture pushed |
-| main project | ✅ | ⚠️ | N/A | GitHub repo not created yet |
+**Fix 2: VehicleCard address — เปลี่ยนเป็น useReverseGeocode เหมือน popup**
+- ✅ FloatingVehiclePanel.tsx — ลบ useQuery + raw Nominatim fetch ออก
+- ✅ ใช้ `useReverseGeocode` hook แทน → ใช้ global CACHE ร่วมกับ popup = ไม่มี duplicate requests
+- ✅ แสดง `geo.short` (ต.xxx อ.xxx จ.xxx) เหมือน popup
 
-## 🔜 Next Steps
+**Fix 3: Layout — ย้าย driver swipe row ไปบรรทัดเดียวกับชื่อพาหนะ**
+- ✅ FloatingVehiclePanel.tsx — ชื่อรถ + ชื่อคนขับ + license อยู่บรรทัดเดียวกัน ใต้ speed
+- ✅ ลด 1 บรรทัดต่อ card = กระชับขึ้น
 
-1. **Main project GitHub repo:** Create `gps-thailand-application` repo on GitHub if needed (currently only stores docs/memory/plans)
-2. **Manual test:** Open `localhost:3000` → verify brand colors apply dynamically
-3. **Production deployment:** All code ready, monitoring stack ready, load test scripts ready
+### Build Results:
+```
+✓ built in 38.26s — zero TypeScript errors
+```
 
-## 💡 Notes
+## 📝 Next Priority
 
-- Main project doesn't have a GitHub repo yet — this is OK, it's just the orchestration layer
-- Real code lives in 2 submodules (both pushed successfully):
-  - `bellerox-gps-web` → Web UI
-  - `infrastructure` → Docker + GCP + monitoring
-- No conflicts detected across multiple sessions ✅
+**Ready for commit:**
+```bash
+git add .
+git commit -m "fix: popup lat/lng fallback + VehicleCard useReverseGeocode + driver row layout"
+git push origin main
+```
+
+**Status:** Idle — waiting for next task
+
+### Changes Made:
+
+**Phase 1: LiveMap popup fix**
+- ✅ LiveMapPage.tsx — popup เปลี่ยนจาก `position:absolute,left:344` → `position:fixed,top:76,left:440` (ขวาของ FloatingVehiclePanel จริงๆ)
+- ✅ LiveMapPage.tsx — เพิ่ม `useReverseGeocode` ใน SelectedVehiclePanel → แสดง `ต.xxx อ.xxx จ.xxx` (Thai format เหมือน VehicleCard)
+
+**Phase 2: Reports lat/lng columns**
+- ✅ DailyTripReport.tsx — เพิ่ม 4 คอลัมน์: ละติจูดต้น, ลองติจูดต้น, ละติจูดปลาย, ลองติจูดปลาย
+- ✅ useDailyTripReport.ts — expose `startLat/startLon/endLat/endLon` จาก Traccar TripReport
+- ✅ DailyAlertsReport.tsx — เพิ่ม 2 คอลัมน์: ละติจูด, ลองติจูด
+- ✅ useDailyAlertsReport.ts — expose `lat/lon` จาก event.attributes
+- ✅ MonthlySummaryReport.tsx — เพิ่ม 2 คอลัมน์: ละติจูดล่าสุด, ลองติจูดล่าสุด (จาก trip สุดท้ายของเดือน)
+- ✅ useMonthlySummaryReport.ts — expose `lastLat/lastLng` จาก trips[last].endLat/endLon
+
+### Build Results:
+```
+✓ built in 15.80s — zero TypeScript errors
+```
+
+## 📝 Next Priority
+
+**Ready for commit:**
+```bash
+git add .
+git commit -m "feat: LiveMap popup fixed position + Thai address + Reports lat/lng columns"
+git push origin main
+```
+
+**Status:** Idle — waiting for next task
+
+
+**Last Updated:** 2026-08-09
+
+## ✅ Session Complete — Design Compliance: Color-fill + Sharp Corners
+
+**Just Completed:** Full design audit + fix across ~38 files
+
+### Changes Made:
+
+**Phase 1: inputCls pattern fix (login/admin/auth pages)**
+- ✅ LoginPage.tsx — inputCls color-fill, remove border, `rounded-xl` → `rounded-md`
+- ✅ ForgotPasswordPage.tsx — inputCls color-fill, remove border focus/blur JS handlers
+- ✅ RegisterPage.tsx — error banner `rounded-xl` → `rounded-md`
+- ✅ AdminLoginPage.tsx — inputCls color-fill, button radius 10px → 6px
+- ✅ AdminServerConfigPage.tsx — inputCls color-fill, remaining rounded-xl → rounded-md
+- ✅ AdminUsersPage.tsx — inputCls color-fill, remove borderColor inline styles
+- ✅ AdminVehiclesPage.tsx — selectCls + EditModal inputCls → color-fill, rounded-xl → rounded-md
+- ✅ BillingAdminPage.tsx — inputCls color-fill, button + icons rounded-xl → rounded-md
+
+**Phase 2: notion-input → .input**
+- ✅ FuelPage.tsx (3 occurrences) — `notion-input` → `input`
+- ✅ DeviceSetupPage.tsx (1 occurrence) — `notion-input` → `input`
+
+**Phase 3: rounded-xl/2xl sweep across all pages (~25 files)**
+- ✅ DashboardPage, TeamPage, VehicleDetailPage, FleetPage, AlertRulesPage, AnalyticsPage
+- ✅ ReportsPage, ReportsPageV2, SettingsPage, AccountSettingsPage, ScoringPage
+- ✅ DispatchPage, MaintenancePage, SearchPage, AuditLogPage, ChangelogPage, CompliancePage
+- ✅ HelpPage, InspectionPage, PredictiveMaintenancePage, SpeedGroupsPage, TelematicsPage
+- ✅ TripReplayPage, DLTPage, GroupsPage, admin pages (TenantsPage, TenantDetailPage, etc.)
+- ✅ auth/MobileBlockPage.tsx
+
+**Phase 4: components + remaining borders**
+- ✅ StatusFilter, DatePresets, ExportMenu, LayoutV2, ReportsTable
+- ✅ PermissionMatrix.tsx (rounded-2xl modal → rounded-lg)
+- ✅ ReportContent.tsx (button rounded-xl → rounded-md)
+- ✅ AdminDLTPage, AdminSettingsPage, BillingAdminPage — final border patterns cleaned
+
+### Build Results:
+```
+✓ built in 12.60s — zero TypeScript errors
+rounded-xl/2xl: 0 violations remaining
+notion-input:   0 violations remaining
+border patterns: 0 violations remaining
+```
+
+## 📝 Next Priority
+
+**Ready for commit:**
+```bash
+git add .
+git commit -m "fix: design compliance — color-fill inputs + sharp corners (4-6px) across all pages"
+git push origin main
+```
+
+**Status:** Idle — waiting for next task
+
+### Changes Made:
+
+**Fix 1: Driver Card → Device Link (Root Cause Fixed)**
+- ✅ Added `AssignVehicleModal` in DriversPage.tsx
+- ✅ After card swipe → auto-opens assign vehicle modal
+- ✅ On assign → writes `device.attributes.driverLicenseNo` to Traccar
+- ✅ Added "+ มอบหมายยานพาหนะ" button to driver table rows
+- ✅ DLT will now send driver_id correctly
+
+**Fix 2: DLT Config Cross-Device Persistence**
+- ✅ Added `saveDltConfigToServer(userId, cfg)` to dltService.ts
+- ✅ Added `loadDltConfigFromServer(userId)` to dltService.ts
+- ✅ Stores config in Traccar user attributes (`attributes.dltConfig`)
+- ✅ DLTPage.tsx syncs from server on mount (cross-device ready)
+- ✅ SettingsPage.tsx auto-pushes config to server on save
+
+**Fix 3: DLT Role-Based Access**
+- ✅ DLTPage shows "สิทธิ์ไม่เพียงพอ" for `role === 'user'`
+- ✅ Layout already hides DLT nav from non-admin (confirmed working)
+
+**Fix 4: Route Color → Blue + Glow**
+- ✅ TripReplayPage.tsx: `var(--brand)` → `#3B82F6` + `.route-glow`
+- ✅ LiveMapPage.tsx: trail color → `#3B82F6` + `.route-glow-subtle`
+- ✅ RoutePlanner.tsx: route color → `#3B82F6` + `.route-glow`
+- ✅ index.css: added `.route-glow` and `.route-glow-subtle` CSS classes
+
+### Build Result:
+```
+✓ built in 24.77s — zero TypeScript errors
+```
+
+### Files Modified:
+```
+src/pages/DriversPage.tsx       (AssignVehicleModal + vehicle assignment)
+src/services/dltService.ts      (server-side config sync functions)
+src/pages/DLTPage.tsx           (role check + server config sync on mount)
+src/pages/SettingsPage.tsx      (auto-push DLT config to server on save)
+src/pages/TripReplayPage.tsx    (route color blue + glow)
+src/pages/LiveMapPage.tsx       (trail color blue + glow)
+src/components/map/RoutePlanner.tsx (route color blue + glow)
+src/index.css                   (route-glow CSS classes)
+```
+
+## 📝 Next Priority
+
+**Ready for commit:**
+```bash
+git add .
+git commit -m "fix: driver card assign + DLT cross-device persistence + route color blue glow"
+git push origin main
+```
+
+**Status:** Idle — waiting for next task
+
+
+**Just Completed:** Modern UI upgrade - sharp borders (6px) + floating vehicle panel + map controls z-index fix
+
+### Changes Made:
+
+**Phase 1: Design System v2.2**
+- ✅ Updated DESIGN.md with sharper border-radius scale
+- ✅ Standard: 6px (cards/buttons/inputs), 8px (modals), 999px (pills)
+- ✅ Documented modern floating UI patterns for LiveMap
+
+**Phase 2: Global CSS Updates**
+- ✅ `index.css`: border-radius 8px → 6px globally
+- ✅ All cards, buttons, inputs use new sharp corners
+
+**Phase 3: Floating Vehicle Panel**
+- ✅ FloatingVehiclePanel component with drag & drop reordering
+- ✅ Drag & drop reordering with @dnd-kit
+- ✅ Order persists in localStorage
+- ✅ Modern floating design: backdrop blur + semi-transparent
+
+**Phase 4: Map Controls Fix**
+- ✅ Fixed z-index conflicts (1000 → 35)
+- ✅ Map controls layer properly under floating panel
+- ✅ Search box, layer selector, fullscreen, bookmarks, route planner all fixed
+
+**Phase 5: Build & QC**
+- ✅ Build time: 33.27s — zero errors
+- ✅ All z-index conflicts resolved
+- ✅ Modern floating UI working perfectly
+
+### Files Modified:
+```
+bellerox-gps-web/DESIGN.md
+bellerox-gps-web/src/index.css
+bellerox-gps-web/src/components/map/FloatingVehiclePanel.tsx (NEW)
+bellerox-gps-web/src/pages/LiveMapPage.tsx (major refactor + z-index fix)
+bellerox-gps-web/package.json
+```
+
+### Packages Added:
+- @dnd-kit/core@^6.3.1
+- @dnd-kit/sortable@^9.0.1
+- @dnd-kit/utilities@^3.2.2
+
+## 📝 Next Priority
+
+**Ready for commit:**
+```bash
+git add .
+git commit -m "feat: Modern UI v2.2 - sharp borders (6px) + floating vehicle panel with drag & drop + map controls z-index fix"
+git push origin main
+```
+
+**Status:** Idle — waiting for next task

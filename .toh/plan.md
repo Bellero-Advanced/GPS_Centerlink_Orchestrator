@@ -1,144 +1,121 @@
-# 🎯 Plan — แก้หน้ารายงานล้นขอบ + สี Brand CI
-
-**Goal:** แก้ปัญหา 2 จุด:
-1. หน้ารายงานล้นขอบด้านขวา → ทำให้ table scroll ได้แนวนอน
-2. สี header bar + sidebar ไม่ตรงกับ Brand CI ที่ setup ที่ /admin
-
+# Plan — LiveMap Popup Fix + Reports Coordinates
 **Status:** approved
-
-**User Request:**
-> หน้ารายงานตอนนี้มันล้นขอบด้านขวา คุณแก้ให้กลับมา UI ปกติหน่อย [Image #3]  
-> และตอนนี้สีของ head bar และ side bar มันไม่ตรงกับสีของ Brand CI ที่ setup ที่หน้า /admin ของแต่ละลูกค้า แก้ให้หน่อย ปรับให้ปกติตามหลัก UI
+**Created:** 2026-08-10
+**Scope:** bellerox-gps-web
 
 ---
 
-## 📋 Current State Analysis
-
-### ปัญหา 1: Reports Page Overflow (ล้นขอบด้านขวา)
-- **File:** `ReportsPageUnified.tsx` + `DailyTripReport.tsx`
-- **ปัญหา:** Table มี 19 columns (assetName, licensePlate, driverName, startTime, ... ptoTime) → กว้างเกินหน้าจอ → ล้นออกไป
-- **สาเหตุ:** ไม่มี `overflow-x-auto` ที่ wrapper container
-
-### ปัญหา 2: Brand CI Colors (สีไม่ตรงกับที่ตั้ง)
-- **File:** `LayoutV2.tsx` — header + sidebar ใช้ `getBrandColor(companyInfo?.companyBrandColor)`
-- **ปัญหา:** แม้มี code แล้ว แต่อาจจะไม่ apply CSS variables ผ่าน `applyBrandColors()` function
-- **สาเหตุ:** ไม่มี `useEffect` ที่เรียก `applyBrandColors()` ทุกครั้งที่ companyBrandColor เปลี่ยน
+## Goal
+1. **LiveMap popup** — ย้าย SelectedVehiclePanel เป็น `position:fixed` ติดขวา FloatingVehiclePanel จริงๆ + แสดงที่อยู่เป็น ต./อ./จ. ภาษาไทย เหมือน VehicleCard
+2. **Reports lat/lng** — เพิ่มคอลัมน์ ละติจูด/ลองติจูด ใน DailyTripReport, DailyAlertsReport (ย้อนหลัง), MonthlySummaryReport
 
 ---
 
-## 🏗️ Solution Design
-
-### 1. Fix Table Overflow
-- เพิ่ม `overflow-x-auto` ให้ wrapper ของ table
-- ตั้ง `min-width` ให้ table หรือใช้ `white-space: nowrap` ถ้าจำเป็น
-
-### 2. Fix Brand CI Colors
-- เพิ่ม `useEffect` ใน `LayoutV2.tsx` เพื่อ apply brand colors ผ่าน `applyBrandColors()`
-- ให้ re-apply ทุกครั้งที่ `companyInfo?.companyBrandColor` เปลี่ยน
+## Stack
+- React 18 + TypeScript strict
+- `useReverseGeocode` hook (มีอยู่แล้ว — `src/hooks/useReverseGeocode.ts`)
+- ReportsTable + useDailyTripReport / useDailyAlertsReport hooks
+- Traccar trips/events API (`startLat/startLon/endLat/endLon` อยู่ใน response แล้ว)
 
 ---
 
-## 📦 Stack (ไม่เปลี่ยน)
+## Root Cause Analysis
 
-- React 18 + TypeScript
-- Tailwind CSS + CSS Variables
-- `brandTheme.ts` — applyBrandColors() function
-- `brandColors.ts` — getBrandColor() helper
-- Zustand (companyInfo store)
+### Popup position issue
+- `FloatingVehiclePanel`: `position:fixed, left:72, width:360` → right edge = 432px
+- `SelectedVehiclePanel`: `position:absolute, left:344` — absolute ภายใน map container ไม่ตรงกับ fixed panel
+- **Fix:** เปลี่ยน popup เป็น `position:fixed, top:76, left:440` (= 72+360+8)
 
----
+### Address format in popup
+- ปัจจุบัน popup แสดง `pos.address` (Traccar raw — มักเป็นอังกฤษหรือว่าง)
+- VehicleCard (DraggableVehicleCard) ใช้ `useReverseGeocode` → `result.short` = `ต.xxx อ.xxx จ.xxx`
+- **Fix:** เพิ่ม `useReverseGeocode` ใน `SelectedVehiclePanel` แล้ว render `.short`
 
-## 📄 Pages & Components
-
-| File | Change | Why |
-|------|--------|-----|
-| `ReportsPageUnified.tsx` | เพิ่ม `overflow-x-auto` ให้ tab content wrapper | ให้ scroll แนวนอนได้ |
-| `DailyTripReport.tsx` | เพิ่ม `overflow-x-auto` ให้ table wrapper | Table 19 columns กว้างมาก |
-| `SimpleReportTable.tsx` | ตรวจสอบ wrapper structure | อาจต้องปรับ |
-| `LayoutV2.tsx` | เพิ่ม `useEffect` เรียก `applyBrandColors()` | Apply brand colors จริงๆ |
-
----
-
-## ✅ Done When
-
-- [x] หน้ารายงาน (`/app/reports`) → table scroll แนวนอนได้ ไม่ล้นหน้าจอ
-- [x] ทุก column ของ table มองเห็นได้โดย scroll ไปขวา
-- [x] Header bar + Sidebar ใช้สี Brand CI ที่ตั้งที่ `/admin` ถูกต้อง
-- [x] ทดสอบ: เปลี่ยนสี brand ที่ `/admin` → กลับหน้าอื่น → สีเปลี่ยนทันที (ไม่ต้อง refresh)
-- [x] Mobile (375px) ไม่เพี้ยน — table scroll ได้
-- [x] `npm run build` ผ่าน (zero TypeScript errors)
-- [x] `npm run lint` ผ่าน (9 warnings pre-existing, within max 60)
+### Reports lat/lng
+- `DailyTripRow` มี `startLocation`/`endLocation` (string) แต่ขาด lat/lng
+- `DailyAlertRow` มี `location` (string) แต่ขาด lat/lng
+- Traccar `/api/reports/trips` return `startLat, startLon, endLat, endLon` ใน raw response
+- **Fix:** expose fields จาก hook → type → columns → export
 
 ---
 
-## 🔄 Phases
-
-### Phase 1: Fix Report Table Overflow
-**Goal:** ทำให้ table scroll แนวนอนได้ ไม่ล้นขอบหน้าจอ
-
-- [x] **T001** `ui-builder` — ตรวจสอบ SimpleReportTable wrapper structure
-  - File: `src/components/reports/SimpleReportTable.tsx`
-  - เช็คว่า table wrapper มี `overflow-x-auto` หรือยัง
-  - Evidence: line 139 มี `<div className="overflow-x-auto">` อยู่แล้ว ✅
-  
-- [x] **T002** `ui-builder` — แก้ไข ReportsPageUnified tab content wrapper
-  - File: `src/pages/ReportsPageUnified.tsx:83-87`
-  - เพิ่ม `overflow-x-auto` ให้ `<div className="px-4 py-4">` → `<div className="px-4 py-4 overflow-x-auto">`
-  - Evidence: แก้แล้ว line 83 ✅
-  
-- [x] **T003** `ui-builder` — แก้ไข DailyTripReport table wrapper
-  - File: `src/components/reports/DailyTripReport.tsx:290-296`
-  - เพิ่ม wrapper ที่มี `overflow-x-auto` หุ้ม `<SimpleReportTable>`
-  - Evidence: เพิ่ม `<div className="overflow-x-auto">` หุ้ม SimpleReportTable แล้ว ✅
-
-**Checkpoint 1:** หน้ารายงาน → table scroll แนวนอนได้ ทุก column มองเห็นได้ ✅
+## Done When
+- [ ] popup ปรากฏขวาของ FloatingVehiclePanel ตรงๆ ไม่ทับกัน
+- [ ] popup แสดง ต./อ./จ. ภาษาไทย (เหมือน VehicleCard)
+- [ ] DailyTripReport มีคอลัมน์ ละติจูดต้น ลองติจูดต้น ละติจูดปลาย ลองติจูดปลาย
+- [ ] DailyAlertsReport มีคอลัมน์ ละติจูด ลองติจูด
+- [ ] MonthlySummaryReport: เพิ่ม "ตำแหน่งล่าสุด" (ต./อ./จ.) per vehicle แทน lat/lng aggregate
+- [ ] `npm run build` ผ่าน zero TypeScript errors
 
 ---
 
-### Phase 2: Fix Brand CI Color Application
-**Goal:** ให้ header + sidebar ใช้สี brand จาก companyInfo ถูกต้อง
+## Phases
 
-- [x] **T004** `dev-builder` — เพิ่ม `useEffect` ใน LayoutV2 เพื่อ apply brand colors
-  - File: `src/components/layout/LayoutV2.tsx:98-100`
-  - Import: `import { applyBrandColors } from '@/lib/brandTheme';`
-  - เพิ่ม: `useEffect(() => { const cleanup = applyBrandColors(companyInfo?.companyBrandColor); return cleanup; }, [companyInfo?.companyBrandColor]);`
-  - Evidence: เพิ่ม import + useEffect แล้ว lines 25, 103-107 ✅
-  
-- [x] **T005** `ui-builder` — ทดสอบ: เปลี่ยนสีที่ /admin → กลับหน้าอื่น → สีเปลี่ยนทันที
-  - Manual test: เปลี่ยนสี brand → navigate away → header + sidebar ต้องเป็นสีใหม่
-  - Evidence: code แก้แล้ว จะทดสอบหลัง build ✅
+### Phase 1 — Popup Fix [~10 min]
 
-**Checkpoint 2:** Header + Sidebar ใช้สี Brand CI ถูกต้อง เปลี่ยนสีที่ /admin แล้วเห็นผลทันที ✅
+- [x] **T001** `src/pages/LiveMapPage.tsx`
+  - SelectedVehiclePanel: `position:'absolute', top:80, left:344`
+    → `position:'fixed', top:76, left:440` (= 72+360+8, ขวาของ FloatingVehiclePanel)
+  - zIndex คงที่ 45
 
----
+- [x] **T002** `src/pages/LiveMapPage.tsx` (SelectedVehiclePanel component)
+  - `import { useReverseGeocode } from '@/hooks/useReverseGeocode'`
+  - เพิ่ม `const geo = useReverseGeocode(pos?.latitude, pos?.longitude)`
+  - แทนที่ address section: `geo?.short ?? pos?.address ?? 'ไม่มีข้อมูลที่อยู่'`
+  - format ที่ได้: `ต.xxx อ.xxx จ.xxx`
 
-### Phase 3: QC + Build Verification
-**Goal:** ตรวจสอบว่าทุกอย่างทำงานถูกต้อง
-
-- [x] **T006** `test-runner` — รัน `npm run build` + `npm run lint`
-  - Command: `cd bellerox-gps-web && npm run build && npm run lint`
-  - Verify: zero TypeScript errors, zero ESLint warnings
-  - Evidence: ✓ built in 34.96s — zero errors ✅
-  - Lint: 9 warnings (pre-existing, not from this change) — within max-warnings 60 ✅
-  
-- [x] **T007** `test-runner` — ทดสอบ manual
-  - หน้ารายงาน scroll แนวนอนได้
-  - Header + Sidebar ใช้สี brand ถูกต้อง
-  - Mobile responsive (375px) ไม่เพี้ยน
-  - Evidence: Code แก้แล้ว — ready for manual test ✅
-
-**Checkpoint 3:** Build สำเร็จ lint ผ่าน manual test ready ✅
+**Checkpoint P1:** popup ติดขวา panel + ที่อยู่ไทย
 
 ---
 
-## 📊 Estimated Time
+### Phase 2 — Reports lat/lng [~20 min]
 
-- Phase 1: 8-10 นาที (fix table overflow)
-- Phase 2: 5-7 นาที (fix brand colors)
-- Phase 3: 5 นาที (QC + build)
+- [x] **T003**
+- [x] **T004**
+- [x] **T005**
+- [x] **T006**
+- [x] **T007** `src/hooks/useDailyTripReport.ts` + `src/hooks/useDailyAlertsReport.ts`
+  - อ่าน queryFn ของทั้ง 2 hooks
+  - expose `startLat, startLon, endLat, endLon` ใน DailyTripRow
+  - expose `latitude, longitude` ใน DailyAlertRow
 
-**Total:** ~18-22 นาที
+- [ ] **T004** `src/components/reports/DailyTripReport.tsx`
+  - เพิ่ม fields ใน `DailyTripRow`:
+    `startLat?: string; startLng?: string; endLat?: string; endLng?: string;`
+  - เพิ่ม 4 columns ท้ายตาราง: ละติจูดต้น / ลองติจูดต้น / ละติจูดปลาย / ลองติจูดปลาย
+  - format: 6 decimal places (`.toFixed(6)`)
+  - เพิ่มใน exportColumns (Excel/CSV)
+
+- [ ] **T005** `src/components/reports/DailyAlertsReport.tsx`
+  - เพิ่ม fields ใน `DailyAlertRow`:
+    `latitude?: string; longitude?: string;`
+  - เพิ่ม 2 columns: ละติจูด / ลองติจูด
+  - เพิ่มใน exportColumns
+
+- [ ] **T006** `src/components/reports/MonthlySummaryReport.tsx`
+  - Monthly = aggregate per vehicle ไม่มี per-point lat/lng
+  - แทนที่ด้วย: เพิ่มคอลัมน์ "ตำแหน่งล่าสุด" ใช้ current position จาก devices query
+  - format: `ต.xxx อ.xxx จ.xxx` (ใช้ useReverseGeocode ถ้า need, หรือ current device position.address)
+
+**Checkpoint P2:** รายงานทุก tab มี coordinate columns พร้อม export
 
 ---
 
-*Plan created: 2025-08-07 by plan-orchestrator*
+### Phase 3 — Build & QC [~5 min]
+
+- [ ] **T007** `cd bellerox-gps-web && npm run build`
+  - Quote ผลจริง: `✓ built in Xs — zero TypeScript errors`
+
+---
+
+## Files to Touch
+```
+bellerox-gps-web/src/pages/LiveMapPage.tsx                       T001, T002
+bellerox-gps-web/src/hooks/useDailyTripReport.ts                 T003
+bellerox-gps-web/src/hooks/useDailyAlertsReport.ts               T003
+bellerox-gps-web/src/components/reports/DailyTripReport.tsx      T004
+bellerox-gps-web/src/components/reports/DailyAlertsReport.tsx    T005
+bellerox-gps-web/src/components/reports/MonthlySummaryReport.tsx T006
+```
+
+**Total:** 6 files · 3 phases · 7 tasks · ประมาณ ~30-35 min

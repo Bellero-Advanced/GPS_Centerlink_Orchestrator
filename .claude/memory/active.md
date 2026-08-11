@@ -6,8 +6,25 @@
 ## In Progress
 - None
 
-## Just Completed (2026-08-07)
-- ✅ **User & Group Assignment Optimization** (completed)
+## Just Completed (2026-08-11)
+- ✅ **Reports Time Range Enhancement** (completed)
+  - **Problem**: หน้ารายงานเลือกแค่วันที่ได้ (00:00-23:59), ไม่สามารถระบุช่วงเวลาเอง (เช่น 08:00-17:00)
+  - **Solution**: เพิ่ม time input ใน DatePresets component
+    1. **เพิ่ม Time Input**: 2 ช่อง (from time / to time) ใน custom section
+    2. **combineDateTime Function**: รวมเวลาเข้ากับวันที่ใน Date object
+    3. **Preset Behavior**: วันนี้/เมื่อวาน ใช้ 00:00-23:59, Custom ใช้เวลาที่เลือก
+    4. **Summary Button**: ตรวจสอบแล้วมีครบ 5 tabs (line 304, 439, 563, 683, 969)
+    5. **SummaryModal**: มีอยู่แล้ว แสดง KPI cards + insights ของแต่ละ tab
+  - **Features**:
+    - เลือกช่วงเวลาได้: "1-5 ม.ค. 08:00-17:00"
+    - Preset ยังคงทำงานปกติ (00:00-23:59)
+    - ส่ง Date object ที่มีเวลาถูกต้องไปยัง Traccar API
+  - **Files**: `src/components/DatePresets.tsx`
+  - Build: ✅ TypeScript clean, Vite build 13.48s
+  - Plan: `.toh/plan-reports-time-range.md` — Phases 1-3 completed (T001-T005)
+  - Manual test pending: ต้องทดสอบ localhost ว่า time range ส่งไป API ถูกต้อง
+
+- ✅ **User & Group Assignment Optimization** (completed 2026-08-07)
   - **Problem**: Group assignment slow (2-3 sec wait, no feedback), CreateUserModal only 3 fields
   - **Solution**: Extended user creation form + verified existing optimistic code
     1. **Extended CreateUserModal**: 8 fields total (3 required: name, username, password; 5 optional: phone, email, LINE, logo, address)
@@ -59,7 +76,16 @@
   - Plan: `.toh/plan.md` — Phases 1-5 completed
 
 ## Next Steps
-1. **Manual Test User Form** (when ready):
+1. **Manual Test Reports Time Range** (when ready):
+   - Run: `npm run dev` → open http://localhost:5173
+   - Navigate to Reports page
+   - Test Case 1: เลือก preset "วันนี้" → verify time 00:00-23:59
+   - Test Case 2: เลือก custom date + time "1-3 ม.ค. 08:00-17:00"
+   - Test Case 3: กด "ค้นหาข้อมูล" → ดู Network tab → verify Traccar API query params มี time ถูกต้อง
+   - Test Case 4: กดปุ่ม "📊 ดูสรุป" ในแต่ละ tab → verify modal เปิดและแสดง KPI
+   - Expected: Time range ส่งไป Traccar API ตาม timestamp ที่เลือก
+
+2. **Manual Test User Form** (when ready):
    - Open TeamPage → click "เพิ่มผู้ใช้"
    - Fill 3 required fields: ชื่อบริษัท, username, password
    - Optionally fill: เบอร์โทร, อีเมล, LINE ID, URL โลโก้, ที่อยู่

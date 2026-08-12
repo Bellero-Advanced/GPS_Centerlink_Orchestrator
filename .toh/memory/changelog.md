@@ -1,5 +1,71 @@
 # 📝 Session Changelog
 
+## 2026-08-12 — White-label Branding Fix + Color-fill Polish + Sidebar Cleanup
+
+**Summary:** แก้ปัญหา white-label tenant branding ไม่ apply (logo/primaryColor/background fallback ไป Centerlink) + ปรับ component UI เป็น color-fill สม่ำเสมอ + เอา "พื้นที่กำหนด" ออกจาก sidebar
+
+### Root Causes (ตรวจโค้ดจริง)
+1. **2 TenantContext ทับซ้อน** — `src/context/TenantContext.tsx` (OLD, `adjustColor` แบบเก่าทำลาย hue) + `src/contexts/TenantContext.tsx` (NEW, อ���านจาก Supabase ถูก) → CSS `--brand` โดนเขียนทับด้วยค่าผิดเพี้ยน
+2. **`useCompanyInfo` legacy** — LayoutV2 header dropdown อ่านจาก `user.attributes` แทน `tenant.theme` → fallback ไป Centerlink `#EC4899`
+
+### Phase 1 — Consolidate TenantContext (single source of truth)
+- **`src/contexts/TenantContext.tsx`** — เพิ่ม `applyBrandColors()` จาก `brandTheme.ts` (แทน `adjustColor` แบบเก่า), export `useTenantTheme()` alias สำหรับ backward-compat, ลบ OLD context ทิ้ง
+- **`src/context/`** — ลบทั้งโฟลเดอร์ (OLD context)
+- **`App.tsx`** — `TenantThemeProvider` → `TenantProvider as TenantThemeProvider` (alias)
+- **`Logo.tsx`, `CenterlinkLoader.tsx`, `LoginPage.tsx`, `ForgotPasswordPage.tsx`** — เปลี่ยน import path จาก `@/context/TenantContext` → `@/contexts/TenantContext`
+
+### Phase 2 — `useCompanyInfo` fallback to tenant theme
+- **`src/hooks/useCompanyInfo.ts`** — เพิ่ม merge logic: user attrs (priority) → `useTenant().theme` (fallback)
+- ผลลัพธ์: header dropdown แสดง logo/brandColor/appName จาก tenant config จริง แม้ user ไม่ได้แก้ company attributes
+
+### Phase 3 — Color-fill UI polish (7 admin files + AccountSettingsPage)
+- **`TenantDetailPage.tsx`** — ลบ `borderColor:'#DADCE0'` (10 จุด) + `border:'1px solid #DADCE0'` (5 จุด) → ใช้ `var(--surface-2)` fill, เปลี่ยน `#ff788b` → `var(--brand)`
+- **`TenantsPage.tsx`** — ลบ borderColor ใน 8 inputs ของ NewTenantModal + tenant row เปลี่ยนเป็น `fill-block-elevated`
+- **`AdminSettingsPage.tsx`** — ลบ borderColor 10 จุด, onFocus/onBlur border logic, เปลี่ยนเป็น `var(--surface-2)` fill
+- **`AdminUsersPage.tsx`** — table → `.data-table` class, ลบ hard-coded header bg/border, role chips ใช้ `var(--brand-overlay-12)`
+- **`AdminDLTPage.tsx`** — table → `.data-table`, ลบ borders, status colors → `var(--success)/var(--critical)`
+- **`AdminServerConfigPage.tsx`** — table → `.data-table`, chip → `.chip` class, Firewall block ใช้ `var(--surface-2)` fill
+- **`AccountSettingsPage.tsx`** — ลบ border ใน `inputBase` + `card` + onFocus/onBlur, เปลี่ยนเป็น `var(--surface-2)` fill, toggle success → `var(--success)`
+
+### Phase 4 — Sidebar cleanup
+- **`LayoutV2.tsx`** — ลบ `{ to: '/app/geofences', icon: Shield, label: 'พื้นที่กำห��ด' }` ออกจาก NAV[1], เปลี่ยน label "จุดสนใจ (POI)" → "จุดสนใจ"
+- **`SearchPage.tsx`** — quick-link "พื้นที่กำหนด" → "จุดสนใจ" (path: `/app/poi-areas`)
+- **`App.tsx`** — `/app/geofences` route redirect ไป `/app/poi-areas` อยู่แล้ว ✅
+
+### Build Status
+- ✅ `npm run build` — 20.37s, 0 TypeScript errors
+- ✅ `npm run lint` — 0 errors, 35 pre-existing warnings (ไม่ใช่จากงานนี้)
+- ✅ Sidebar เหลือ "จุดสนใจ" อย่างเดียว
+- ✅ Tenant branding ดึงจาก Supabase ผ่าน `applyBrandColors()` (single source of truth)
+
+### Files Modified
+```
+bellerox-gps-web/src/contexts/TenantContext.tsx (rewritten)
+bellerox-gps-web/src/context/ (DELETED)
+bellerox-gps-web/src/hooks/useCompanyInfo.ts (tenant fallback)
+bellerox-gps-web/src/components/Logo.tsx (import path)
+bellerox-gps-web/src/components/CenterlinkLoader.tsx (import path)
+bellerox-gps-web/src/components/layout/LayoutV2.tsx (sidebar + Bell import)
+bellerox-gps-web/src/pages/LoginPage.tsx (import path)
+bellerox-gps-web/src/pages/auth/ForgotPasswordPage.tsx (import path)
+bellerox-gps-web/src/pages/AccountSettingsPage.tsx (color-fill)
+bellerox-gps-web/src/pages/SearchPage.tsx (quick-link)
+bellerox-gps-web/src/pages/admin/TenantDetailPage.tsx (color-fill)
+bellerox-gps-web/src/pages/admin/TenantsPage.tsx (color-fill)
+bellerox-gps-web/src/pages/admin/AdminSettingsPage.tsx (color-fill)
+bellerox-gps-web/src/pages/admin/AdminUsersPage.tsx (data-table)
+bellerox-gps-web/src/pages/admin/AdminDLTPage.tsx (data-table)
+bellerox-gps-web/src/pages/admin/AdminServerConfigPage.tsx (data-table)
+bellerox-gps-web/src/App.tsx (TenantProvider alias)
+```
+
+### Next Steps
+- Manual test: login ที่ gps.centerlink.co.th vs GPS Thailand subdomain → ยืนยัน brand color แยกชัดเจน
+- เพิ่ม "Reset to defaults" ใน TenantDetailPage Branding section
+- E2E test (Playwright) สำหรับ create tenant → branding auto-apply
+
+---
+
 ## 2026-08-09 — Modern UI Complete: Vehicle Cards + Color-Fill Audit (100%)
 
 **Summary:** แก้ FloatingVehiclePanel ให้แสดงข้อมูลเต็ม (driver/address/timestamp with icons) + audit color-fill ทั้งระบบครบ 100% (19 files, zero violations)

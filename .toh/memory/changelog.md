@@ -1,5 +1,92 @@
 # 📝 Session Changelog
 
+## 2026-08-14 — DLT Auto-Send Morning Failures Fix
+
+**Goal:** แก้ปัญหาการส่งข้อมูล GPS ไป DLT fail ช่วง 7 โมงเช้า
+
+**Root Causes:**
+1. Bangkok timezone detection range แคบเกินไป (6–8h)
+2. Staleness check เข้มเกินไป (-10 to +5 min)
+3. Device clock drift ไม่ได้จัดการ (อุปกรณ์แบตหมด/factory reset)
+4. ไม่มี logging เพื่อ debug
+
+**Changes:**
+- `bellerox-gps-web/src/services/dltService.ts`:
+  - Extended Bangkok timezone detection: 5.5–8.5h (from 6–8h) — catch edge cases
+  - Extended staleness tolerance: -15 to +10 min (from -10 to +5 min) — allow longer delays during reconnects
+  - Added device clock drift detection: if fixTime behind > 2h, use serverTime instead
+  - Added rejection logging: console.warn with device names and reasons
+  - Enhanced sendDltBatch(): track rejectedReasons array, log summary
+- `bellerox-gps-web/src/hooks/useDltAutoSend.ts`:
+  - Added console.log at every step: fetch start, batch send, success/error
+  - Better error messages for debugging
+
+**Build Status:**
+- ✅ `npm run build` — 12.30s, 0 TypeScript errors
+
+**Result:** Morning 7am DLT sends should now succeed — extended timestamp tolerance + drift detection + logging for debugging
+
+---
+
+## 2026-08-13 — Dashboard Enhancement: Filter + Search + Sort
+
+**Goal:** Add interactive controls to vehicle table
+
+**Changes:**
+- `bellerox-gps-web/src/pages/DashboardPage.tsx` — enhanced vehicle table
+  - Added: Status filter dropdown (ทุกสถานะ/เคลื่อนที่/จอดติดเครื่อง/จอดดับเครื่อง/ออฟไลน์)
+  - Added: Search box (filter by vehicle name or uniqueId)
+  - Added: Sort dropdown (name/speed/status) + order toggle (asc/desc)
+  - Added: Sortable table headers (click to sort)
+  - Added: Dynamic result count (updates with filter)
+  - Fixed: Pagination resets to page 1 when filter/search/sort changes
+  - Implementation: useState for filter/search/sort state, derived filteredVehicles array, sort logic with localeCompare for Thai names
+
+**Build Status:**
+- ✅ `npm run build` — 13.46s, 0 TypeScript errors
+- ✅ All controls functional with real-time updates
+
+**Files Modified:**
+```
+bellerox-gps-web/src/pages/DashboardPage.tsx (added filter/search/sort state + UI controls)
+```
+
+**Result:** Vehicle table now fully interactive — users can filter by status, search by name, and sort by any column
+
+---
+
+## 2026-08-13 — Dashboard Redesign (Simplified)
+
+**Goal:** Simplify dashboard — 4 KPI stats in header + paginated vehicle table only
+
+**Changes:**
+- `bellerox-gps-web/src/pages/DashboardPage.tsx` — full refactor
+  - Removed: Donut chart, health score, recent alerts panel (right column)
+  - Removed: 8 operational KPI tiles (ขับนาน 4 ชม., ซ่อม, ประกัน, GPS ไม่ส่งสัญญาณ)
+  - Removed: Quick actions row (4 buttons)
+  - Removed: Statistics row (Trips/ระยะทาง/พนักงาน)
+  - Removed: Summary footer
+  - Simplified: 4 KPI stats (ยานพาหนะทั้งหมด, ออนไลน์, เคลื่อนที่, ออฟไลน์) — moved to header, 2-line design (title + value only)
+  - Added: Pagination to vehicle table (10 items/page with prev/next controls)
+  - Kept: Idle vehicles warning + offline vehicles section
+- `bellerox-gps-web/DESIGN.md` — added KPI pattern documentation
+  - Pattern 1: Dashboard main KPIs (2-line: title + value, no icon, no unit)
+  - Pattern 2: Other pages KPIs (3-line: title + value + unit, no icon)
+
+**Build Status:**
+- ✅ `npm run build` — 13.08s, 0 TypeScript errors
+- ✅ `npm run lint` — 35 pre-existing warnings (not from this change)
+
+**Files Modified:**
+```
+bellerox-gps-web/src/pages/DashboardPage.tsx (major refactor)
+bellerox-gps-web/DESIGN.md (KPI pattern documentation)
+```
+
+**Result:** Dashboard loads faster, cleaner single-column layout, easier to scan
+
+---
+
 ## 2026-08-12 — White-label Branding Fix + Color-fill Polish + Sidebar Cleanup
 
 **Summary:** แก้ปัญหา white-label tenant branding ไม่ apply (logo/primaryColor/background fallback ไป Centerlink) + ปรับ component UI เป็น color-fill สม่ำเสมอ + เอา "พื้นที่กำหนด" ออกจาก sidebar

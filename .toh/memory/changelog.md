@@ -1,5 +1,54 @@
 # 📝 Session Changelog
 
+## 2026-08-20 — Multi-Tenant System Complete
+
+**Feature: Multi-tenant architecture with white-label branding**
+
+- Added Supabase `tenants` table schema
+- Created admin pages: TenantListPage + TenantDetailPage
+- Integrated Traccar admin API (suspend/resume, password reset)
+- Added tenant asset upload (logo, icon, bg image) to Supabase Storage
+- Mobile app build trigger via EAS (iOS + Android)
+- Sub-companies section showing managed users + device counts
+
+**Files:**
+- `src/pages/admin/TenantListPage.tsx` — tenant list with status chips
+- `src/pages/admin/TenantDetailPage.tsx` — full tenant editor
+- `src/services/tenantService.ts` — CRUD + asset upload
+- `src/services/adminTraccarService.ts` — admin-level Traccar operations
+- `src/lib/tenantConfig.ts` — TypeScript schema
+
+**Deploy:** commit `2d84c0f` → build 32137607372 ✅
+
+---
+
+## 2026-08-19 — Performance Upgrade Complete
+
+**Feature: Fast geocoding + sub-1s reports + PDF summary**
+
+- Switched geocoding: Nominatim → Photon API (unlimited, free)
+- Added IndexedDB cache for geocode results (permanent)
+- Added IndexedDB cache for trip reports (TTL: 5min today, 1h past)
+- Extracted shared summary calculation (`reportSummary.ts`)
+- PDF export now shows 9 comprehensive metrics matching Modal
+- Grayscale color scheme for PDF (white/gray/black only)
+
+**Performance:**
+- Geocoding: 50 addresses < 5s (was ~50s) — 10x faster
+- Reports: first load ~2-3s, cached < 1s (was ~10s+) — 5-10x faster
+
+**Files:**
+- `src/lib/geocodeCache.ts` — IndexedDB for geocodes
+- `src/lib/reportCache.ts` — IndexedDB for reports
+- `src/lib/reportSummary.ts` — shared summary logic
+- `src/hooks/useReverseGeocode.ts` — Photon + fallback
+- `src/lib/exportUtils.ts` — PDF template with grayscale design
+- `src/components/reports/DailyTripReport.tsx` — comprehensive summary export
+
+**Deploy:** commit `da2f959` → build 32135801574 ✅
+
+---
+
 ## 2026-08-14 — DLT Auto-Send Morning Failures Fix
 
 **Goal:** แก้ปัญหาการส่งข้อมูล GPS ไป DLT fail ช่วง 7 โมงเช้า

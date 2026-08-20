@@ -64,5 +64,26 @@ updated: 2026-08-18
 - [ ] Upload ตราประทับที่ `/admin/tenants/[id]`
 - [ ] ออกใบรับรอง → ดูว่าลายเซ็น/ตราประทับโชว์ถูกต้อง รักษาสัดส่วน
 
+## 🔧 Current: Certificate HTML2Canvas Fix
+
+**Issue:** Certificate generation failing with "Node cannot be found in the current page" error from html2canvas library.
+
+**Root Cause:** Off-screen positioning (`left: -9999px`) broke html2canvas's internal DOM tree traversal. The library clones the DOM tree and needs elements to be in normal layout flow.
+
+**Solution:**
+- Changed from `position: absolute; left: -9999px` to `position: fixed; visibility: hidden`
+- Keeps element at (0,0) in layout flow but invisible to user
+- Simplified html2canvas options (removed onclone callback, set allowTaint:false)
+- Added layout reflow trigger before capture
+
+**Files Changed:**
+- `bellerox-gps-web/src/services/certificateService.ts` — positioning strategy
+
+**Status:**
+- ✅ Committed: `85bc6b2`
+- ✅ Pushed to GitHub
+- 🔄 CI/CD running: https://github.com/Bellero-Advanced/bellerox-gps-web/actions
+- 🧪 **Needs testing:** Generate certificate from DLT Compliance page to verify fix
+
 ## Next: (awaiting user)
-Ready for next task.
+Test certificate generation to verify html2canvas fix works.

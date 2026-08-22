@@ -1,373 +1,379 @@
-# Plan — Reports Summary Fix + Caching Infrastructure
+# Plan — Full-Stack Optimization: Cost · Pipeline · Complete Activity Reports
 
-**Status:** `approved`  
-**Created:** 2026-08-20  
-**Started:** 2026-08-20  
+**Status:** `approved`
+**Created:** 2026-08-22
+**Started:** 2026-08-22
 **Model:** claude-opus-5
+**Supersedes:** `plan-reports-caching-20260820.md` (Phase 1-2 shipped · Phase 3-5 built but never wired in)
 
 ---
 
 ## 🎯 Goal
 
-แก้ไข Reports System ให้ถูกต้อง + เพิ่ม Performance:
+สาม goal ที่เกี่ยวกันเป็นลูกโซ่ — แก้ต้นน้ำแล้วปลายน้ำดีขึ้นเอง:
 
-### ปัญหาเร่งด่วน (Phase 1-2):
-1. **Summary Metrics ผิด** — PDF แสดงค่าผิด:
-   - ระยะทางรวม: 1689.1 กม. (ผิด) → ควรเป็น 168.7 กม. (ระยะสะสมสุดท้าย)
-   - ความเร็วเฉลี่ย: 0 km/h → ควรเฉลี่ยจากทุกเที่ยว
-   - เวลาเครื่องยนต์ทำงาน: 0.0 ชม. → ควรรวม duration ทุกเที่ยว
-   - เวลาจอด: หายไป → ควรมี (idle + stopped)
-   - เวลาจอดติดเครื่อง: 0.0 ชม. → ควรคำนวณจาก idle status
-
-2. **แก้ `calculateComprehensiveSummary()`** ให้คำนวณถูกทุก metric
-
-### Performance & Scalability (Phase 3-5):
-3. **Query ช้า** — ตอนนี้ query Traccar API ทุกครั้ง (20k vehicles × 7 days = ล้าน positions)
-4. **ต้องการ Caching Layer:**
-   - PostgreSQL Materialized View เก็บรายงานสำเร็จรูป
-   - Background Worker คำนวณทุก 5-10 นาที
-   - Pre-geocoding ทุก position ทันที (ไม่ต้องรอตอน query)
-   - Redis Cache เก็บ 30 วันล่าสุด
-   - Query เร็ว < 50ms
+1. **ลดค่าใช้จ่ายจริง** — บิลจริง ~$97/เดือน ไม่ใช่ $35 ตามที่เอกสารเขียน
+   ลดได้ ~$31/เดือน โดยไม่ลดความสามารถ
+2. **แก้ pipeline ทั้งเส้น** — GPS → Traccar → Postgres → browser → DLT
+   ต้นตอ performance อยู่ที่ **ปริมาณ row ที่เก็บ** ไม่ใช่ CPU
+3. **รายงานกิจกรรมครบ 24 ชม.** — ทุกเที่ยว ทุกการจอด ทุกการติด/ดับเครื่อง
 
 ---
 
-## 📦 Stack
+## 🔴 ต้องรู้ก่อนอนุมัติ — 4 เรื่องที่ตรวจแล้วเจอของจริง
 
-**Phase 1-2 (Fix Metrics):**
-- React 18 + TypeScript strict
-- `reportSummary.ts` — calculation logic
-- Traccar API data structure
+### 1. ไม่มี backup เลย — ข้อมูล 3.3 ล้าน position ไม่มีสำรอง
+`backup.sh:10` ชี้ `gs://bellerox-gps-backups` · `backup-db.sh:11` ชี้ `gs://gps-thailand-backups`
+**ทั้งสอง bucket ไม่มีอยู่จริงใน project** และไม่มี snapshot schedule เลย
+สคริปต์รันแล้ว fail เงียบ ๆ · ถ้า VM ตายวันนี้ = ข้อมูลหายหมด
 
-**Phase 3-5 (Caching Infrastructure):**
-- PostgreSQL 16 (Materialized Views)
-- Node.js Background Worker (Bull Queue)
-- Redis 7 (cache layer)
-- Longdo Map API (geocoding)
-- Docker Compose (worker deployment)
+### 2. SSH เปิดให้ทั้งโลก + token หลุดใน git
+`gcp/terraform/main.tf:174` → SSH `source_ranges = ["0.0.0.0/0"]`
+comment เขียนว่า "Replace with your office IP" แต่ไม่มีใครแก้
+`scripts/p0-deploy.sh:21` → **Cloudflare API token ตัวจริงอยู่ใน git**
+`scripts/p0-deploy.sh:147` → admin password hardcoded
+
+### 3. DLT ส่งจากเบราว์เซอร์ ไม่ใช่จาก server
+`useDltAutoSend` ทำงานใน `LayoutV2` → ต้องเปิดหน้าเว็บไว้ DLT จึงได้ข้อมูล
+**ปิดเบราว์เซอร์ = หยุดส่ง** ขัดกับข้อกำหนดกรมขนส่งที่ต้องส่งต่อเนื่อง
+นี่คือต้นตอเดียวกับ 429 ที่เพิ่งแก้ — localStorage lock แก้อาการ ไม่ได้แก้ architecture
+
+### 4. เวลาจอดติดเครื่องเป็น 0 ตลอด — dead code
+`reportSummary.ts:89-94` เช็คว่า status มีคำ `ติดเครื่อง`
+แต่ `useDailyTripReport.ts:124-128` ส่งได้แค่ `'รถวิ่ง'` / `'จอดรถ,ดับเครื่องยนต์'`
+**ไม่มีทางเข้าเงื่อนไขนั้น** → `SummaryModal:86,107` แสดง 0.0 ชม. ตลอดกาล
 
 ---
 
-## 📄 Files Affected
+## 💰 ค่าใช้จ่ายจริง (ตรวจจาก gcloud API สด ไม่ใช่เอกสาร)
 
-**Phase 1-2:**
-- `src/lib/reportSummary.ts` — แก้ calculation
-- `src/hooks/useDailyTripReport.ts` — เช็คว่าส่งข้อมูลครบไหม
-- `src/components/reports/DailyTripReport.tsx` — ตรวจสอบ PDF export
+| รายการ | สภาพจริง | $/เดือน |
+|---|---|---|
+| VM `bellerox-gps-vm` | **n2-standard-2** (เอกสารเขียน e2 — ผิด) | 87.46 |
+| Boot disk | 50GB **pd-ssd** (เอกสารเขียน HDD — ผิด) | 9.35 |
+| Egress | วัดได้ 3.88 GiB/30 วัน | 0.47 |
+| Static IP | attached อยู่ → ไม่คิดเงิน | 0.00 |
+| Cloud SQL / Memorystore / LB | **ไม่มีอยู่จริง** | 0.00 |
+| **รวม GPS** | | **~$97** |
+| `jinkin-erp-db-ip` | **RESERVED ไม่มีใครใช้** (คนละ project) | 8.03 ⚠️ |
 
-**Phase 3-5:**
-- `infrastructure/workers/report-processor/` — Background worker (new)
-- `infrastructure/postgres/schema-reports.sql` — Materialized views (new)
-- `infrastructure/docker/docker-compose.workers.yml` — Worker deployment (new)
-- `bellerox-gps-web/src/hooks/useReportCache.ts` — Hook ใช้ cache (new)
+**ตัวเลข `11.8GB out` ในเอกสารเป็น counter สะสมตลอดอายุ container ไม่ใช่ต่อเดือน**
+egress จริง 3.88 GB = $0.47 → optimize ตรงนี้ไม่คุ้มค่าแรง
+
+### ลดได้จริง
+
+| ทำอะไร | ประหยัด/เดือน | ความเสี่ยง |
+|---|---|---|
+| n2-standard-2 → **e2-standard-2** (2vCPU/8GB เท่าเดิม) | **$27.11** | ไม่มี — spec เท่าเดิม ไม่ต้องจูนอะไร |
+| pd-ssd → **pd-balanced** | **$3.85** | IOPS ลด · ที่ 3.3M rows รับได้ |
+| ปล่อย `jinkin-erp-db-ip` | $8.03 | ต้องยืนยันว่า JINKIN เลิกใช้แล้ว |
+| **รวม (ไม่รวม JINKIN)** | **~$31/เดือน** | |
+
+**ไม่แนะนำ:** e2-medium (4GB) ประหยัดเพิ่ม $30 แต่ container limit รวม 6.8GB อยู่แล้ว
+ต้องลด Traccar heap + Postgres buffer → เสี่ยงเกินคุ้ม
+
+Cloudflare อยู่ใน free tier ทั้งหมด · Worker ~8,640 req/วัน จาก limit 100k → ไม่ต้องแตะ
+
+---
+
+## 🔧 Pipeline — ต้นตอจริงอยู่ที่ปริมาณ row
+
+### LEG 1 · GPS → Traccar
+`filter.enable=true` แต่ **`filter.static` ไม่ได้ตั้ง** (`traccar.xml:50-57`)
+`filter.duplicate` ช่วยไม่ได้ — มันตัดแค่ timestamp ซ้ำ รถจอดส่ง timestamp ใหม่ทุกครั้ง
+→ **รถจอดค้างคืนดับเครื่อง ยังเก็บ row ทุก 30 วิ**
+นี่คือคานงัดที่ใหญ่ที่สุดของทั้งระบบ และตอนนี้ปิดอยู่
+
+### LEG 2 · Traccar → Postgres
+1.9GB ÷ 2.8M rows = **~679 byte/row** (สมมติฐาน 200 byte ผิด 3.4 เท่า)
+เพราะ `database.saveOriginal=true` (`traccar.xml:32`) เก็บ payload ดิบทุก row
+`database.positionPeriod=90` ตั้งไว้ — แต่ยังไม่ได้ยืนยันว่า cleanup task รันจริง
+ไม่มี purge เอง · TimescaleDB ใช้ไม่ได้ (image เป็น `postgres:16-alpine` ธรรมดา)
+
+### LEG 3 · Traccar → browser
+WebSocket ใช้จริง **แต่ polling ยังวิ่งพร้อมกันไม่ได้ปิด**
+positions 20s + devices 30s + geofences 30s + events 60s = **8 req/นาที/แท็บ**
+WS มี circuit breaker เลิกลองหลัง 5 ครั้ง → ตกไป polling ถาวรจนกด refresh
+
+### LEG 4 · server → DLT
+ส่งจากเบราว์เซอร์ (ดูข้อ 3 ด้านบน) · ไม่มี cron/systemd/Bull job ฝั่ง server เลย
+
+### LEG 5 · geocoding
+3 provider: Photon (client) · Longdo (worker → Postgres cache) · Nominatim (Traccar, cache แค่ 1000)
+client cache ดี (IndexedDB + memory + 1 req/s queue) แต่เป็น N+1 ต่อแถวตอน cache miss
+
+---
+
+## 📊 รายงานกิจกรรมครบวัน — ช่องว่างที่ต้องปิด
+
+### มีอยู่แล้ว
+- Traccar บันทึก `ignitionOn` / `ignitionOff` **อัตโนมัติ** (`IgnitionEventHandler` ไม่มี config gate)
+  → ข้อมูลมีอยู่ใน `tc_events` แล้ว แค่ไม่มีใครไปอ่าน
+- `daily_trip_reports` มีคอลัมน์ `stopped_time`, `idle_time` (`schema-reports.sql:23-24`)
+- `cached_trips` เก็บรายเที่ยวแบบ normalized (`03-cached-trips.sql:12-54`)
+
+### ขาด
+| ขาดอะไร | หลักฐาน |
+|---|---|
+| worker เรียกแค่ `/api/reports/trips` | `services/traccar.ts:60` — ไม่เรียก stops/events/summary |
+| `stopped_time`/`idle_time` เขียน 0 ตลอด | `dailyReportJob.ts:48-49` เขียน comment ยอมรับไว้เอง |
+| `ignitionOn/Off` ไม่มีใคร query | grep ทั้ง repo ไม่เจอ call site |
+| ไม่มีตาราง stops / events / idle | ไม่มีใน `infrastructure/postgres/` |
+| `cached_trips` worker ไม่เขียน | เขียนครั้งเดียวจาก backfill block → stale ทันที |
+| ไม่มี timeline component | grep "imeline" เจอแต่ ImeiHistory/VehicleDetail/AuditLog |
+| `generateIdleTimeReport` ชื่อหลอก | `reportGenerators.ts:317` เรียก `getStopsReport` ไม่กรอง ignition |
+
+### trips + stops ต่อกันครบ 24 ชม. ไหม → **ไม่ครบ** และเป็นปัญหาเชิงโครงสร้าง
+1. ทั้งสอง report ถูกตัดตาม `from`/`to` → จอดค้ามคืนขาดที่ขอบวัน
+2. detect จาก motion + มี minimum threshold → ขยับน้อยกว่าเกณฑ์ ไม่เป็นทั้ง trip และ stop
+3. อุปกรณ์ offline → ไม่เกิด trip ไม่เกิด stop (รูโหว่เงียบ)
+4. `filter.accuracy 50m` + `filter.skipLimit 1800s` ตัด position ก่อนบันทึก
+5. ไม่มีโค้ดไหนเช็คว่า `stop[n].endTime == trip[n+1].startTime`
+
+→ **ignition events คือกระดูกสันหลังที่หายไป** Traccar บันทึกให้แล้ว แต่ไม่มีใครใช้
 
 ---
 
 ## ✅ Done When
 
-**Phase 1-2 (Fix Summary):**
-- [ ] ระยะทางรวม = ระยะสะสมสุดท้าย (168.7 กม. ไม่ใช่ 1689.1)
-- [ ] ความเร็วเฉลี่ย = average speed จากทุกเที่ยว
-- [ ] เวลาเครื่องยนต์ทำงาน = sum(duration) จากทุกเที่ยว
-- [ ] เวลาจอด = sum(stopped time)
-- [ ] เวลาจอดติดเครื่อง = sum(idle time)
-- [ ] ใช้น้ำมันทั้งหมด = sum(fuel) จากทุกเที่ยว
-- [ ] PDF export แสดงค่าถูกต้อง (ทดสอบกับรถเดียวกัน)
+- [ ] backup ทำงานจริง — bucket มีอยู่ · restore ทดสอบผ่าน · retention ชัดเจน
+- [ ] SSH จำกัด IP · secret ถอนออกจาก git แล้ว rotate
+- [ ] DLT ส่งจาก server ได้ต่อเนื่องแม้ปิดเบราว์เซอร์ทุกเครื่อง
+- [ ] `filter.static` เปิด · วัดได้ว่า write rate ลดลงจริง
+- [ ] retention มีผลจริง — ยืนยันจากอายุ row ที่เก่าที่สุดในฐาน
+- [ ] VM = e2-standard-2 · disk = pd-balanced · ระบบยังทำงานปกติ
+- [ ] รายงานรายวันแสดง timeline ต่อเนื่อง: วิ่ง → จอด → ติดเครื่อง → ดับ ครบ 24 ชม. ไม่มีรูโหว่ที่ไม่มีคำอธิบาย
+- [ ] `เวลาจอดติดเครื่อง` แสดงค่าจริง ไม่ใช่ 0
+- [ ] ตาราง server-side ถูกอ่านโดย UI จริง (ไม่ใช่ dead code เหมือน `useReportCache`)
+- [ ] `npm run build` ผ่าน · `npm run lint` ไม่มี error ใหม่
+- [ ] `npx vitest run` ผ่านทั้งหมด
 
-**Phase 3-5 (Caching):**
-- [ ] Materialized view `daily_trip_reports` สร้างเสร็จ
-- [ ] Background worker คำนวณรายงานทุก 10 นาที
-- [ ] Geocoding pipeline ทำงาน (pre-cache addresses)
-- [ ] Redis cache เก็บ 30 วันล่าสุด
-- [ ] Hook `useReportCache` ดึงจาก cache ก่อน fallback Traccar
-- [ ] Query เร็ว < 100ms (test กับ 7 days, 1 vehicle)
-- [ ] Worker deploy ด้วย Docker Compose
+<!-- APPEND-PHASES -->
 
 ---
 
-## 📋 Phases
+## Phase 1 — กันของหาย (ทำก่อน ไม่มีข้อแม้)
 
-### Phase 1 — Investigation (ตรวจสอบ Bug)
+> ไม่มี backup + SSH เปิดโลก = ความเสี่ยงสูงสุดในระบบ สูงกว่าเรื่อง performance ทั้งหมด
 
-**Duration:** ~15 min  
-**Agent:** dev-builder
-
-- [x] **T001** อ่าน `reportSummary.ts` เช็คว่า `calculateComprehensiveSummary()` คำนวณยังไง
-  - Files: `src/lib/reportSummary.ts`
-  - Goal: หา logic ที่ทำให้ totalDistance = 1689.1 แทน 168.7
-  - **Result:** พบว่าบวก `trip.distance` ซ้ำทุกเที่ยว แต่ผลรวมควรถูก → ต้องใช้ `totalDistance` จากแถวสุดท้าย
-
-- [x] **T002** อ่าน `useDailyTripReport.ts` เช็คว่า data structure ที่ส่งเข้า summary ถูกต้องไหม
-  - Files: `src/hooks/useDailyTripReport.ts`
-  - Goal: เช็ค field `distance`, `duration`, `avgSpeed` ส่งเข้ามาครบไหม
-  - **Result:** มี 2 fields: `distance` (แต่ละเที่ยว) + `totalDistance` (สะสม)
-
-- [x] **T003** เช็คว่า Traccar API ส่ง field อะไรมาบ้าง
-  - Files: `src/services/traccarService.ts`, `src/types/traccar.types.ts`
-  - Goal: ยืนยันว่า `spentFuel`, `duration`, `averageSpeed` มีใน TripReport
-  - **Result:** Traccar ส่งข้อมูลครบ, ปัญหาอยู่ที่การคำนวณ summary
-
-**Checkpoint 1:** ✅ รู้สาเหตุว่าทำไม metrics ผิด - ต้องใช้ totalDistance จากแถวสุดท้าย
-
----
-
-### Phase 2 — Fix Summary Calculation (แก้ Metrics)
-
-**Duration:** ~45 min  
-**Agent:** dev-builder
-
-- [x] **T004** แก้ `totalDistance` ให้ใช้ระยะสะสมสุดท้าย
-  - Files: `src/lib/reportSummary.ts`
-  - Change: `totalDistance = data[data.length - 1].totalDistance` หรือ `sum(distance per trip)`
-  - **Result:** ใช้ cumulative distance จากแถวสุดท้าย (line 88-93)
-
-- [x] **T005** แก้ `avgSpeed` ให้เฉลี่ยจากทุกเที่ยว
-  - Files: `src/lib/reportSummary.ts`
-  - Change: `avgSpeed = sum(distance) / sum(duration in hours)`
-  - **Result:** คำนวณจาก totalDistance / totalHours
-
-- [x] **T006** แก้ `totalEngineHours` ให้รวม duration จากทุกเที่ยว
-  - Files: `src/lib/reportSummary.ts`
-  - Change: `totalEngineHours = sum(duration in hours)`
-  - **Result:** แก้แล้ว - totalEngineHours = totalHours (line 81)
-
-- [x] **T007** เพิ่ม `totalStoppedTime` คำนวณจาก stopped positions
-  - Files: `src/lib/reportSummary.ts`
-  - Change: ต้องดึงข้อมูล stopped events หรือคำนวณจาก speed = 0 positions
-  - **Result:** คำนวณจาก status field (line 64-65) - รอ position data ที่แม่นยำกว่า
-
-- [x] **T008** แก้ `totalIdleTime` คำนวณจาก idle positions
-  - Files: `src/lib/reportSummary.ts`
-  - Change: ดึงจาก events หรือ positions ที่ speed = 0 + ignition ON
-  - **Result:** คำนวณจาก status field (line 66-67) - รอ position data ที่แม่นยำกว่า
-
-- [x] **T009** แก้ `totalFuel` รวมจากทุกเที่ยว
-  - Files: `src/lib/reportSummary.ts`
-  - Change: `totalFuel = sum(trip.spentFuel)`
-  - **Result:** แก้แล้ว - sum fuel จากทุกเที่ยว (line 59-60)
-
-- [x] **T010** ทดสอบ export PDF กับรถเดิม (2ฒฌ-3550) เช็คค่าตรง 168.7 กม.
-  - Goal: ยืนยันว่า PDF แสดงค่าถูกต้อง
-  - **Result:** Committed + Pushed - รอ CI/CD deploy (รอพี่โตทดสอบ)
-
-**Checkpoint 2:** ✅ Summary metrics แก้เสร็จ - รอ user testing
+- [x] **T101** `general-purpose` — สร้าง GCS bucket จริง + แก้ `infrastructure/scripts/backup-db.sh`
+      ให้ตรง bucket · lifecycle 90 วัน · เพิ่ม exit code check (ห้าม fail เงียบ)
+      ✅ `gs://bellerox-gps-backups` (asia-southeast1) · lifecycle 30d→NEARLINE, 90d delete
+      ✅ ถอน DB password ออกจาก `backup-db.sh:15` → env var
+      ✅ ลบ `scripts/backup.sh` (container name ผิด `bellerox-postgres` ของจริง `centerlink-postgres`)
+      ✅ แก้บั๊ก fail-silent: เดิม `pg_dump | gzip` แล้วเช็ค `$?` = เช็ค gzip ไม่ใช่ pg_dump
+         → ดัมป์ล้มเหลวได้ .gz ว่างแล้วรายงานสำเร็จ · แก้ด้วย `pipefail` + size floor 1MB
+- [x] **T103** `general-purpose` — GCE snapshot schedule รายวัน retention 7 วัน
+      ✅ policy `bellerox-gps-daily-snapshot` 02:00 น. Bangkok · attached กับ disk แล้ว
+      ✅ **snapshot จริงทดสอบแล้ว: 2.9GB READY** (ไม่รอ 02:00 น.)
+- [ ] **T102** `general-purpose` — cron backup + **ทดสอบ restore ลง DB ชั่วคราว**
+      ⚠️ **BLOCKED บางส่วน** — VM มี scope แค่ `devstorage.read_only` เขียน GCS ไม่ได้
+      dump ทำงานได้จริง (234MB ผ่าน verify) แต่ upload ได้ 403
+      แก้ scope ต้อง **stop VM** → มัดไปกับ downtime ของ T504
+      ไม่ใช้ service account key file บน VM (secret อายุยาวบนดิสก์ ขัดกับ T105/T601)
+      **ความเสี่ยงตอนนี้คุมได้แล้วด้วย snapshot รายวัน (T103)**
+- [ ] **T104** `general-purpose` — จำกัด SSH `main.tf:174` เป็น IP ที่ระบุ + IAP range `[P]`
+- [ ] **T105** `general-purpose` — ถอน token/password จาก `p0-deploy.sh` → env var
+      + **rotate Cloudflare token ที่หลุด** (ต้องถือว่าโดนแล้ว)
+- [ ] **Checkpoint 1** — `gsutil ls` เห็นไฟล์ · restore ผ่าน · firewall ไม่มี 0.0.0.0/0 บน 22 · `git grep` ไม่เจอ secret
 
 ---
 
-### Phase 3 — Database Schema (Materialized View)
+## Phase 2 — ลดปริมาณข้อมูลที่ต้นทาง
 
-**Duration:** ~1 hr  
-**Agent:** dev-builder
+> คานงัดใหญ่สุด · ทำก่อน Phase 5 เพื่อ partition บนข้อมูลที่สะอาดแล้ว
 
-- [x] **T011** สร้าง schema `daily_trip_reports` table
-  - Files: `infrastructure/postgres/schema-reports.sql` (new)
-  - **Result:** ✅ Created with indexes and constraints
-
-- [x] **T012** สร้าง `geocode_cache` table
-  - Files: `infrastructure/postgres/schema-reports.sql`
-  - **Result:** ✅ Created with trigger for usage tracking
-
-**Checkpoint 3:** ✅ Database schema พร้อมใช้
-
----
-
-### Phase 4 — Background Worker (Report Processor)
-
-**Duration:** ~2 hrs  
-**Agent:** dev-builder
-
-- [x] **T013** สร้าง Node.js worker project
-  - Files: `infrastructure/workers/report-processor/package.json` (new)
-  - Dependencies: `bull`, `ioredis`, `pg`, `axios`, `date-fns`
-  - **Result:** ✅ Created with TypeScript config
-
-- [x] **T014** สร้าง `ReportJob` — คำนวณรายงานรายวัน
-  - Files: `infrastructure/workers/report-processor/src/jobs/dailyReportJob.ts` (new)
-  - **Result:** ✅ Fetches trips, geocodes, calculates summary, upserts to DB
-
-- [x] **T015** สร้าง `GeocodingJob` — pre-geocode positions
-  - Files: `infrastructure/workers/report-processor/src/services/geocoding.ts` (new)
-  - **Result:** ✅ Longdo Map API integration with cache
-
-- [x] **T016** สร้าง `worker.ts` — main entry point
-  - Files: `infrastructure/workers/report-processor/src/worker.ts` (new)
-  - **Result:** ✅ Bull queue setup with cron schedule
-
-**Checkpoint 4:** ✅ Worker คำนวณรายงานได้
+- [ ] **T201** `general-purpose` — เพิ่ม `filter.static=true` ใน `traccar.xml`
+      **วัด row/วัน ก่อน-หลัง** เก็บตัวเลขเป็นหลักฐาน
+- [ ] **T202** `general-purpose` — ยืนยัน `database.positionPeriod=90` ทำงานจริง
+      query อายุ row เก่าสุด · ถ้าไม่ทำงาน → ทำ purge job เอง
+- [ ] **T203** `general-purpose` — ตรวจว่า DLT/รายงาน ต้องใช้ `saveOriginal` ไหม
+      **ถ้าไม่ชัด → ไม่แตะ แล้วรายงานให้พี่โตตัดสิน** (ปิดได้ลด row ~3 เท่า)
+- [ ] **T204** `dev-builder` — ปิด polling เมื่อ WebSocket ต่ออยู่ (`useDevices.ts:31,121`)
+      + circuit breaker ลองใหม่แบบ backoff ไม่เลิกถาวร
+- [ ] **Checkpoint 2** — row/วัน ลดลงจริง (quote ตัวเลข) · แผนที่สดยังอัพเดตปกติ · build ผ่าน
 
 ---
 
-### Phase 5 — Redis Cache + Hook Integration
+## Phase 3 — DLT ย้ายขึ้น server
 
-**Duration:** ~1 hr  
-**Agent:** dev-builder
+> แก้ architecture ไม่ใช่แก้อาการ · จบทั้ง 429 และ compliance ในครั้งเดียว
 
-- [x] **T017** สร้าง `useReportCache` hook
-  - Files: `src/hooks/useReportCache.ts` (new)
-  - **Result:** ✅ Queries PostgreSQL cache first, fallback to Traccar API
-
-- [x] **T018** เปลี่ยน `useDailyTripReport` ให้ใช้ cache
-  - Files: `src/hooks/useDailyTripReport.ts`
-  - Change: เรียก `useReportCache` ก่อน fallback Traccar
-  - **Result:** ⏭️ Skipped - Hook พร้อมใช้แล้ว, integration ทำภายหลังตามต้องการ
-
-- [x] **T019** สร้าง Docker Compose config สำหรับ worker
-  - Files: `infrastructure/docker/docker-compose.workers.yml` (new)
-  - **Result:** ✅ Redis + report-processor services with env config
-
-**Checkpoint 5:** ✅ Cache infrastructure พร้อม deploy
+- [ ] **T301** `dev-builder` — ย้าย logic ส่ง DLT ไป service ฝั่ง server
+      reuse `buildDltUnitId` + validation จาก commit `9f78faf` (ห้ามเขียนใหม่)
+- [ ] **T302** `dev-builder` — scheduler ฝั่ง server 1 นาที/ครั้ง — **จุดเดียวในระบบ**
+      → rate limit หมดปัญหาโดยธรรมชาติ ไม่ต้องพึ่ง localStorage lock
+- [ ] **T303** `dev-builder` — transmission log ลง Postgres แทน localStorage
+      (ตอนนี้ clear browser = log หาย · ตรวจย้อนหลังกับกรมขนส่งไม่ได้)
+- [ ] **T304** `dev-builder` — หน้า DLT อ่าน log จาก server · เลิกใช้ browser scheduler
+- [ ] **T305** `dev-builder` — alert เมื่อส่งไม่สำเร็จติดกัน 3 รอบ (LINE Notify)
+- [ ] **Checkpoint 3** — ปิดเบราว์เซอร์ 10 นาที log ฝั่ง server ยังเดิน · ไม่มี 429 · `received_records > 0`
 
 ---
 
-### Phase 6 — Testing & Deployment
+## Phase 4 — รายงานกิจกรรมครบวัน (ตามที่พี่โตต้องการ)
 
-**Duration:** ~30 min  
-**Agent:** test-runner
+> ตารางถาวร ไม่ใช่ cache · เก็บทุกสถานะ ไม่ใช่แค่เที่ยววิ่ง
 
-- [x] **T020** ทดสอบ summary metrics (Phase 2)
-  - Test: Export PDF รถ 2ฒฌ-3550 วันที่ 19/08/2569
-  - Expected: ระยะทางรวม 168.7 กม., ความเร็วเฉลี่ย > 0, เวลาเครื่องยนต์ > 0
-  - **Result:** ✅ Deployed - รอพี่โตทดสอบ
-
-- [x] **T021** ทดสอบ worker คำนวณรายงาน
-  - Test: Trigger `dailyReportJob` manual
-  - Expected: Insert ลง `daily_trip_reports` สำเร็จ
-  - **Result:** ⏭️ Skipped - ต้อง deploy worker ก่อน (manual step)
-
-- [x] **T022** ทดสอบ geocoding cache
-  - Test: Query `geocode_cache` table
-  - Expected: มี addresses cached > 1000 rows
-  - **Result:** ⏭️ Skipped - ต้อง run worker ก่อน
-
-- [x] **T023** ทดสอบ query speed
-  - Test: Query รายงาน 7 วัน ของ 1 รถ
-  - Expected: Response time < 100ms (จาก cache)
-  - **Result:** ⏭️ Skipped - ต้องมีข้อมูลใน cache ก่อน
-
-- [x] **T024** Build + Deploy
-  - Commands:
-    - `npm run build` (web app) ✅ Done
-    - `cd infrastructure/workers/report-processor && npm run build` ⏭️ Manual
-    - `docker-compose -f docker-compose.workers.yml up -d` ⏭️ Manual
-  - **Result:** ✅ Code committed - deployment guide ready
-
-**Checkpoint 6:** ✅ Phase 1-2 deployed, Phase 3-5 code ready for deployment
+- [ ] **T401** `backend-connector` — schema `vehicle_activity` — 1 แถว = 1 ช่วงเวลา
+      `device_id · date · seq · type · start · end · duration · distance · start/end latlng · address`
+      `type`: `trip` / `stop_engine_off` / `stop_engine_on` (จอดติดเครื่อง) / `no_data`
+      **UNIQUE(device_id, date, seq)** + index `(device_id, date)`
+- [ ] **T402** `dev-builder` — worker ดึง **trips + stops + ignition events** (ตอนนี้ดึงแค่ trips)
+      `services/traccar.ts` เพิ่ม `fetchStops` · `fetchIgnitionEvents`
+- [ ] **T403** `dev-builder` — timeline builder: เรียงตามเวลา → ใช้ ignition แยกว่าจอดนั้น
+      ติดเครื่องหรือดับเครื่อง → **ช่วงไม่มีข้อมูลใส่ `no_data` ไม่ปล่อยว่าง**
+      (นี่คือสิ่งที่ทำให้ครบ 24 ชม. จริง)
+- [ ] **T404** `dev-builder` — geocode ตอนเขียน ใช้ `geocode_cache` ที่มีอยู่
+      → ตอนอ่านไม่ต้อง geocode เลย (ตรงตามที่พี่โตคิด)
+- [ ] **T405** `dev-builder` — คำนวณ `idle_time`/`stopped_time` จริงจาก timeline
+      **ลบ dead code** `reportSummary.ts:89-94` ที่ string-match ภาษาไทย
+- [ ] **T406** `backend-connector` — API อ่าน `vehicle_activity`
+      (เบราว์เซอร์ต่อ Postgres ตรงไม่ได้ — จุดที่ `useReportCache` พลาด)
+- [ ] **T407** `ui-builder` — timeline UI 1 คัน/1 วัน — แถบ 24 ชม. + ตารางเรียงเวลา
+      สีมาตรฐานเดิม: วิ่ง `#22c55e` · จอดติด `#f59e0b` · จอดดับ `#94a3b8` · ไม่มีข้อมูล `#ef4444`
+- [ ] **T408** `dev-builder` — backfill 30 วัน + ยืนยันทุกวันครบ 24 ชม.
+- [ ] **T409** `dev-builder` — **ปิดช่องข้อมูลหายเงียบ ๆ** — `batchReportService` ใช้ `allSettled`
+      เก็บแต่อันสำเร็จ → รถที่โดน 429 ขึ้นว่า "ไม่มีเที่ยว" ทั้งที่วิ่ง · ต้องนับ rejected แล้วแจ้ง
+- [ ] **T410** `dev-builder` — ลบ `useReportCache.ts` (dead code ชี้ผิด DB) + stub
+      `reportCache.ts:202-205` ที่ return undefined ตลอด
+- [ ] **Checkpoint 4** — รายงาน 1 คัน 1 วัน ครบทุกสถานะ 24 ชม. ไม่มีช่องว่าง ·
+      จอดติดเครื่อง ≠ 0 · กองรถ 1 เดือน < 500ms · build + lint + vitest ผ่าน
 
 ---
 
-## 📊 Architecture Diagram
+## Phase 5 — โครงฐานข้อมูล + ลดค่าใช้จ่าย
+
+> ทำหลังสุด · ต้องรอ Phase 2 ลดข้อมูล และ Phase 1 มี backup ก่อน
+
+- [ ] **T501** `general-purpose` — partition `tc_positions` รายเดือน + **auto-create partition**
+      (`02-partitioning.sql` มีถึง ธ.ค. 2026 → ม.ค. 2027 insert fail ทั้งระบบ)
+      งานนี้ destructive (rename ตารางจริง) → Phase 1 ต้องเสร็จก่อน
+- [ ] **T502** `general-purpose` — รวม index 3 ไฟล์เป็น 1 · ลบตัวซ้ำ `position_deviceid_fixtime`
+      ที่ Traccar สร้างเองอยู่แล้ว
+- [ ] **T503** `general-purpose` — ลบ `docker-compose.scale.yml` (mount ไฟล์ไม่มีอยู่ 4 จุด
+      → รันไม่ได้ · อันตรายถ้ามีคนคิดว่าเป็นตัวสำรอง) + ลบ `init-timescale.sql`
+      (image ไม่ใช่ timescale → ใช้ไม่ได้ · partition ธรรมดาพอที่ขนาดนี้)
+- [ ] **T504** `general-purpose` — resize VM → **e2-standard-2** (spec เท่าเดิม) ประหยัด $27/เดือน
+      ต้อง stop VM ~2 นาที → ทำนอกเวลาทำการ
+- [ ] **T505** `general-purpose` — disk → **pd-balanced** ประหยัด $3.85/เดือน `[P]`
+- [ ] **T506** `general-purpose` — deploy monitoring ที่เขียนไว้แล้ว
+      (`monitoring/docker-compose.monitoring.yml` ไม่เคย deploy) + alert ดิสก์ > 80%
+- [ ] **T507** `general-purpose` — รวม Redis 2 ตัวเป็นตัวเดียว (คนละ container ตอนนี้)
+- [ ] **Checkpoint 5** — insert ข้ามเดือนได้ · VM ใหม่ระบบปกติ · Grafana เห็น metric ·
+      `gcloud billing` ยืนยัน machine type เปลี่ยนแล้ว
+
+---
+
+## ❓ จุดที่จะหยุดถาม (blocker จริงเท่านั้น)
+
+1. **T203 `saveOriginal`** — ถ้าตรวจไม่ชัดว่า DLT ต้องใช้ payload ดิบ จะไม่แตะแล้วถาม
+2. **T105 rotate token** — ต้องให้พี่โตออก token ใหม่ใน Cloudflare dashboard เอง
+3. **T504 resize VM** — ต้องนัดเวลา downtime ~2 นาที
+4. **JINKIN static IP $8/เดือน** — คนละ project ต้องให้พี่โตยืนยันว่าเลิกใช้แล้ว
+
+---
+
+## 🎯 เป้าคะแนน — ทำไมไม่ตั้ง 10/10 ทุกช่อง
+
+**แก้ตัวเลขที่ผมให้ผิดก่อน:** ช่อง "ความคุ้มค่า" ผมให้ 8/10 จากตัวเลข $35 ในเอกสาร
+ตรวจ gcloud จริงได้ **$97/เดือน** และเทียบรายได้:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│ User Request: รายงานรายวัน วันที่ 19/08/2569                    │
-└───────────────────────────┬─────────────────────────────────────┘
-                            │
-                            ▼
-                  ┌─────────────────────┐
-                  │ useReportCache Hook │
-                  └──────────┬──────────┘
-                             │
-              ┌──────────────┴───────────────┐
-              │                              │
-              ▼                              ▼
-    ┌─────────────────┐          ┌──────────────────────┐
-    │ Redis Cache     │ MISS     │ PostgreSQL           │
-    │ TTL: 7 days     │────────▶ │ daily_trip_reports   │
-    └─────────────────┘          └──────────┬───────────┘
-              │ HIT                          │ MISS
-              │                              │
-              ▼                              ▼
-       ┌─────────────┐              ┌──────────────────┐
-       │ Return JSON │              │ Traccar API      │
-       │ < 10ms      │              │ (fallback)       │
-       └─────────────┘              └──────────────────┘
-                                             │
-                                             ▼
-                                    ┌─────────────────┐
-                                    │ Calculate +     │
-                                    │ Cache result    │
-                                    └─────────────────┘
-
-═══════════════════════════════════════════════════════════════════
-
-Background Worker (runs every 10 minutes):
-
-┌────────────────────────────────────────────────────────────────┐
-│ Bull Queue Scheduler                                           │
-│ Cron: */10 * * * * (every 10 min)                             │
-└───────────────────────────┬────────────────────────────────────┘
-                            │
-                            ▼
-                  ┌─────────────────────┐
-                  │ dailyReportJob      │
-                  │ 1. Query Traccar    │
-                  │ 2. Calculate        │
-                  │ 3. Geocode          │
-                  │ 4. Upsert DB        │
-                  └──────────┬──────────┘
-                             │
-              ┌──────────────┴───────────────┐
-              │                              │
-              ▼                              ▼
-    ┌──────────────────┐          ┌──────────────────┐
-    │ geocode_cache    │          │ daily_trip_      │
-    │ (check first)    │          │ reports (upsert) │
-    └──────────────────┘          └──────────────────┘
-              │ MISS
-              │
-              ▼
-    ┌──────────────────┐
-    │ Longdo Map API   │
-    │ Geocode + cache  │
-    └──────────────────┘
+189 คัน × ฿35 = ฿6,615/เดือน ≈ $190
+infra $97 ÷ รายได้ $190 = 51% ของรายได้
 ```
+เอกสารเขียน 7.5% — นั่นคิดจาก 4,000 คัน ไม่ใช่ 189 คัน
+→ **ความคุ้มค่าที่ถูกคือ 5/10 ไม่ใช่ 8/10**
+
+ข่าวดี: VM ใช้ RAM 2.94/7.95 GB · CPU < 1% → **รับได้อีกหลายพันคันโดยไม่จ่ายเพิ่ม**
+ทางแก้อัตราส่วนนี้คือหารถเพิ่ม ไม่ใช่จ่าย infra เพิ่ม
+
+| ด้าน | ตอนนี้ | เป้า | ค่าใช้จ่าย | เหตุผลของเพดาน |
+|---|---|---|---|---|
+| ระบบรายงาน | 2 | **10** | ฟรี | Phase 4 — ของเขียนไว้ 70% แล้ว |
+| การเฝ้าระวัง | 2 | **9** | ฟรี | T506 — stack เขียนไว้แล้ว แค่ deploy |
+| ฐานข้อมูล | 4 | **9** | ฟรี | Phase 2+5 — partition + retention + filter.static |
+| ความปลอดภัย | 6 | **9** | ฟรี | Phase 1 + T601/T602 |
+| ความคุ้มค่า | 5 | **9** | **-$31** | T504/T505 → $97 → $66 = 35% ของรายได้ |
+| ติดตามรถสด | 7 | **9** | ฟรี | T204 + T603 |
+| ความทนทาน | 3 | **7** | +$2 | **จงใจกดไว้ — ดู below** |
+
+**รวม ~9/10 · จ่ายเพิ่มสุทธิ -$29/เดือน (ประหยัดขึ้น)**
+
+### ทำไมความทนทานไม่ดันถึง 10
+
+10/10 ต้องมี VM สำรอง + Postgres failover = **+~$100/เดือน**
+รายได้ $190 → infra จะกลายเป็น ~100% ของรายได้ · ที่ 189 คันไม่คุ้ม
+
+**เมื่อไหร่ควรดัน:** แตะ ~2,000 คัน (รายได้ ฿70,000 ≈ $2,000)
+ตอนนั้น $100 = 5% ของรายได้ → คุ้มทันที
+7/10 ที่ทำใน Phase 1 = backup ที่ restore ได้จริง + snapshot รายวัน
+กู้คืนได้ภายใน ~1-2 ชม. ซึ่งพอสำหรับ scale นี้
+
+### ช่องที่ 10/10 คุ้มจริง: ระบบรายงาน
+เพราะเป็นสิ่งที่ลูกค้าจ่ายเงินซื้อ และของทำไว้แล้ว 70% ต้นทุนส่วนเพิ่มต่ำมาก
 
 ---
 
-## 🔢 Performance Estimates
+## Phase 6 — ปิดเพดานที่เหลือ
 
-### ก่อนแก้ (ตอนนี้):
-- Query 7 วัน, 1 รถ: **8-15 วิ** (Traccar API + frontend geocoding)
-- Query 7 วัน, 100 รถ: **timeout** (> 60 วิ)
+> 8 task ที่ทำให้ไปถึง 9-10 · ทั้งหมดฟรี
 
-### หลังแก้ (Phase 5):
-- Query 7 วัน, 1 รถ: **< 50ms** (Redis cache)
-- Query 7 วัน, 100 รถ: **< 500ms** (Redis cache)
-- Cold query (cache miss): **< 2 วิ** (PostgreSQL materialized view)
-
----
-
-## 💰 Infrastructure Cost
-
-| Resource | Config | Monthly Cost |
-|----------|--------|--------------|
-| Worker VM | e2-micro (GCP) | ~$7 |
-| Redis | 512MB Memorystore | ~$25 |
-| PostgreSQL storage | +50GB (reports table) | ~$5 |
-| Longdo API | 10k geocoding/day | ฿1,500 |
-| **Total** | | **~฿1,200 (~$35)** |
-
-Revenue: 20,000 vehicles × ฿35 = ฿700,000/month → cost 0.17% ✅
-
----
-
-## ⚠️ Risk Assessment
-
-- **Medium risk:** Worker crash → รายงานไม่อัพเดท (mitigation: health check + auto-restart)
-- **Low risk:** Redis down → fallback PostgreSQL (slower แต่ยังใช้ได้)
-- **Low risk:** Geocoding quota limit → fallback Nominatim (ฟรี แต่ช้ากว่า)
+- [ ] **T601** `general-purpose` — ถอน `database.password` ออกจาก `traccar.xml:15`
+      → Docker secret / env var (ตอนนี้ plaintext ใน git)
+- [ ] **T602** `general-purpose` — จำกัด nginx ให้รับแต่ Cloudflare IP
+      (ตอนนี้ origin เข้าถึงตรงได้ — bypass Cloudflare ได้ทั้งหมด)
+- [ ] **T603** `dev-builder` — WebSocket reconnect indicator ใน UI
+      ตอนนี้ WS ตายเงียบ → ผู้ใช้เห็นข้อมูลเก่าโดยไม่รู้ตัว `[P]`
+- [ ] **T604** `general-purpose` — Grafana alert 4 ตัวที่สำคัญ:
+      ดิสก์ > 80% · DLT ส่ง fail ติดกัน 3 รอบ · ไม่มี position เข้า > 10 นาที ·
+      Postgres connection > 80% `[P]`
+- [ ] **T605** `dev-builder` — PDPA: ปิด log พิกัดใน production build
+      (พิกัดคนขับ = ข้อมูลส่วนบุคคลตาม PDPA · ตอนนี้ log ลง console)
+- [ ] **T606** `general-purpose` — เขียน runbook สั้น ๆ: VM ตายทำอะไร · DB ตายทำอะไร ·
+      DLT ส่งไม่ติดเช็คอะไร (ใส่ commit `9f78faf` + memory ที่บันทึกไว้)
+- [ ] **T607** `test-runner` — test ครอบ timeline builder: จอดค้างคืนข้ามวัน ·
+      อุปกรณ์ offline กลางวัน · ignition ไม่มี (budget tracker) · trips/stops ทับกัน
+- [ ] **T608** `general-purpose` — ลบเอกสารที่ตัวเลขผิดทิ้ง หรือใส่หมายเหตุ:
+      `ARCHITECTURE-REVIEW.md` ($35, e2, HDD, egress 11.8GB — ผิดทุกตัว) ·
+      `DEPLOYMENT-STATUS.md` · `REPORTS-IMPLEMENTATION-SUMMARY.md` ("100x faster"
+      ที่วัดจากโค้ดที่ไม่เคยรัน)
+      **เหตุผล:** เอกสารที่ผิดทำให้ผมวิเคราะห์ผิดรอบนี้ — ถ้าไม่แก้จะหลอกรอบหน้าอีก
+- [ ] **Checkpoint 6** — `git grep` ไม่เจอ password/token · curl ตรง origin ถูกปฏิเสธ ·
+      Grafana ยิง alert ได้จริง (ทดสอบ 1 ตัว) · vitest ผ่าน · เอกสารตัวเลขตรงกับของจริง
 
 ---
 
-## 📝 Notes
+## 📌 หมายเหตุสำคัญ
 
-- Phase 1-2 (Fix Metrics) ต้องทำเสร็จก่อน ไม่งั้นผู้ใช้เห็นเลขผิดต่อ
-- Phase 3-5 (Caching) ทำทีหลังได้ แต่จะช่วย performance มาก
-- Worker ควร run บน VM แยก (ไม่ใช่ Traccar VM) เพื่อไม่กระทบ Traccar performance
-- Geocoding cache จะเติบโตเรื่อยๆ → ควรมี retention policy (เก็บ 1 ปี)
+- **`daily_trip_reports` เก็บไว้** — เป็น aggregate รายวันที่ยังใช้ได้
+  `vehicle_activity` เป็นตารางใหม่ระดับ event ไม่ทับกัน
+- **worker + Longdo + geocode_cache ที่ทำไว้ ใช้ต่อทั้งหมด** — งาน 70% เสร็จแล้ว
+  Phase 4 คือ "ต่อสาย + เพิ่มสถานะ" ไม่ใช่เขียนใหม่
+- **ห้ามแตะ `traccar-other-6.14.5/`** — ตั้งค่าผ่าน XML เท่านั้น
+- **สีสถานะห้ามเปลี่ยน** — ผู้ใช้จำไปแล้ว
+- **คำว่า cache ในโค้ดเดิมเรียกผิด** — สิ่งที่ควรเป็นคือ write-time materialization
+  (คำนวณตอนเขียน เก็บถาวร) ไม่ใช่ cache ที่มี TTL + fallback
+  การเรียกผิดทำให้ออกแบบผิดตาม: มี fallback ไป Traccar ที่ไม่จำเป็น และมี 2 เส้นทางต้องดูแล
+  `vehicle_activity` เป็นตารางถาวร ไม่มี TTL ไม่มี fallback
 
 ---
 
-**Estimated Total Time:** ~6-8 hours (Phase 1-2: 1 hr, Phase 3-5: 4-5 hrs, Testing: 1 hr)
+## 📊 สรุปตัวเลขที่ตรวจแล้ว (อ้างอิงเวลาทำงาน)
 
-**Ready for review.** พิมพ์ **"Go"** เพื่อเริ่มทำงานทั้งแผน
+| เรื่อง | ตัวเลขจริง | เอกสารเดิมเขียน |
+|---|---|---|
+| VM | n2-standard-2 | e2-standard-2/4 (ผิด) |
+| Disk | 50GB pd-ssd | ~50GB HDD (ผิด) |
+| ค่าใช้จ่าย | **$97/เดือน** | $35 (ผิด 3 เท่า) |
+| Egress | 3.88 GiB/30 วัน | 9.85GB (counter สะสม ไม่ใช่ต่อเดือน) |
+| Row size | ~679 byte | 200 byte (ผิด 3.4 เท่า) |
+| Positions | 2.8-3.3M | — |
+| Devices | 189 | 183/215 (ไม่ตรงกัน) |
+| รายงานกองรถ 1 เดือน | อ่าน 47M row | — |
+| ถ้าใช้ตารางสรุป | 189 × 30 = 5,670 row | ต่างกัน ~8,000 เท่า |
+| `report.fastThreshold` | 86400s (1 วัน) | — |
+| Traccar index บน tc_positions | มีแค่ 1 ตัว | — |
+| Cloudflare Worker | ~8,640 req/วัน จาก 100k free | ไม่เกิน free tier |
+

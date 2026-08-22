@@ -8,7 +8,7 @@
  * Usage:
  *   TRACCAR_URL=https://traccar.gps.bellerox.com \
  *   TRACCAR_EMAIL=admin@bellerox.com \
- *   TRACCAR_PASSWORD=AdminGPS123 \
+ *   TRACCAR_PASSWORD='<admin-password>' \
  *   node load-test-websocket-users.js
  */
 
@@ -18,7 +18,11 @@ const https = require('https');
 // ─── Configuration ────────────────────────────────────────────────────
 const TRACCAR_URL = process.env.TRACCAR_URL || 'http://localhost:8082';
 const TRACCAR_EMAIL = process.env.TRACCAR_EMAIL || 'admin@bellerox.com';
-const TRACCAR_PASSWORD = process.env.TRACCAR_PASSWORD || 'AdminGPS123';
+const TRACCAR_PASSWORD = process.env.TRACCAR_PASSWORD;
+if (!TRACCAR_PASSWORD) {
+  console.error('TRACCAR_PASSWORD is required — export it, do not hardcode.');
+  process.exit(1);
+}
 const USER_COUNT = 10;
 const TEST_DURATION_MIN = 5;
 

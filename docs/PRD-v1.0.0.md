@@ -187,10 +187,11 @@ Target launch: **ภายใน 60 วันหลัง PRD นี้ได้
 - [ ] **Deploy Docker stack** `docker-compose up -d`
 - [ ] **สร้าง admin account**
   ```bash
+  export ADMIN_PASS='<strong-password>'
   bash infrastructure/scripts/create-admin.sh
   ```
   - Email: `admin@bellerox.com`
-  - Password: `AdminGPS123=!`
+  - Password: ตั้งผ่าน `ADMIN_PASS` — ห้าม hardcode ในไฟล์ที่อยู่ใน git
 - [ ] **ผูก custom domain** `gps.bellerox.com` ใน Cloudflare Pages dashboard
 
 #### Web App

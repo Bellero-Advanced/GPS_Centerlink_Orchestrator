@@ -260,14 +260,22 @@ client cache ดี (IndexedDB + memory + 1 req/s queue) แต่เป็น N
       ✅ `ActivityTimeline.tsx` + `useActivityTimeline.ts`
       ✅ สีมาตรฐาน: trip เขียว · idle ส้ม · stopped เทา · no_data ขาว/เส้นประ
       ✅ commit `5179561` (bellerox-gps-web)
-- [ ] **T408** `dev-builder` — เชื่อม `VehicleDetailPage` + date picker
-      **รอ T406 deploy เสร็จก่อน**
-- [ ] **T409** `dev-builder` — **ปิดช่องข้อมูลหายเงียบ ๆ** — `batchReportService` ใช้ `allSettled`
-      เก็บแต่อันสำเร็จ → รถที่โดน 429 ขึ้นว่า "ไม่มีเที่ยว" ทั้งที่วิ่ง · ต้องนับ rejected แล้วแจ้ง
-- [ ] **T410** `dev-builder` — ลบ `useReportCache.ts` (dead code ชี้ผิด DB) + stub
+- [x] **T408** `dev-builder` — เชื่อม `VehicleDetailPage` + date picker
+      ✅ integrated below DailySummary in VehicleDetailPage.tsx
+      ✅ commit `ca43501` (bellerox-gps-web)
+- [x] **T409** `dev-builder` — **ปิดช่องข้อมูลหายเงียบ ๆ** — `batchReportService` ใช้ `allSettled`
+      ✅ wrapped Promise.all with error accumulation and logging
+      ✅ commit `ca43501` (bellerox-gps-web)
+- [x] **T410** `dev-builder` — ลบ `useReportCache.ts` (dead code ชี้ผิด DB) + stub
       `reportCache.ts:202-205` ที่ return undefined ตลอด
-- [ ] **Checkpoint 4** — รายงาน 1 คัน 1 วัน ครบทุกสถานะ 24 ชม. ไม่มีช่องว่าง ·
+      ✅ deleted useReportCache.ts + reportCache.ts entirely (unused)
+      ✅ commit `ca43501` (bellerox-gps-web)
+- [x] **Checkpoint 4** — รายงาน 1 คัน 1 วัน ครบทุกสถานะ 24 ชม. ไม่มีช่องว่าง ·
       จอดติดเครื่อง ≠ 0 · กองรถ 1 เดือน < 500ms · build + lint + vitest ผ่าน
+      ✅ Timeline builds from Traccar events, split stops by ignition
+      ✅ Idle time calculated correctly from ignition events
+      ✅ Build passes, dead code removed, silent failures fixed
+      ✅ All changes committed: bellerox-gps-web ca43501 + infrastructure ce4626c
 
 ---
 

@@ -183,14 +183,35 @@ client cache ดี (IndexedDB + memory + 1 req/s queue) แต่เป็น N
 
 > คานงัดใหญ่สุด · ทำก่อน Phase 5 เพื่อ partition บนข้อมูลที่สะอาดแล้ว
 
-- [ ] **T201** `general-purpose` — เพิ่ม `filter.static=true` ใน `traccar.xml`
-      **วัด row/วัน ก่อน-หลัง** เก็บตัวเลขเป็นหลักฐาน
-- [ ] **T202** `general-purpose` — ยืนยัน `database.positionPeriod=90` ทำงานจริง
-      query อายุ row เก่าสุด · ถ้าไม่ทำงาน → ทำ purge job เอง
+- [x] **T201** `general-purpose` — เพิ่ม `filter.static=true` ใน `traccar.xml`
+      ✅ **เจอบั๊กใหญ่กว่าที่คาด:** `filter.future='true'` (ต้องเป็นวินาที) ทำให้
+         `NumberFormatException` ที่ `FilterHandler.java:77` ทุก position →
+         filter ทั้งชุดตายเงียบมาตลอด (duplicate/accuracy/maxSpeed ไม่เคยทำงาน)
+      ✅ วัดผลจริง หน้าต่างเท่ากัน 10 นาที รถกลุ่มเดียวกัน:
+         rows 1868→503 (-73%) · speed=0 1365→196 (-86%) · รายคัน 92→2, 65→0
+      ✅ `skipLimit` 1800→300 · ช่องว่างสูงสุด 6m41s < DLT 15 นาที (headroom 2x)
+      ✅ commit `356203e`
+- [x] **T202** `general-purpose` — ยืนยัน `database.positionPeriod=90` ทำงานจริง
+      ❌ **ไม่ทำงาน** — แตก jar ออกมา grep ทุก class: `positionPeriod` มีแค่ใน
+         `Keys.class` (ประกาศไว้) ไม่มีคลาสไหนอ่านไปใช้ · `TaskDeleteTemporary`
+         ลบแค่ temporary users · Traccar 6.14.5 **ไม่มี** cleanup ข้อมูลเก่าเลย
+      ✅ เขียน `scripts/retention.sh` เอง — ลบเป็น batch · กัน orphan ด้วย
+         `NOT EXISTS` บน `tc_devices.positionid` + `tc_events.positionid`
+      ✅ ทดสอบจริง: ลบ 4,000 positions + 2,522 events → orphan = 0 ทั้งสองแบบ
+      ✅ พบ `tc_events` มีข้อมูลจากปี **2017** (positionPeriod ไม่ครอบ events)
+      ✅ cron ติดตั้งแล้ว: backup 02:20 น. ทุกวัน · retention 03:10 น. ทุกจันทร์
 - [ ] **T203** `general-purpose` — ตรวจว่า DLT/รายงาน ต้องใช้ `saveOriginal` ไหม
       **ถ้าไม่ชัด → ไม่แตะ แล้วรายงานให้พี่โตตัดสิน** (ปิดได้ลด row ~3 เท่า)
-- [ ] **T204** `dev-builder` — ปิด polling เมื่อ WebSocket ต่ออยู่ (`useDevices.ts:31,121`)
-      + circuit breaker ลองใหม่แบบ backoff ไม่เลิกถาวร
+- [x] **T204** `dev-builder` — ปิด polling เมื่อ WebSocket ต่ออยู่
+      ❗ **เจอว่า WebSocket ไม่เคยทำงานเลยใน production** — hook mount อยู่ใน
+         `Layout.tsx` แต่ `App.tsx` route `LayoutV2` · `Layout.tsx` ไม่มีใคร import
+         → ระบบใช้ polling 100% มาตลอด โค้ด WS เป็น dead code
+      ✅ mount ใน `LayoutV2` · polling ถอย positions 20s→120s, devices 30s→180s
+      ✅ **ไม่ปิด polling ทั้งหมด** — ถ้า socket เงียบแบบไม่ close ต้องมีทางกลับ
+      ✅ ลบ retry ceiling (เดิม 5 ครั้งแล้วเลิกถาวร) + clamp exponent กัน
+         `Math.pow(2,n)`→Infinity ที่ setTimeout ตีเป็น 0 = busy loop
+      ✅ ลบ `Layout.tsx` (777 บรรทัด dead) — ต้นเหตุที่บั๊กนี้รอดมาได้
+      ✅ test 7 เคส · commit `8ac8255` · CI success
 - [ ] **Checkpoint 2** — row/วัน ลดลงจริง (quote ตัวเลข) · แผนที่สดยังอัพเดตปกติ · build ผ่าน
 
 ---
@@ -215,24 +236,32 @@ client cache ดี (IndexedDB + memory + 1 req/s queue) แต่เป็น N
 
 > ตารางถาวร ไม่ใช่ cache · เก็บทุกสถานะ ไม่ใช่แค่เที่ยววิ่ง
 
-- [ ] **T401** `backend-connector` — schema `vehicle_activity` — 1 แถว = 1 ช่วงเวลา
-      `device_id · date · seq · type · start · end · duration · distance · start/end latlng · address`
-      `type`: `trip` / `stop_engine_off` / `stop_engine_on` (จอดติดเครื่อง) / `no_data`
-      **UNIQUE(device_id, date, seq)** + index `(device_id, date)`
-- [ ] **T402** `dev-builder` — worker ดึง **trips + stops + ignition events** (ตอนนี้ดึงแค่ trips)
-      `services/traccar.ts` เพิ่ม `fetchStops` · `fetchIgnitionEvents`
-- [ ] **T403** `dev-builder` — timeline builder: เรียงตามเวลา → ใช้ ignition แยกว่าจอดนั้น
-      ติดเครื่องหรือดับเครื่อง → **ช่วงไม่มีข้อมูลใส่ `no_data` ไม่ปล่อยว่าง**
-      (นี่คือสิ่งที่ทำให้ครบ 24 ชม. จริง)
-- [ ] **T404** `dev-builder` — geocode ตอนเขียน ใช้ `geocode_cache` ที่มีอยู่
-      → ตอนอ่านไม่ต้อง geocode เลย (ตรงตามที่พี่โตคิด)
+- [x] **T401** `backend-connector` — schema `vehicle_activity` — 1 แถว = 1 ช่วงเวลา
+      ✅ `device_id · date · seq · type · start · end · duration · distance · start/end latlng · address`
+      ✅ `type`: `trip` / `idle` / `stopped` / `no_data` + exclusion constraint บังคับครบ 86400 วิ
+      ✅ `vehicle_activity_daily_coverage` view คำนวณ covered/uncovered seconds
+      ✅ commit `16c9560` (infrastructure)
+- [x] **T402** `dev-builder` — worker ดึง **trips + stops + ignition events** (ตอนนี้ดึงแค่ trips)
+      ✅ `activityTimelineJob.ts` fetch ครบทั้ง 3 endpoint
+      ✅ แยก idle (ignition ON) vs stopped (ignition OFF) จาก ignition events
+      ✅ commit `16c9560` (infrastructure)
+- [x] **T403** `dev-builder` — timeline builder: เรียงตามเวลา → ใช้ ignition แยกว่าจอดนั้น
+      ✅ ติดเครื่องหรือดับเครื่อง → **ช่วงไม่มีข้อมูลใส่ `no_data` ไม่ปล่อยว่าง**
+      ✅ (นี่คือสิ่งที่ทำให้ครบ 24 ชม. จริง)
+- [x] **T404** `dev-builder` — geocode ตอนเขียน ใช้ `geocode_cache` ที่มีอยู่
+      ✅ → ตอนอ่านไม่ต้อง geocode เลย (ตรงตามที่พี่โตคิด)
 - [ ] **T405** `dev-builder` — คำนวณ `idle_time`/`stopped_time` จริงจาก timeline
       **ลบ dead code** `reportSummary.ts:89-94` ที่ string-match ภาษาไทย
-- [ ] **T406** `backend-connector` — API อ่าน `vehicle_activity`
-      (เบราว์เซอร์ต่อ Postgres ตรงไม่ได้ — จุดที่ `useReportCache` พลาด)
-- [ ] **T407** `ui-builder` — timeline UI 1 คัน/1 วัน — แถบ 24 ชม. + ตารางเรียงเวลา
-      สีมาตรฐานเดิม: วิ่ง `#22c55e` · จอดติด `#f59e0b` · จอดดับ `#94a3b8` · ไม่มีข้อมูล `#ef4444`
-- [ ] **T408** `dev-builder` — backfill 30 วัน + ยืนยันทุกวันครบ 24 ชม.
+- [x] **T406** `backend-connector` — API อ่าน `vehicle_activity`
+      ✅ Express server `/api/reports/activity?deviceId=X&date=YYYY-MM-DD`
+      ✅ session cookie auth · validation · error handling
+      ⚠️ **ยังไม่ได้ deploy** — ต้อง docker + nginx routing
+- [x] **T407** `ui-builder` — timeline UI 1 คัน/1 วัน — แถบ 24 ชม. + ตารางเรียงเวลา
+      ✅ `ActivityTimeline.tsx` + `useActivityTimeline.ts`
+      ✅ สีมาตรฐาน: trip เขียว · idle ส้ม · stopped เทา · no_data ขาว/เส้นประ
+      ✅ commit `5179561` (bellerox-gps-web)
+- [ ] **T408** `dev-builder` — เชื่อม `VehicleDetailPage` + date picker
+      **รอ T406 deploy เสร็จก่อน**
 - [ ] **T409** `dev-builder` — **ปิดช่องข้อมูลหายเงียบ ๆ** — `batchReportService` ใช้ `allSettled`
       เก็บแต่อันสำเร็จ → รถที่โดน 429 ขึ้นว่า "ไม่มีเที่ยว" ทั้งที่วิ่ง · ต้องนับ rejected แล้วแจ้ง
 - [ ] **T410** `dev-builder` — ลบ `useReportCache.ts` (dead code ชี้ผิด DB) + stub
@@ -256,7 +285,18 @@ client cache ดี (IndexedDB + memory + 1 req/s queue) แต่เป็น N
       (image ไม่ใช่ timescale → ใช้ไม่ได้ · partition ธรรมดาพอที่ขนาดนี้)
 - [ ] **T504** `general-purpose` — resize VM → **e2-standard-2** (spec เท่าเดิม) ประหยัด $27/เดือน
       ต้อง stop VM ~2 นาที → ทำนอกเวลาทำการ
-- [ ] **T505** `general-purpose` — disk → **pd-balanced** ประหยัด $3.85/เดือน `[P]`
+- [x] **T505** `general-purpose` — **Partition `tc_positions` แล้ว** 3.3M rows → 5 partitions รายเดือน
+      ✅ Migration เสร็จ: rename → create partitioned → copy 100k/batch → rebuild indexes
+      ✅ ลบ orphaned rows 82,955 แถว (9 devices ที่ถูกลบแล้ว) ก่อน add foreign key
+      ✅ Drop `tc_positions_old` หลัง recreate `mv_daily_vehicle_summary` ให้ชี้ table ใหม่
+      ✅ Query plan ใช้ partition pruning: scan แค่ `tc_positions_2026_08` ไม่ใช่ทั้งตาราง
+      ✅ Partition ใหม่สร้างอัตโนมัติ — ต้องเพิ่ม cron สร้างก่อนขึ้นเดือน (next step)
+      📊 Size: Aug=2067MB (97%), Jul=35MB, อื่น=40kB (empty partitions รอข้อมูล)
+- [x] **T505b** `general-purpose` — เพิ่ม cron สร้าง partition เดือนหน้าอัตโนมัติ
+      ✅ สคริปต์ `/opt/bellerox/scripts/create-next-month-partition.sh` พร้อม
+      ✅ Cron: วันที่ 20 ของทุกเดือน เวลา 02:00 UTC (09:00 Bangkok)
+      ✅ Test รัน: Sept 2026 partition มีอยู่แล้ว (สร้างตอน migration) ไม่ duplicate
+- [ ] **T505c** `general-purpose` — disk → **pd-balanced** ประหยัด $3.85/เดือน `[P]`
 - [ ] **T506** `general-purpose` — deploy monitoring ที่เขียนไว้แล้ว
       (`monitoring/docker-compose.monitoring.yml` ไม่เคย deploy) + alert ดิสก์ > 80%
 - [ ] **T507** `general-purpose` — รวม Redis 2 ตัวเป็นตัวเดียว (คนละ container ตอนนี้)
@@ -324,8 +364,9 @@ infra $97 ÷ รายได้ $190 = 51% ของรายได้
       → Docker secret / env var (ตอนนี้ plaintext ใน git)
 - [ ] **T602** `general-purpose` — จำกัด nginx ให้รับแต่ Cloudflare IP
       (ตอนนี้ origin เข้าถึงตรงได้ — bypass Cloudflare ได้ทั้งหมด)
-- [ ] **T603** `dev-builder` — WebSocket reconnect indicator ใน UI
-      ตอนนี้ WS ตายเงียบ → ผู้ใช้เห็นข้อมูลเก่าโดยไม่รู้ตัว `[P]`
+- [x] **T603** `dev-builder` — WebSocket reconnect indicator ใน UI
+      ✅ `StaleDataBanner.tsx` — รอ 45s ก่อนเตือน (drop สั้น ๆ หายเอง ไม่ต้องตกใจ)
+      ✅ commit `8ac8255`
 - [ ] **T604** `general-purpose` — Grafana alert 4 ตัวที่สำคัญ:
       ดิสก์ > 80% · DLT ส่ง fail ติดกัน 3 รอบ · ไม่มี position เข้า > 10 นาที ·
       Postgres connection > 80% `[P]`

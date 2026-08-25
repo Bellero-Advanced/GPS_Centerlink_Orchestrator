@@ -82,3 +82,22 @@ LEARNING: recovered last-known positions must be DISPLAY-ONLY — GPS_STALE_MS=5
   CHECK_OK: live bundle verified — getPositionsByIds with chunked `id=` query present in index-hv7uJ11k.js
   CHECK_OK: live bundle verified — 'ไม่มีพิกัดล่าสุด' fallback string present in LiveMapPage-DlPQ1xog.js
   NOTE: staged only the 3 source files — 7 untracked helper scripts/docs contain plaintext passwords, left uncommitted
+
+2026-08-25 12:35 SHIP dlt-cache-gap + partition-auto-index
+  T001-T003 DLT sends merged position set (cache + DB fallback)
+  CHECK_OK: production measurement — 42 devices dltEnabled=true, /api/positions returned
+    31-32 rows total of which only 8 were dltEnabled (6 consecutive polls, union = 8)
+  CHECK_OK: getPositionsByIds recovered 42/42 in 0.197s; 15 pass the 15-min freshness gate
+  CHECK_OK: useDevices.ts diff is comments + 1 query key only → displayStatus provably untouched
+  T004-T008 skip breakdown (stale/future/badTimestamp/noPosition) + UI column + panel
+  CHECK_OK: vitest 3/3 — legacy log entry without `skipped` renders '—' not 0;
+    ages 3.0m/725.2m/3019.2m format as "3 นาที"/"12.1 ชม."/"2 วัน"
+  T009-T012 partition script into git + auto (id) index
+  CHECK_OK: reproduced the bug — hand-created tc_positions_2026_10 got 3 indexes, no _id_idx
+  CHECK_OK: script backfilled it → 4 indexes, all_valid=t on all 6 partitions
+  CHECK_OK: re-run reported "All partitions already have their (id) index" (idempotent)
+  CHECK_OK: GPS wrote position at 05:30:31 during the run; load 0.10; /api/devices 0.33s
+  T013 CHECK_OK: npm run build exit 0 · npm run lint exit 0 (43 warnings, limit 60, none mine)
+  T014 commits: web cd6b21c · infra b655891
+  NOTE: 25 of 42 have fixes older than 24h — SIM/hardware, not fixable in code
+  NOTE: 9 untracked helper files in bellerox-gps-web still hold plaintext passwords, left out

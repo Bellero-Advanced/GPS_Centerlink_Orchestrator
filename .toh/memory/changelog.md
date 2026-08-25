@@ -752,3 +752,23 @@ bellerox-gps-web/package.json
 
 ---
 *Auto-updated by agents after each task*
+
+## 2026-08-25 — แก้เซิร์ฟช้า 11 วินาที + error 1016
+
+### ปัญหา 1: error 1016 (เว็บล่ม HTTP 530)
+- **อาการ:** gpsthailand.centerlink.co.th ตอบ 530 ทุก path (favicon, /app/map, /)
+- **ต้นตอ:** worker `centerlink-html-injector` proxy ไป `centerlink-gps.pages.dev`
+  ซึ่ง **ไม่มี DNS record** (project จริงชื่อ `bellerox-gps`) → CF error 1016 = origin DNS failure
+  ค่านี้ค้างผิดมาก่อนหน้าแล้ว แต่เพิ่งโผล่ตอน deploy worker ใหม่
+- **แก้:** `PAGES_ORIGIN` → `https://bellerox-gps.pages.dev` (ยืนยันด้วย `wrangler pages project list`)
+- **ผล:** ทุก path กลับมา 200 · tenant OG injection ยังทำงาน ("GPS Thailand GPS")
+
+### ปัญหา 2: Traccar API ช้า 11 วินาที
+- **อาการ:** หน้าเว็บเร็ว (0.16s) แต่ API ทุก endpoint 11s แม้ `/api/server`
+- **ต้นตอ:** `tc_positions` เป็น partitioned table แต่ **ไม่มี index บน `id`** เลย
+  (partition ทำ PK index ที่ inherit มาหาย) → `WHERE id=$1` = Parallel Seq Scan
+  ทุก partition 3.36M แถว → Postgres 389% CPU, load 16, Traccar นั่งรอ DB (CPU 0.4%)
+- **แก้:** `CREATE INDEX CONCURRENTLY <partition>_id_idx ON <partition> (id)` ครบ 5 partition
+  + เพิ่มลง `infrastructure/postgres/indexes.sql` พร้อม DO block loop สำหรับ partition ใหม่
+- **ผล:** query 8-11s → **0.309ms** · Postgres CPU 389% → 1.05% · load 16 → 0.33
+  · `/api/devices` 11.0s → 0.24s · fallback batch 40 ids → 0.21s

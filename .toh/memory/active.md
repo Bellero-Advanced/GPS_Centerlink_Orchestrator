@@ -1,10 +1,43 @@
 ---
-updated: 2026-08-20
+updated: 2026-08-25
 ---
 
 # Active Work
 
-## ✅ Completed: Reports Fix + Caching Infrastructure (All Phases)
+## ✅ Just Completed: Vehicle Card แสดงพิกัด+เวลาล่าสุดเสมอ (2026-08-25)
+
+**อาการ:** Vehicle Card บางคันใน Live Map ไม่ขึ้นวันเวลาที่ GPS ส่งล่าสุด และไม่ขึ้นพิกัดค้างไว้ตอนจอดดับเครื่อง
+
+**ต้นตอ (พิสูจน์จาก production API):** `GET /api/positions` คืนแค่ **22 จาก 214 คัน**
+เพราะอ่านจาก in-memory cache ของ Traccar → คันที่หาย 77 คันเป็น `status='online'` ที่ `lastUpdate` สดใหม่
+เมื่อไม่มี position → การ์ดซ่อนแถวที่อยู่ (มี `&&` guard) และเวลาเป็น 'ไม่มีข้อมูล'
+
+**แก้ 3 จุด:**
+- `services/traccarService.ts` — `getPositionsByIds()` ดึงจาก DB ด้วย `positionId` (chunk 40/request)
+- `hooks/useDevices.ts` — `useFallbackPositions()` เติมช่องว่าง, cache ชนะเสมอ
+- `components/map/FloatingVehiclePanel.tsx` — แถวที่อยู่+เวลาแสดงตลอด, fallback เป็น lat/lng ดิบ, กัน Invalid Date
+
+**ผล:** กู้คืนได้ 121/121 ตำแหน่งที่หาย · build ผ่าน 23.16s · lint 0 issue ในไฟล์ที่แก้
+**Deploy แล้ว ✅** — commit `b6db3fb` · CI run 32797898608 success · ยืนยันโค้ดอยู่บน live bundle จริง
+(https://gpsthailand.centerlink.co.th)
+
+⚠️ มี 7 ไฟล์ untracked ในโฟลเดอร์ bellerox-gps-web ที่มีรหัสผ่านเปลือย (test-login.sh, test-superadmin.sh,
+FIX-GPS-THAILAND-USER.md ฯลฯ) — **ยังไม่ commit ตั้งใจ** ควรลบหรือใส่ .gitignore
+
+---
+
+## 🎯 Next Steps
+1. เปิด https://gpsthailand.centerlink.co.th กด Cmd+Shift+R ดูว่าการ์ดขึ้นพิกัด+เวลาครบทุกคัน
+2. ลบ/gitignore ไฟล์ที่มีรหัสผ่าน 7 ไฟล์
+3. ต่อ: `.toh/plan.md` ยังมี 63 task ค้าง (แผน cost/pipeline/reports 22 ส.ค.)
+
+---
+
+## 📌 ค้างจากรอบก่อน (2026-08-20)
+
+Reports caching infrastructure — Phase 1-2 deployed (`263f694`), Phase 3-5 เขียนโค้ดแล้วยังไม่ deploy
+(worker + `schema-reports.sql` + `docker-compose.workers.yml`) — ต้องรัน migration + ขอ Longdo API key ก่อน
+
 
 **Date:** 2026-08-20
 

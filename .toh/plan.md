@@ -1,158 +1,119 @@
-# Plan: แก้การ์ดรถขัดแย้งกันเอง — สถานะ/ความเร็ว/เวลา
+# Plan: พิกัดต้องไม่หาย — แก้ position id ซ้ำข้าม partition
 
 Status: completed 2026-08-25
-Created: 2026-08-25 by /toh-plan
-Supersedes: plan-2026-08-25-DLT-partition-DONE.md (เสร็จครบ 19/19 แล้ว)
+Created: 2026-08-25 by /toh
+Supersedes: plan-2026-08-25-vehicle-card-status-DONE.md (เสร็จ 7/7 · commit b50c6e8)
 
 ## Goal
 
-พี่โตเห็นการ์ดรถที่**ขัดแย้งกันเองในใบเดียว**: แถบแดง `จอดดับเครื่อง` แต่โชว์ `44 km/h`
-และเวลา `23/08/2569` ทั้งที่วันนี้ 25 ส.ค. — สามอาการนี้ **ไม่ใช่ 3 บั๊ก** แต่เป็นโซ่เดียวกัน
-ที่เริ่มจากจุดเดียว: **รถที่ไม่มีข้อมูลสดเลย ถูกตัดสินว่า "ยังสด"**
+พี่โตชี้ว่าการ์ดบอก **"ไม่มีพิกัดล่าสุด"** ทั้งที่เวลาอัปเดตคือ 25/08 วันนี้ และตั้งกฎชัด:
 
-### พิสูจน์แล้วด้วยการ replay logic จริง (ไม่ใช่เดา)
+> "fix time ที่ส่งมาล่าสุดทุกครั้ง มันก็คู่กับพิกัด ดังนั้นมันต้องโชว์พิกัดตลอด ไม่มีหาย
+> ต่อให้ออฟไลน์ หรือจอดดับเครื่องก็ต้องโชว์พิกัดล่าสุด"
 
-รัน `useDevices.ts` ทั้งบล็อกกับ device ที่ Traccar cache ไม่คืน (`livePos = undefined`)
-แต่แถวใน DB บอก `status='online'` — ได้ผลตรงกับภาพที่พี่โตเห็นเป๊ะ:
+ถูกต้องทุกคำ — GPS ส่ง fix time มาพร้อมพิกัดเสมอ ถ้าเวลามีแต่พิกัดหาย นั่นคือบั๊กฝั่งเรา
+
+### ต้นตอ — `position id` ซ้ำข้าม partition (พิสูจน์แล้ว ไม่ใช่ทฤษฎี)
 
 ```
-livePos present : false
-isGpsStale      : false   ← ไม่มีข้อมูลสดเลย แต่ตัดสินว่า "สด"
-isOnline        : true
-hook speedKmh   : 0
-displayStatus   : stopped  (แถบแดง จอดดับเครื่อง)
-panel prints    : 44 km/h  ← จาก DB fallback ข้าม speedKmh ไปเลย
-panel time      : 2026-08-23  = 2.4 วันก่อน
+GET /api/positions?id=92932   → deviceId=36  fix 5 ส.ค.  lat 12.955   ← Traccar หยิบอันนี้
+history ของ device 122         → deviceId=122 fix 25 ส.ค. lat 14.132   ← อันที่ถูกจริง
 ```
 
-### โซ่ต้นตอ — 3 ข้อต่อ
+`id=92932` มี **สองแถว คนละ device คนละ partition** · `device.positionId` ชี้ค่าที่ถูก
+แต่ `?id=` คืนแถวจาก partition ที่ id ชนกัน → `getPositionsByIds()` ได้ของรถคันอื่น
 
-**ข้อต่อ 1 — `isGpsStale` ตกเป็น `false` เมื่อไม่มีข้อมูล** (`useDevices.ts:216-218`)
+โค้ดปัจจุบันกรอง `p.deviceId !== d.id` ทิ้ง **ซึ่งถูกแล้ว** (ถ้าไม่ทิ้ง รถอยุธยาจะไปโผล่ชลบุรี
+ห่างกัน 300 กม.) แต่ผลลัพธ์คือ **พิกัดหายเงียบ ๆ** ทั้งที่ GPS ส่งมาจริงเมื่อ 3 นาทีก่อน
 
-```ts
-const isGpsStale = liveEffectiveTime
-  ? Date.now() - liveEffectiveTime.getTime() > GPS_STALE_MS
-  : false;   // ← ไม่มี livePos → แปลว่า "ไม่เก่า"
-```
+นี่คือผลพวงจาก partition ที่ทำ PK uniqueness หาย — ตระกูลเดียวกับ [[tc-positions-missing-id-index]]
 
-ตรรกะกลับหัว: **ไม่มีข้อมูลสด = หลักฐานว่า offline ที่หนักที่สุด** แต่โค้ดอ่านเป็น "ผ่าน"
-พอ `isGpsStale=false` และ `device.status='online'` (ค่าใน DB ที่ค้างจากก่อน Traccar restart)
-→ `isOnline=true` → เข้าสาย `stopped` ได้ ทั้งที่ควรเป็น `offline`
+### วัดจริงทั้งฝูง 206 คัน (user `admin_gpsthailand`)
 
-นี่คือรากของ **อาการ "จอดดับเครื่องสีแดงหลายคัน"** — รถ 2 วันก่อนไปกองอยู่ในถังแดง
-ทั้งที่ควรเป็นสีเทาออฟไลน์ ทำให้ตัวเลข `88/206` และ `14 กำลังวิ่ง` ที่ footer เชื่อถือไม่ได้
+| ค่า | ผล |
+|---|---|
+| `GET /api/positions` (cache) | **29** |
+| cache ไม่มี | **177** |
+| `positionId` ชี้แถวของ**ตัวเอง** | 44 |
+| `positionId` ชี้แถวของ**รถคันอื่น** | **72** (ในนั้น 66 คันส่งข้อมูลมา < 5 นาที) |
 
-**ข้อต่อ 2 — การ์ดคำนวณความเร็วเองจากแหล่งผิด** (`FloatingVehiclePanel.tsx:122`)
+ไม่ใช่แค่ 4 คันที่พี่โตแคปมา — **72 คัน = 35% ของฝูง**
 
-```ts
-const kmh = Math.round((vehicle.position?.speed ?? 0) * 1.852);
-```
+### ทางแก้ที่ทดสอบต้นทุนแล้ว
 
-`vehicle.position` = ตำแหน่งที่**กู้จาก PostgreSQL** (`positionMap`) ส่วน `vehicle.speedKmh`
-ที่ hook คำนวณไว้ = จาก **cache สดเท่านั้น** (`livePos`) — commit `b6db3fb` แยกสองตัวนี้ไว้
-โดยเจตนา (บันทึกใน memory: fallback ต้องเป็น display-only ห้ามป้อนเข้า logic)
-แต่การ์ด**ข้าม `speedKmh` ทิ้ง** แล้วคูณ 1.852 เองจาก `position` → ได้ความเร็ว 2 วันก่อน
-มาแปะบนการ์ดที่บอกว่าจอด นี่คือ **อาการ "จอดดับเครื่องแต่มีความเร็ว"**
+`?deviceId=<id>` คืน**พิกัดของตัวเองถูกต้องเสมอ** (ไม่ชนกับ partition อื่น เพราะกรองด้วย deviceId)
 
-ทำผิดแบบเดียวกันอีก 5 จุด — `TelematicsPage:179` · `VehicleDetailPage:242,355` ·
-`FleetPage:92,121,450` · `DashboardPage:404` ทุกจุดอ่าน `position.speed` ตรง ๆ
+| วิธี | ต้นทุนจริงที่วัดได้ | ครอบคลุม |
+|---|---|---|
+| `?deviceId=` ยิงขนาน chunk 25 | **2.4 s** / 177 คัน | +48 คัน |
+| history 7 วัน + กรอง deviceId | ~22 s / 65 คัน | +65 คัน |
+| ~~batch `?deviceId=a&deviceId=b`~~ | 144 ms แต่คืน **0 แถว** | ❌ ใช้ไม่ได้ |
 
-**ข้อต่อ 3 — เวลา 23/08 ไม่ใช่บั๊ก แต่ไม่มีบริบท**
+### 206 คัน แยก 3 กลุ่ม
 
-`23/08/2569 08:14` คือ**เวลาจริงของ fix ล่าสุด** ที่ `effectiveTime()` คำนวณถูกแล้ว —
-รถคันนั้น GPS หยุดส่งไป 2 วันจริง (SIM หมด/ถอดเครื่อง — แก้ด้วยโค้ดไม่ได้ ต้องแก้หน้างาน)
-ปัญหาคือการ์ด**แสดงวันที่เปล่า ๆ** โดยไม่บอกว่านี่เก่า 2 วัน พอวางข้าง `44 km/h`
-พี่โตจึงอ่านว่า "เวลาเพี้ยน" ทั้งที่มันคือ "ข้อมูลเก่าที่ถูกนำเสนอเหมือนของสด"
+| กลุ่ม | จำนวน | ต้องทำ |
+|---|---|---|
+| มีพิกัดแล้ว (cache) | 29 | ปกติ |
+| กู้ได้ (`positionId > 0`) | **113** | ทำให้พิกัดกลับมา |
+| `positionId=0` + `lastUpdate=null` | **64** | **"ยังไม่เชื่อม GPS"** (พี่โตสั่ง) |
 
-> ⚠️ ตัวแก้ timezone เดิม (`fixMs - srvMs > 1 ชม.` → ใช้ `serverTime`) **ถูกแล้ว ห้ามแตะ**
-> memory ยืนยันด้วย raw payload ว่า gt06/meitrack ยังส่งเวลา +7 มาเองจริง
+64 คันนี้ไม่มีพิกัดในระบบจริง — device สร้างไว้แต่ยังไม่เคยติดตั้ง เรียก "ออฟไลน์" ผิดความหมาย
 
-### ตัดสินใจแล้ว (พี่โตเลือกข้อ 1)
+### 🔴 ผลพลอยได้ที่ต้องแก้ด้วย — DLT
 
-รถไม่มีข้อมูลสด → **`offline` สีเทา `#9AA0A6`** ตามกฎในเอกสาร (`offline = ไม่มีข้อมูล > 5 นาที`)
-ไม่เพิ่มสถานะใหม่ ไม่แตะชุดสี 4 สีเดิม — `CLAUDE.md` ห้ามเปลี่ยนสีสถานะ
-ผลข้างเคียงที่ยอมรับ: การ์ดแดงจะลดลง การ์ดเทาจะเพิ่มขึ้น (~20-80 คัน) = ความจริงที่ถูกซ่อนอยู่
+`getPositionsForDevices()` (ใช้โดย `useDltAutoSend`) push `fallback` เข้า `merged` โดยเช็คแค่
+`!cachedDeviceIds.has(p.deviceId)` → **แถวของรถคันอื่นหลุดเข้าไปได้** แล้ว DLT key ด้วย `p.deviceId`
+= ตำแหน่งไปผูกกับรถผิดคัน
 
-ยังเห็น **พิกัด + ที่อยู่ + เวลา fix ล่าสุด** ครบเหมือนเดิม (นั่นคือคุณค่าของ fallback
-ที่ commit `b6db3fb` สร้างไว้ — เก็บไว้ทั้งหมด) แต่ซ่อนความเร็วเก่าทิ้ง
+**ยังไม่เกิดความเสียหาย** เพราะด่าน `FRESH_WINDOW_MS = 15 นาที` ใน `classifyFreshness()`
+ตัดแถวเก่า 20 วันทิ้งทั้งหมด → ไม่มีข้อมูลผิดส่งถึงกรมขนส่ง (ตรวจแล้ว)
+แต่เป็นระเบิดเวลา: ถ้าแถวที่ id ชนกันบังเอิญสดพอ จะส่งพิกัดผิดคันไปให้ราชการ **ต้องปิดช่องนี้**
 
 ## Stack
 
-ไม่มีของใหม่ — React 18 + React Query + TypeScript strict ตาม `CLAUDE.md` เดิมทุกข้อ
-(hook → component · ไม่มี `any` · ไม่แตะสีสถานะ · speed เก็บเป็น knots แปลงที่ display)
-เพิ่ม Vitest test ไฟล์แรกของ repo (มี `vitest.config.ts` + `npm run test` อยู่แล้ว ยังไม่มีเทสต์เลย)
-
-## Pages / Files ที่แตะ
-
-| ไฟล์ | ทำอะไร |
-|---|---|
-| `src/hooks/useDevices.ts` | แก้ `isGpsStale` · export `hasLiveData` ให้ UI ใช้ |
-| `src/hooks/__tests__/vehicleStatus.test.ts` | **ใหม่** — ล็อกพฤติกรรมด้วยเทสต์ |
-| `src/components/map/FloatingVehiclePanel.tsx` | ใช้ `speedKmh` จาก hook · ป้าย "ข้อมูลเก่า" |
-| `src/pages/TelematicsPage.tsx` | เลิกคำนวณ speed เอง |
-| `src/pages/VehicleDetailPage.tsx` | เลิกคำนวณ speed เอง (2 จุด) |
-| `src/pages/FleetPage.tsx` | เลิกคำนวณ speed เอง (3 จุด — รวม export CSV) |
-| `src/pages/DashboardPage.tsx` | เลิกคำนวณ speed เอง |
+ไม่มีของใหม่ — React Query + TypeScript strict ตาม `CLAUDE.md`
+(service → hook → component · ไม่มี `any` · **ไม่เพิ่ม/เปลี่ยนสี 4 สถานะเดิม**)
 
 ## Done When
 
-1. ไม่มีการ์ดใดแสดง `จอดดับเครื่อง`/`จอดติดเครื่อง`/`ออฟไลน์` พร้อมความเร็ว > 0 พร้อมกัน
-2. รถที่จอดดับเครื่อง / ออฟไลน์ → ความเร็วแสดง **`0 km/h`** (ไม่ใช่ `—` ไม่ใช่เลขเก่า)
-   — พี่โตสั่งชัด: จอดอยู่ = ความเร็วศูนย์จริง ต้องอ่านได้ทันทีว่าศูนย์
-3. **เวลาต้องเป็น fix ล่าสุดของคันนั้นเสมอ** — ห้ามอ่านย้อนหลัง ห้ามหยิบ position เก่ากว่า
-   ที่ `positionId` ชี้อยู่ · fix เก่ากว่า 5 นาที → มีป้ายบอกอายุ ("2 วันก่อน") กำกับ
-4. ยังเห็นพิกัด + ที่อยู่ + เวลา fix ล่าสุดครบ (ไม่ถอย `b6db3fb`)
-5. `npm run test` ผ่าน — เทสต์ครอบ 5 เคส: cache hit moving/idle/stopped · cache miss → offline · fixTime +7
-6. `npm run build` 0 error · `npm run lint` 0 warning
-7. ตัวเลข footer สอดคล้องกัน: `moving + idle + stopped + offline == total`
+1. รถทุกคันที่มี `positionId > 0` **แสดงพิกัด** — ไม่มี "ไม่มีพิกัดล่าสุด" ในกลุ่มนี้
+2. พิกัดที่แสดง **เป็นของรถคันนั้นจริง** (`p.deviceId === device.id` ทุกแถว ไม่มีข้อยกเว้น)
+3. เวลาที่แสดงคู่กับพิกัดเสมอ — fix time กับพิกัดมาจาก**แถวเดียวกัน** ห้ามคนละแถว
+4. 64 คันที่ไม่เคยส่งข้อมูล → ป้าย **"ยังไม่เชื่อม GPS"** ไม่ใช่ "ออฟไลน์"
+5. DLT: แถวที่ `deviceId` ไม่ตรง **ไม่หลุด**เข้า `merged` เลย
+6. โหลดหน้าแผนที่ไม่ช้าลงจนสังเกตได้ — fallback ชั้นแพงทำเบื้องหลัง ไม่บล็อก first paint
+7. `npm run test` · `npm run build` 0 error · `npm run lint` ไม่เพิ่ม warning · CI เขียว
 
-## Phase 1 — แก้รากที่ hook (ต้นน้ำ)
+## Phase 1 — ปิดรูรั่วที่ service (ต้นน้ำ)
 
-- [x] **T001** `dev-builder` — `src/hooks/useDevices.ts`: แก้ `isGpsStale` ให้ไม่มี `livePos` = stale
-      (`const isGpsStale = liveEffectiveTime ? ... : true`) + เพิ่ม `hasLiveData: !!livePos`
-      และ `lastFixAgeMs` ใน return object · อัปเดต `VehicleWithPosition` ใน `traccar.types.ts`
-- [x] **T002** `dev-builder` — `src/hooks/__tests__/vehicleStatus.test.ts` (**ใหม่**):
-      แยก logic คำนวณสถานะออกเป็น pure function `computeVehicleStatus()` ใน `src/lib/vehicleStatus.ts`
-      แล้วเทสต์ 5 เคสใน Done When #5 — hook เรียกใช้ฟังก์ชันนี้แทนโค้ด inline
-- [x] **Checkpoint 1** — `npm run test` ต้องผ่านและ quote ผลจริง · `npm run build` 0 error
-      · ยืนยันว่าเคส "cache miss → offline" fail ก่อนแก้ T001 และ pass หลังแก้
+- [x] **T001** `src/services/traccarService.ts`: `getPositionsByIds()` รับ `Map<positionId, deviceId>`
+      แล้ว **กรอง `p.deviceId` ต้องตรงกับที่ขอ** คืนเฉพาะแถวที่เจ้าของถูก · เพิ่ม
+      `getPositionsByDeviceIds(ids)` ยิง `?deviceId=` ขนาน chunk 25 + กรอง `deviceId` (2.4 s/177 คัน)
+- [x] **T002** `getPositionsForDevices()`: ใช้ตัวใหม่ทั้งสองชั้น · ยืนยันว่า `merged` มีแต่แถว
+      ที่ `deviceId` ตรง (ปิดช่อง DLT ตาม Done When #5)
+- [x] **Checkpoint 1** — unit test ยืนยันแถวเจ้าของผิดถูกกรองทิ้ง 100% · quote ผลจริง
 
-## Phase 2 — ให้ทุกหน้าใช้ค่าจาก hook (ปลายน้ำ)
+## Phase 2 — hook ต่อ fallback 3 ชั้น + สถานะใหม่
 
-- [x] **T003** `dev-builder` — `FloatingVehiclePanel.tsx`: เปลี่ยน `kmh` มาจาก `vehicle.speedKmh`
-      · **แสดง `0` เมื่อไม่มีข้อมูลสด** (ไม่ใช่ `—` — พี่โตสั่ง: จอด/ออฟไลน์ = ศูนย์จริง)
-      · แสดงบล็อกความเร็วทุกสถานะรวม `offline` (เดิม `:239` ซ่อนของ offline ทิ้ง)
-      · เพิ่มป้ายอายุข้อมูลใต้เวลาเมื่อ fix เก่ากว่า 5 นาที ใช้ `formatDistanceToNow`
-      + locale `th` (`date-fns` มีใน deps แล้ว)
-- [x] **T004** `dev-builder` [P] — `TelematicsPage.tsx:179` + `VehicleDetailPage.tsx:242,355`:
-      ใช้ `v.speedKmh` แทน `knotsToKmh(v.position?.speed)` · `stale` ใช้ `hasLiveData` จาก hook
-- [x] **T005** `dev-builder` [P] — `FleetPage.tsx:92,121,450` + `DashboardPage.tsx:404`:
-      ใช้ `v.speedKmh` — รวม CSV export (ห้ามส่งความเร็วเก่าออกไฟล์รายงาน)
-      และ preset filter บรรทัด 450 (กรองด้วยความเร็วเก่า = ผลกรองผิด)
-- [x] **Checkpoint 2** — `grep -rn "position?\.speed\|position\.speed" src/` เหลือเฉพาะจุดที่
-      ต้องใช้ค่าดิบจริง (TripReplay history) · `npm run build` + `npm run lint` 0
+- [x] **T003** `src/hooks/useDevices.ts`: fallback เป็นชั้น — (1) cache (2) `?deviceId=`
+      (3) history 7 วัน สำหรับคันที่ยังไม่ได้ · ชั้น 3 แยก query แยก `enabled` ไม่บล็อก first paint
+- [x] **T004** `src/lib/vehicleStatus.ts`: เพิ่ม `hasEverReported` (จาก `positionId > 0`)
+      → `displayStatus: 'unlinked'` สำหรับคันที่ไม่เคยส่ง · **สีเทาอ่อนกว่า offline** ไม่แตะ 4 สีเดิม
+      · อัปเดต `STATUS_TH`/`STATUS_COLOR` ทั้ง 13 ไฟล์ที่ใช้ `displayStatus` (grep ให้ครบ)
+- [x] **Checkpoint 2** — เทสต์: partition sweep ต้องยังผ่านด้วย 5 สถานะ · build 0 error
 
-## Phase 3 — ยืนยันกับข้อมูลจริง
+## Phase 3 — ยืนยันกับ production จริง
 
-- [x] **T006** `test-runner` — รัน `npm run dev` เปิด `/app/map` ด้วย Playwright:
-      นับการ์ดที่มี badge `จอดดับเครื่อง` พร้อมความเร็ว > 0 → ต้องเป็น **0**
-      · ยืนยัน `moving+idle+stopped+offline == total` ที่ footer
-- [x] **T007** `dev-builder` — เทียบจำนวนก่อน/หลังแก้ (stopped ลดเท่าไร offline เพิ่มเท่าไร)
-      รายงานตัวเลขจริงให้พี่โตเห็นว่ากระทบกี่คัน
-- [x] **Checkpoint 3** — Done When ครบ 7 ข้อ · commit + push + CI เขียว (ตาม memory
-      `toh-plan-commit-rule`) · อัปเดต memory ไฟล์ `traccar-positions-cache-gap`
+- [x] **T005** วัดซ้ำด้วย `admin_gpsthailand` — รถที่มี `positionId > 0` ต้องมีพิกัด **113/113**
+      · ทุกแถว `deviceId` ตรง · เทียบก่อน/หลังให้พี่โตเห็นตัวเลข
+- [x] **T006** render test: การ์ดของ `2ฒฌ-3550` (คันในภาพ) ต้องโชว์พิกัด + เวลาจากแถวเดียวกัน
+- [x] **Checkpoint 3** — Done When ครบ 7 ข้อ · commit + push + **รอ CI เขียว** · อัปเดต memory
 
 ## ที่ตรวจแล้วว่า *ไม่ใช่* ต้นตอ — อย่าเสียเวลาซ้ำ
 
-- ❌ **timezone / `effectiveTime()`** — คำนวณถูกแล้ว `23/08` คือเวลา fix จริง ไม่ใช่ค่าเพี้ยน
-- ❌ **Traccar server TZ** — แก้แล้ว commit `0ffe76c` (`TZ=UTC`) ยืนยันด้วย raw payload
-- ❌ **`b6db3fb` fallback** — ไม่ใช่บั๊ก มันกู้พิกัดได้ 121/121 · ปัญหาคือ *ปลายทาง* ใช้ผิด
-- ❌ **`/api/positions` cache gap** — รู้อยู่แล้วและมี fallback ครอบแล้ว ไม่ต้องแก้ซ้ำ
-- ❌ **สีสถานะ** — `#EA4335` แดง / `#9AA0A6` เทา ถูกตามสเปค ไม่แตะ
-
-## ข้อจำกัดของ session นี้
-
-credential Traccar ใน `.env.local` / `server/.env` / `docker/.env` **401 ทั้ง 3 ชุด**
-และ SSH เข้า VM `34.142.244.40:22` timeout จาก IP นี้ → **ยืนยันตัวเลข production สดไม่ได้**
-จึงพิสูจน์ด้วยการ replay logic จากโค้ดจริงแทน (ผลตรงกับภาพเป๊ะ) และ Phase 3 จะรัน
-`npm run dev` ในเครื่องเพื่อยืนยัน — ถ้าพี่โตมี credential ที่ใช้ได้ บอกได้ หนูจะวัด production ให้ด้วย
+- ❌ **`?id=` คืนหลายแถว** — คืนแถวเดียวเสมอ (ตรวจ 3 id) ปัญหาคือคืน**ผิดคัน** ไม่ใช่คืนเกิน
+- ❌ **chunk 40 ยาวเกิน** — ขอ 116 ได้คืน 116 ครบ ไม่ได้หายจาก URL length
+- ❌ **สิทธิ์ผู้ใช้** — `admin_gpsthailand` เห็น 206 คันครบ
+- ❌ **timezone / `effectiveTime()`** — ถูกแล้ว ห้ามแตะ ดู [[timezone-7h-offset-root-cause]]
+- ❌ **batch `?deviceId=a&deviceId=b`** — HTTP 200 แต่คืน 0 แถว ต้องยิงทีละคันขนานกัน
+- ❌ **DLT ส่งข้อมูลผิดไปแล้ว** — ด่าน 15 นาทีกันไว้ทัน ยังไม่มีความเสียหาย แต่ต้องปิดช่อง

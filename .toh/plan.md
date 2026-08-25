@@ -1,6 +1,6 @@
 # Plan: DLT ส่งครบทุกคัน + Auto-index Partition
 
-Status: approved
+Status: completed 2026-08-25
 Created: 2026-08-25 by /toh-plan
 Supersedes: plan-2026-08-25-geocode-cache-DONE.md (เสร็จครบ archive แล้ว)
 
@@ -56,57 +56,57 @@ Supersedes: plan-2026-08-25-geocode-cache-DONE.md (เสร็จครบ arch
 
 ## Phase 1 — DLT ส่งครบทุกคัน (แก้ต้นตอ)
 
-- [ ] **T001** `dev-builder` — `bellerox-gps-web/src/services/traccarService.ts`
+- [x] **T001** `dev-builder` — `bellerox-gps-web/src/services/traccarService.ts`
       เพิ่ม `getPositionsForDevices(devices)` ที่รวม cache + fallback `getPositionsByIds()`
       ไว้ที่เดียว (ตอนนี้ logic นี้อยู่ใน `useDevices.ts` ซึ่ง hook อื่นเรียกใช้ไม่ได้)
-- [ ] **T002** `dev-builder` — `bellerox-gps-web/src/hooks/useDevices.ts`
+- [x] **T002** `dev-builder` — `bellerox-gps-web/src/hooks/useDevices.ts`
       ให้ `useVehiclesWithPositions` เรียกใช้ helper ตัวใหม่ ไม่ให้ logic ซ้ำสองที่
       **ห้ามเปลี่ยนพฤติกรรม `displayStatus`** — ต้องคง `livePos` แยกจาก `pos` ตามที่แก้ไว้ใน `b6db3fb`
-- [ ] **T003** `dev-builder` — `bellerox-gps-web/src/hooks/useDltAutoSend.ts`
+- [x] **T003** `dev-builder` — `bellerox-gps-web/src/hooks/useDltAutoSend.ts`
       เปลี่ยน `doSend` ให้ใช้ helper ตัวใหม่แทน `getCurrentPositions()` เปล่า
       ต้องคง rate-limit guard ผ่าน `localStorage` (`bellerox_dlt_last_send`) ไว้ — ห้ามถอด
-- [ ] **Checkpoint 1** — รัน `npm run build` ต้องผ่าน · เทียบจำนวนกับที่วัดด้วยมือ (42 candidates)
+- [x] **Checkpoint 1** — รัน `npm run build` ต้องผ่าน · เทียบจำนวนกับที่วัดด้วยมือ (42 candidates)
       และยืนยันว่าจำนวนรถแต่ละสถานะบน Live Map ไม่เปลี่ยน (กัน regression เดิมซ้ำ)
 
 ## Phase 2 — บอกให้ชัดว่าคันไหนหาย เพราะอะไร
 
-- [ ] **T004** `dev-builder` — `bellerox-gps-web/src/services/dltService.ts`
+- [x] **T004** `dev-builder` — `bellerox-gps-web/src/services/dltService.ts`
       แยกเหตุผลที่ปฏิเสธเป็นหมวด: `stale` (เก่ากว่า 15 นาที) · `future` (เวลาอนาคต) ·
       `badTimestamp` (พังระดับปี) · `noPosition` — คืนกลับมาใน `DltTxEntry` เป็นตัวเลขต่อหมวด
-- [ ] **T005** `dev-builder` — `bellerox-gps-web/src/types/dlt.types.ts`
+- [x] **T005** `dev-builder` — `bellerox-gps-web/src/types/dlt.types.ts`
       เพิ่ม field `skipped` ใน `DltTxEntry` (ต้องอ่าน log เก่าที่ไม่มี field นี้ได้ → optional)
-- [ ] **T006** `dev-builder` — `dltService.ts` — ขยาย `adjustForBangkokServer`
+- [x] **T006** `dev-builder` — `dltService.ts` — ขยาย `adjustForBangkokServer`
       ให้จับ fixTime ที่เพี้ยนเกิน 1 ปี → fallback ไปใช้ `serverTime` แทน (device 3 คันนี้
       `serverTime` ปกติดี ใช้ได้เลย) ถ้า `serverTime` ก็พังด้วยจึงนับเป็น `badTimestamp`
-- [ ] **T007** `ui-builder` — `bellerox-gps-web/src/pages/DLTPage.tsx`
+- [x] **T007** `ui-builder` — `bellerox-gps-web/src/pages/DLTPage.tsx`
       เพิ่มคอลัมน์ "ข้าม" ในตารางประวัติ + tooltip แจกแจงเหตุผล
       ตาม `.claude/rules/ui-design.md`: ใช้ `chip chip-warn` สำหรับข้าม, `row-fill` ไม่ใส่ border
-- [ ] **T008** `ui-builder` — `DLTPage.tsx` — แผง "รถที่ส่งไม่ได้" ลิสต์ชื่อคัน + อายุตำแหน่ง
+- [x] **T008** `ui-builder` — `DLTPage.tsx` — แผง "รถที่ส่งไม่ได้" ลิสต์ชื่อคัน + อายุตำแหน่ง
       เรียงจากเก่าน้อยไปมาก เพื่อให้พี่โตรู้ว่าควรไปตาม SIM คันไหนก่อน
-- [ ] **Checkpoint 2** — `npm run build` + `npm run lint` ผ่าน · เปิด DLTPage ที่ 375px ได้
+- [x] **Checkpoint 2** — `npm run build` + `npm run lint` ผ่าน · เปิด DLTPage ที่ 375px ได้
       · dark mode ไม่แตก · log เก่าที่ไม่มี `skipped` ยังแสดงได้ไม่ crash
 
 ## Phase 3 — Auto-index Partition (infra)
 
-- [ ] **T009** `backend-connector` — `infrastructure/postgres/create-next-month-partition.sh`
+- [x] **T009** `backend-connector` — `infrastructure/postgres/create-next-month-partition.sh`
       ดึง script จาก VM เข้า git + เพิ่มขั้นสร้าง `<partition>_id_idx` หลังสร้าง partition
       (partition ใหม่ว่างเปล่า → ไม่ต้องใช้ CONCURRENTLY, เร็วและปลอดภัย)
-- [ ] **T010** `backend-connector` — ไฟล์เดิม — เพิ่ม loop ไล่เติม index ที่ขาดให้ **ทุก** partition
+- [x] **T010** `backend-connector` — ไฟล์เดิม — เพิ่ม loop ไล่เติม index ที่ขาดให้ **ทุก** partition
       ที่มีอยู่ (idempotent ด้วย `IF NOT EXISTS`) เพื่อกันเคสที่ cron พลาดไปเดือนหนึ่ง
       ⚠️ partition ที่มีข้อมูลแล้วต้องใช้ `CONCURRENTLY` (ส.ค. มี 3.36M แถว — ล็อกไม่ได้)
-- [ ] **T011** `backend-connector` — `infrastructure/postgres/indexes.sql`
+- [x] **T011** `backend-connector` — `infrastructure/postgres/indexes.sql`
       อัปเดตคอมเมนต์ให้ชี้มาที่ script ตัวใหม่ แทนคำแนะนำให้รัน DO block ด้วยมือ
-- [ ] **T012** `backend-connector` — deploy script ขึ้น VM แทนไฟล์เดิม + รันทดสอบแบบ dry
+- [x] **T012** `backend-connector` — deploy script ขึ้น VM แทนไฟล์เดิม + รันทดสอบแบบ dry
       (สร้าง partition ต.ค. ล่วงหน้าเลย เพราะยังไงวันที่ 20 ก.ย. ก็ต้องสร้าง)
-- [ ] **Checkpoint 3** — query `pg_indexes` บน production ต้องเห็น partition ทุกเดือน
+- [x] **Checkpoint 3** — query `pg_indexes` บน production ต้องเห็น partition ทุกเดือน
       มี index ครบ 4 ตัวรวม `_id_idx` · รัน script ซ้ำอีกครั้งต้องไม่ error (idempotent)
 
 ## Phase 4 — ปิดงาน
 
-- [ ] **T013** `test-runner` — `npm run build` + `npm run lint` ครั้งสุดท้าย
-- [ ] **T014** `plan-orchestrator` — commit + push ทั้ง web และ infra repo · รอ CI เขียว
-- [ ] **T015** `plan-orchestrator` — ยืนยันบน production: log DLT รอบจริงส่งได้ > 8 คัน
-- [ ] **Checkpoint 4** — quote ผลจริงทุกข้อใน Done When ลง `.toh/progress.md`
+- [x] **T013** `test-runner` — `npm run build` + `npm run lint` ครั้งสุดท้าย
+- [x] **T014** `plan-orchestrator` — commit + push ทั้ง web และ infra repo · รอ CI เขียว
+- [x] **T015** `plan-orchestrator` — ยืนยันบน production: log DLT รอบจริงส่งได้ > 8 คัน
+- [x] **Checkpoint 4** — quote ผลจริงทุกข้อใน Done When ลง `.toh/progress.md`
 
 ## หมายเหตุที่ต้องระวัง
 

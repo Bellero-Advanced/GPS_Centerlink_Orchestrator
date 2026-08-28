@@ -1,0 +1,590 @@
+[    1806ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-B6V2_T1D-1787733367574.js:236
+[    1807ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-B6V2_T1D-1787733367574.js:236
+[   34988ms] [LOG] [LayoutV2] Applying brand colors: {tenantTheme.primaryColor: #ff8800, slug: gpsthailand, finalColor: #ff8800, tenantLoading: false} @ https://gpsthailand.centerlink.co.th/assets/LayoutV2-DsYQrl1C-1787733367574.js:21
+[   40218ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=235:0
+[   40247ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[   40248ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=134:0
+[  455356ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-B6V2_T1D-1787733367574.js:236
+[  455358ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-B6V2_T1D-1787733367574.js:236
+[  455362ms] [LOG] [LayoutV2] Applying brand colors: {tenantTheme.primaryColor: #ff8800, slug: gpsthailand, finalColor: #ff8800, tenantLoading: false} @ https://gpsthailand.centerlink.co.th/assets/LayoutV2-DsYQrl1C-1787733367574.js:21
+[  716927ms] [ERROR] Failed to load resource: the server responded with a status of 504 () @ https://api.centerlink.co.th/api/reports/trips?deviceId=80&from=2026-07-31T17:00:00.000Z&to=2026-08-26T16:59:59.999Z&page_size=0:0
+[  719259ms] [ERROR] Failed to load resource: the server responded with a status of 504 () @ https://api.centerlink.co.th/api/reports/trips?deviceId=80&from=2026-08-18T17:00:00.000Z&to=2026-08-26T16:59:59.999Z&page_size=0:0
+[ 1007028ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-CrN809pu-1787734161793.js:236
+[ 1007030ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-CrN809pu-1787734161793.js:236
+[ 1007566ms] [LOG] [LayoutV2] Applying brand colors: {tenantTheme.primaryColor: #ff8800, slug: gpsthailand, finalColor: #ff8800, tenantLoading: false} @ https://gpsthailand.centerlink.co.th/assets/LayoutV2-DCp3dXsP-1787734161793.js:21
+[ 1169943ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=211:0
+[ 1169953ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=213:0
+[ 1172421ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=103:0
+[ 1172426ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=223:0
+[ 1209604ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=121:0
+[ 1211405ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[ 1211430ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[ 1211435ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[ 1213600ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=119:0
+[ 1332320ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=116:0
+[ 1332327ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=125:0
+[ 1333523ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=143:0
+[ 1335266ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=84:0
+[ 1335269ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=226:0
+[ 1352835ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=98:0
+[ 1388222ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=148:0
+[ 1843506ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=139:0
+[ 1843512ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=127:0
+[ 1883283ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=217:0
+[ 1884611ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=131:0
+[ 1884615ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=134:0
+[ 1884619ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[ 1903380ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[ 1903386ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[ 1904834ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=146:0
+[ 1904841ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=134:0
+[ 1923372ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=216:0
+[ 1925085ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=130:0
+[ 2064090ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=48:0
+[ 2064097ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[ 2124538ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=250:0
+[ 2126506ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=132:0
+[ 2126515ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=133:0
+[ 2246333ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=134:0
+[ 2305451ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=60:0
+[ 2305501ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=284:0
+[ 2305506ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[ 2306877ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=47:0
+[ 2307983ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=126:0
+[ 2308073ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=40:0
+[ 2308107ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=35:0
+[ 2310183ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=137:0
+[ 2310192ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[ 2310277ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=101:0
+[ 3316461ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[ 3316496ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=73:0
+[ 3316532ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[ 3317902ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=73:0
+[ 3317993ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[ 3321571ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=216:0
+[ 3324204ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=119:0
+[ 3325641ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=113:0
+[ 3396613ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[ 3396632ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[ 3396645ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=150305&id=150171&id=150598&id=148926&id=150125&id=150870&id=150776&id=150183&id=150678&id=128056&id=150861&id=150480&id=150337&id=150717&id=150620&id=150576&id=149869&id=146461&id=150461&id=3333163&id=149722&id=150792&id=150914&id=150724&id=150753&id=63595&id=128576&id=150740&id=1053268&id=1617079&id=2820933:0
+[ 3396678ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[ 3396682ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=2654139&id=150336&id=62876&id=71375&id=149745&id=3335238&id=2249921&id=150514&id=150263&id=410375&id=3321321&id=149605&id=150543&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=145628&id=149948&id=150649&id=63304&id=150821&id=3333175&id=150733&id=150370&id=150340&id=3333271&id=150868&id=150452&id=150674&id=63340&id=150750&id=150500&id=150664&id=150325&id=150354&id=150220&id=150909&id=150650:0
+[ 3398051ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=36:0
+[ 3398057ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[ 3398058ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=37:0
+[ 3398165ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[ 3398175ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=73:0
+[ 3399822ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[ 3399832ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[ 3399841ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[ 3402384ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=146:0
+[ 3402551ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=126:0
+[ 3405728ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=100:0
+[ 3405739ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=89:0
+[ 3405818ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=87:0
+[ 3416779ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=150220&id=150909&id=150650&id=150305&id=150171&id=150598&id=148926&id=150125&id=150870&id=150776&id=150678&id=128056&id=150861&id=150480&id=150337&id=150717&id=150620&id=150576&id=149869&id=146461&id=150461&id=3333163&id=149722&id=150792&id=150914&id=150724&id=150753&id=63595&id=128576&id=150740&id=1053268&id=1617079&id=2820933:0
+[ 3416781ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[ 3416807ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=2654139&id=150336&id=62876&id=71375&id=149745&id=3335238&id=2249921&id=150514&id=150263&id=410375&id=3321321&id=149605&id=150777&id=150543&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=145628&id=150817&id=150804&id=149948&id=150649&id=63304&id=150821&id=3333175&id=150733&id=150370&id=150340&id=3333271&id=150868&id=150452&id=150674&id=63340&id=150750&id=150500&id=150664&id=150325&id=150354:0
+[ 3418696ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[ 3418714ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[ 3420652ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[ 3422501ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[ 3422603ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=211:0
+[ 3424517ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=249:0
+[ 3426613ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=91:0
+[ 3426727ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=213:0
+[ 3426731ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[ 3436927ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[ 3436934ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=150818&id=150788&id=150904&id=108394&id=2817729&id=63149&id=3335451&id=3243770&id=150330&id=3335254&id=150844&id=2832439&id=62956&id=3333158&id=3335447&id=150596&id=2687763&id=150246&id=2999768&id=63405&id=63441&id=150526&id=2160645&id=150595&id=150464&id=3009308&id=18901&id=89397&id=150934&id=63321&id=3335409&id=150635&id=2035257&id=150516&id=150394&id=150936&id=1752516&id=150757&id=150454&id=122434:0
+[ 3436947ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=150325&id=150220&id=150909&id=150650&id=150305&id=150956&id=150598&id=148926&id=150125&id=150870&id=150776&id=150678&id=128056&id=150861&id=150480&id=150337&id=150717&id=150620&id=150576&id=149869&id=146461&id=150461&id=3333163&id=149722&id=150792&id=150914&id=150724&id=150753&id=63595&id=128576&id=150884&id=150740&id=1053268&id=1617079&id=2820933:0
+[ 3439434ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=32:0
+[ 3439450ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[ 3439526ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=47:0
+[ 3440834ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=35:0
+[ 3440843ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[ 3440948ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[ 3440975ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=249:0
+[ 3440976ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=279:0
+[ 3442307ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=279:0
+[ 3442370ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[ 3444682ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=98:0
+[ 3444766ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[ 3444812ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=29:0
+[ 3445939ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=90:0
+[ 3446070ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[ 3447379ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[ 3447398ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[ 3449279ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=127:0
+[ 3449289ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[ 3451048ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=133:0
+[ 3452559ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=108:0
+[ 3454384ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=89:0
+[ 3455630ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=84:0
+[ 3455631ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=86:0
+[ 3455634ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=92:0
+[ 3457589ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=251:0
+[ 3699247ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=151594&id=151530&id=151564&id=108394&id=2817729&id=63149&id=3335451&id=3243770&id=151232&id=3335254&id=151486&id=2832439&id=62956&id=3333158&id=3335447&id=151243&id=2687763&id=151040&id=2999768&id=63405&id=63441&id=151197&id=2160645&id=151247&id=151132&id=3009308&id=18901&id=89397&id=151044&id=63321&id=3335409&id=151291&id=2035257&id=151298&id=151062&id=150936&id=1752516&id=150757&id=151235&id=122434:0
+[ 3699271ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[ 3699275ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[ 3699286ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=2654139&id=151127&id=62876&id=71375&id=150958&id=150942&id=3335238&id=2249921&id=151168&id=151143&id=410375&id=3321321&id=149605&id=151201&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=145628&id=151177&id=151246&id=151296&id=63304&id=151460&id=3333175&id=151494&id=151030&id=150998&id=3333271&id=150868&id=150847&id=151228&id=151465&id=63340&id=150500&id=151338&id=151333&id=151106&id=151015:0
+[ 3700810ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=73:0
+[ 3700826ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[ 3700847ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[ 3702221ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=36:0
+[ 3703652ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=77:0
+[ 3703743ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=250:0
+[ 3703753ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[ 3705624ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=59:0
+[ 3705646ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=130:0
+[ 3705654ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=140:0
+[ 3705658ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=126:0
+[ 3707181ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=220:0
+[ 3708757ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=132:0
+[ 3708795ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=148:0
+[ 3824066ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[ 3882265ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[ 3882285ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=250:0
+[ 3885265ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=112:0
+[ 3887218ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=105:0
+[ 3921397ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[ 3921438ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=121:0
+[ 3921442ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=228:0
+[ 3921467ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=211:0
+[ 3923375ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=68:0
+[ 3923413ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=67:0
+[ 3925645ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=88:0
+[ 3925655ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=90:0
+[ 4000192ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[ 4000217ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[ 4002187ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[ 4002216ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=279:0
+[ 4004316ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[ 4006952ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=110:0
+[ 4061998ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=218:0
+[ 4062502ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[ 4062526ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=151477&id=63340&id=151918&id=150500&id=151338&id=151941&id=151106&id=151015&id=151546&id=152119&id=151911&id=151805&id=151632&id=151517&id=151383&id=151585&id=148926&id=151270&id=151510&id=151648&id=152028&id=150978&id=151657&id=151556&id=152036&id=128056&id=152096&id=151502&id=151149&id=151621&id=151887&id=151107&id=151287&id=151313&id=151229&id=149869&id=146461&id=151511&id=3333163&id=149722:0
+[ 4063985ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[ 4063985ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=126:0
+[ 4064074ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=121:0
+[ 4064089ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=68:0
+[ 4064115ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=67:0
+[ 4065684ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[ 4065687ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[ 4065743ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=141:0
+[ 4065756ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=142:0
+[ 4067121ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=116:0
+[ 4067165ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=133:0
+[ 4067261ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=48:0
+[ 4067322ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=47:0
+[ 4067331ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=42:0
+[ 4068996ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[ 4069065ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[ 4070590ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=99:0
+[ 4070626ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=101:0
+[ 4070665ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=48:0
+[ 4070771ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=210:0
+[ 4123167ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=207:0
+[ 4301201ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[ 4303756ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=214:0
+[ 4303765ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=216:0
+[ 4305017ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=68:0
+[ 4361402ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=248:0
+[ 4365606ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=119:0
+[ 4425711ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=73:0
+[ 4425716ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=60:0
+[ 4425725ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=72:0
+[ 4428468ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=216:0
+[ 4465826ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=140:0
+[ 4486861ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=250:0
+[ 4546073ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=150757&id=152720&id=122434&id=2654139&id=152654&id=62876&id=71375&id=152763&id=152856&id=3335238&id=2249921&id=152873&id=152848&id=410375&id=3321321&id=152619&id=152921&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=151521&id=145628&id=151451&id=151177&id=151500&id=152936&id=151296&id=63304&id=152680&id=3333175&id=152727&id=151030&id=150998&id=3333271&id=150868&id=152757&id=151228&id=152039:0
+[ 4546089ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?id=151477&id=63340&id=150500&id=151338&id=151106&id=151015&id=152963&id=152747&id=152903&id=153089&id=151632&id=151517&id=151383&id=152661&id=151585&id=148926&id=151270&id=151510&id=152935&id=152687&id=150978&id=151657&id=151556&id=152681&id=128056&id=152722&id=151149&id=151621&id=151887&id=151107&id=151287&id=151313&id=151229&id=149869&id=152999&id=151511&id=3333163&id=152318&id=151825&id=151679:0
+[ 4546091ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[ 4546241ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[ 4546276ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[ 5677389ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=104:0
+[ 7093851ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=88:0
+[ 7093970ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=89:0
+[ 9198457ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api.centerlink.co.th/api/positions?id=160094&id=151526&id=160098&id=151564&id=108394&id=2817729&id=63149&id=3335451&id=3243770&id=159970&id=3335254&id=151486&id=2832439&id=62956&id=3333158&id=3335447&id=160082&id=2687763&id=160028&id=2999768&id=63405&id=63441&id=151197&id=2160645&id=151247&id=151791&id=151782&id=151132&id=3009308&id=18901&id=89397&id=160137&id=63321&id=3335409&id=151291&id=2035257&id=151298&id=151062&id=150936&id=1752516:0
+[11193632ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=249:0
+[13461821ms] [ERROR] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED @ https://api.centerlink.co.th/api/positions?deviceId=217:0
+[14077271ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=100:0
+[14077273ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=96:0
+[14077278ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=90:0
+[14077279ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=92:0
+[14077281ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=226:0
+[14081741ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions:0
+[14082017ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://api.centerlink.co.th/api/devices:0
+[14082017ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://api.centerlink.co.th/api/positions?id=161165&id=151526&id=161251&id=151564&id=108394&id=63149&id=3335451&id=3243770&id=161224&id=3335254&id=151486&id=2832439&id=62956&id=3333158&id=3335447&id=161252&id=2687763&id=161208&id=2999768&id=63405&id=63441&id=151197&id=2160645&id=151247&id=151791&id=151782&id=151132&id=3009308&id=18901&id=89397&id=161231&id=63321&id=3335409&id=151291&id=2035257&id=151298&id=151062&id=150936&id=1752516&id=150757:0
+[14082018ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://api.centerlink.co.th/api/positions?id=160058&id=122434&id=2654139&id=161236&id=62876&id=71375&id=161234&id=161229&id=3335238&id=2249921&id=152873&id=161166&id=410375&id=3321321&id=161221&id=161230&id=161253&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=151521&id=145628&id=151451&id=151177&id=151500&id=161200&id=151296&id=63304&id=161215&id=3333175&id=161222&id=151030&id=150998&id=3333271&id=150868&id=151228&id=161245&id=151477:0
+[14082019ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://api.centerlink.co.th/api/positions?id=63340&id=160785&id=150500&id=151338&id=160994&id=151106&id=151015&id=161256&id=161238&id=161247&id=161218&id=151632&id=151517&id=151383&id=161207&id=151585&id=161217&id=151270&id=151510&id=161254&id=161205&id=150978&id=151657&id=151556&id=160648&id=161214&id=155370&id=151621&id=151887&id=151107&id=151287&id=151313&id=160891&id=149869&id=160120&id=151511&id=3333163&id=161163&id=161194&id=151679:0
+[14082021ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://api.centerlink.co.th/api/positions?id=161211&id=161237&id=63595&id=128576&id=161210&id=151392&id=1053268&id=1617079&id=2820933:0
+[14082022ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://api.centerlink.co.th/api/positions?deviceId=88:0
+[14082022ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://api.centerlink.co.th/api/positions?deviceId=89:0
+[14082027ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://api.centerlink.co.th/api/positions?deviceId=87:0
+[17273047ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=161760&id=151526&id=161771&id=151564&id=108394&id=63149&id=3335451&id=3243770&id=161757&id=3335254&id=151486&id=2832439&id=62956&id=3333158&id=3335447&id=161762&id=2687763&id=161734&id=161738&id=2999768&id=63405&id=63441&id=151197&id=2160645&id=151247&id=151791&id=151782&id=151132&id=3009308&id=18901&id=89397&id=161770&id=63321&id=3335409&id=151291&id=2035257&id=151298&id=151062&id=150936&id=1752516:0
+[17273112ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=150757&id=160058&id=122434&id=2654139&id=161769&id=62876&id=71375&id=161742&id=161750&id=161764&id=3335238&id=2249921&id=152873&id=161724&id=410375&id=3321321&id=161731&id=161766&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=151521&id=145628&id=151451&id=151177&id=151500&id=161747&id=151296&id=63304&id=161739&id=3333175&id=161736&id=151030&id=150998&id=3333271&id=150868&id=161737&id=151228:0
+[17273112ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=161714&id=151477&id=63340&id=160785&id=150500&id=151338&id=160994&id=151106&id=151015&id=161710&id=161746&id=161705&id=161708&id=151632&id=151517&id=151383&id=161740&id=151585&id=161732&id=151270&id=151510&id=161774&id=161758&id=150978&id=151657&id=151556&id=161748&id=161559&id=160648&id=161755&id=155370&id=151621&id=151887&id=151107&id=151287&id=151313&id=161773&id=149869&id=160120&id=161744:0
+[17273117ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=151511&id=3333163&id=161163&id=161194&id=151679&id=161754&id=63595&id=128576&id=161741&id=151392&id=1053268&id=1617079&id=2820933:0
+[17279853ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[17279853ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=79:0
+[17279853ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=229:0
+[17279854ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=250:0
+[18244255ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[18244357ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=35:0
+[18244416ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[21163682ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[21163685ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=210:0
+[21163767ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=211:0
+[21443048ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[22415535ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=67:0
+[22415536ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=68:0
+[22415611ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[23387911ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=279:0
+[23387927ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=249:0
+[23387929ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=248:0
+[23387963ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[25103108ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=103:0
+[25103136ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=97:0
+[26079345ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[27049385ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=42:0
+[27049401ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=67:0
+[27049484ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=68:0
+[28762686ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[28762693ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=121:0
+[28762744ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=228:0
+[28762816ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=207:0
+[28762816ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[28762876ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[29709337ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=217:0
+[29709340ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=218:0
+[29709346ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=77:0
+[29739307ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=88:0
+[29739389ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=89:0
+[29739643ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=94:0
+[30719763ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=132:0
+[30719776ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=125:0
+[31684858ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[32423645ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[32423646ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=106:0
+[32423661ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=105:0
+[32424027ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=104:0
+[32424188ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=223:0
+[32424352ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=102:0
+[34387829ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[37057508ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=110:0
+[37057509ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=109:0
+[37057511ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=108:0
+[38131149ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[43660995ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[43661232ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[44655289ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=165398&id=151526&id=165401&id=151564&id=108394&id=63149&id=3335451&id=3243770&id=165393&id=3335254&id=151486&id=2832439&id=62956&id=3333158&id=3335447&id=165385&id=2687763&id=165379&id=165384&id=2999768&id=63405&id=63441&id=151197&id=2160645&id=151247&id=151791&id=151782&id=151132&id=3009308&id=18901&id=89397&id=165407&id=63321&id=3335409&id=151291&id=2035257&id=151298&id=151062&id=150936&id=1752516:0
+[44655289ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=3333163&id=165118&id=165285&id=151679&id=165375&id=63595&id=165387&id=151392&id=1053268&id=1617079&id=2820933:0
+[44655290ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=150757&id=160058&id=165403&id=2654139&id=165365&id=62876&id=71375&id=165378&id=165392&id=165404&id=3335238&id=2249921&id=152873&id=165395&id=410375&id=3321321&id=165396&id=165399&id=165380&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=151521&id=145628&id=151451&id=151177&id=151500&id=165390&id=151296&id=63304&id=165376&id=3333175&id=165391&id=151030&id=150998&id=3333271&id=150868&id=165397:0
+[44655290ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=151228&id=164622&id=151477&id=63340&id=160785&id=150500&id=151338&id=151106&id=151015&id=165409&id=165388&id=165381&id=165405&id=151632&id=151517&id=151383&id=161740&id=151585&id=165400&id=151270&id=151510&id=165374&id=165411&id=150978&id=151657&id=151556&id=165386&id=161559&id=160648&id=165410&id=155370&id=151621&id=151887&id=151107&id=151287&id=151313&id=165382&id=149869&id=160120&id=151511:0
+[44655471ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[44655505ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=122:0
+[44655539ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[44667872ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=157:0
+[44667877ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[44670565ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=214:0
+[44670586ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=117:0
+[44670590ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=114:0
+[44672521ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=128:0
+[45627391ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[46597156ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[46597158ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=250:0
+[46597230ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=183:0
+[49978877ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[50008716ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=125:0
+[50008717ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=132:0
+[50008725ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=143:0
+[50008848ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=271:0
+[50008848ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=148:0
+[50008860ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=112:0
+[50008923ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=119:0
+[63654345ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[66342269ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=140:0
+[66342273ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=130:0
+[66342286ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=129:0
+[69028695ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=130:0
+[69028696ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=129:0
+[69028697ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=141:0
+[69028733ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=128:0
+[70029728ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[71734115ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=121:0
+[71734139ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=228:0
+[71734185ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=207:0
+[74584103ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=183:0
+[74586159ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=142:0
+[74586171ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=133:0
+[74586252ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=103:0
+[75501513ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=142:0
+[75501524ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=133:0
+[75501529ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=103:0
+[75541605ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=87:0
+[76531864ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=126:0
+[76531870ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=140:0
+[76531873ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=130:0
+[76531964ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=129:0
+[76550920ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=142:0
+[76550940ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=220:0
+[77504660ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=188317&id=62876&id=71375&id=188475&id=3335238&id=2249921&id=152873&id=188597&id=410375&id=3321321&id=172573&id=188202&id=188407&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=188226&id=188414&id=188388&id=151500&id=188248&id=188352&id=63304&id=188531&id=3333175&id=188435&id=188254&id=188222&id=188250&id=188252&id=188249&id=188457&id=188200&id=63340&id=188361&id=188391&id=188310&id=179906:0
+[77504670ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=188546&id=188465&id=188610&id=108394&id=63149&id=3335451&id=3243770&id=188395&id=180513&id=187727&id=2832439&id=62956&id=3333158&id=176743&id=188439&id=2687763&id=188149&id=2999768&id=63405&id=63441&id=188471&id=2160645&id=188423&id=188614&id=3009308&id=18901&id=89397&id=188623&id=63321&id=183045&id=188486&id=2035257&id=188406&id=188209&id=187730&id=1752516&id=188130&id=160058&id=188262&id=2654139:0
+[77504672ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=188644&id=188640&id=188369&id=188635&id=188300&id=188207&id=188624&id=188462&id=188347&id=188381&id=188590&id=188604&id=188284&id=188354&id=188382&id=187919&id=188524&id=188594&id=188219&id=188398&id=188203&id=184518&id=3333163&id=188359&id=188425&id=188634&id=185240&id=188517&id=63595&id=182388&id=188542&id=1053268&id=1617079&id=2820933:0
+[77505011ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[77505044ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[77505059ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[77516599ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=58:0
+[77516645ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=271:0
+[77516647ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=143:0
+[78482267ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=85:0
+[78482282ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=76:0
+[78482282ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[78482286ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=85:0
+[79449945ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=101:0
+[79449946ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=90:0
+[79450776ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=88:0
+[79906214ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=134:0
+[79906227ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=47:0
+[79906249ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=29:0
+[79908080ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[80876427ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=106:0
+[80876433ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=102:0
+[81841581ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=125:0
+[81841585ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=112:0
+[81841628ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=271:0
+[83557661ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[83557667ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[83557671ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=210:0
+[86515373ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=226:0
+[86515380ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=86:0
+[89162981ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=174:0
+[89162987ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=85:0
+[89162991ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[89163304ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[89163305ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=274:0
+[89163357ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=149:0
+[90166979ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=121:0
+[90166984ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[91849303ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=35:0
+[91849306ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[91849308ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=250:0
+[91849397ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=183:0
+[91849422ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[91849430ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[91849441ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=210:0
+[94538425ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=218:0
+[94538438ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=219:0
+[94538519ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=77:0
+[94541279ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=88:0
+[94541923ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=89:0
+[94541938ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=87:0
+[96495586ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[96498438ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=48:0
+[96498598ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=29:0
+[96498652ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=234:0
+[96521714ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=146:0
+[96521793ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=104:0
+[97461808ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[97461810ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=106:0
+[97461816ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=105:0
+[97461971ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=104:0
+[97461972ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=223:0
+[97461992ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=102:0
+[97462051ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=103:0
+[99173165ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=39:0
+[99173332ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[99173353ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=35:0
+[101703809ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[101703832ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=99:0
+[101703832ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=98:0
+[101703835ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=97:0
+[101711485ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=136:0
+[101711490ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=137:0
+[101711548ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=139:0
+[101860275ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=211:0
+[101860284ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=213:0
+[101860308ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=214:0
+[103815144ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/geocode?lat=11.927531666666667&lon=99.80854166666667:0
+[103815164ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=218150&id=218231&id=218209&id=108394&id=3335451&id=3243770&id=218103&id=180513&id=218244&id=2832439&id=206795&id=3333158&id=176743&id=218215&id=2687763&id=218043&id=2999768&id=218057&id=218142&id=218186&id=2160645&id=218161&id=3009308&id=18901&id=89397&id=218252&id=218242&id=183045&id=2035257&id=218237&id=218183&id=218254&id=1752516&id=218028&id=216894&id=218181&id=2654139&id=218116&id=218222&id=71375:0
+[103815227ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[104782030ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=85:0
+[106472658ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[106502685ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[107475797ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_RESET @ https://api.centerlink.co.th/api/positions?deviceId=86:0
+[107475829ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[107527221ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[107527221ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=127:0
+[107527228ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=136:0
+[107527290ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=139:0
+[107527454ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=126:0
+[107527694ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=140:0
+[107633765ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=235:0
+[107633767ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=134:0
+[107633839ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[107687917ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[107687918ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=122:0
+[107688216ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[107688217ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=220518&id=220406&id=220446&id=220477&id=108394&id=220425&id=3335451&id=3243770&id=220476&id=180513&id=220512&id=2832439&id=206795&id=3333158&id=176743&id=220397&id=2687763&id=220440&id=220495&id=2999768&id=220323&id=220386&id=220509&id=2160645&id=220430&id=220461&id=3009308&id=18901&id=89397&id=220507&id=220511&id=183045&id=220427&id=2035257&id=220467&id=220473&id=220459&id=1752516&id=220353&id=216894:0
+[107688218ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=220393&id=2654139&id=220452&id=220516&id=71375&id=220482&id=220460&id=220384&id=3335238&id=2249921&id=152873&id=220312&id=410375&id=3321321&id=172573&id=220437&id=220447&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=220420&id=212513&id=220426&id=220455&id=151500&id=220422&id=220402&id=220421&id=220376&id=3333175&id=220414&id=220400&id=220436&id=220474&id=206585&id=220308&id=220448&id=63340:0
+[107688218ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=208090&id=220405&id=220390&id=219742&id=220496&id=220429&id=220490&id=220472&id=220500&id=220391&id=220487&id=220439&id=220492&id=220441&id=220435&id=220370&id=220423&id=220498&id=220378&id=220428&id=220466&id=220465&id=209058&id=210350&id=209473&id=202215&id=220413&id=220486&id=220463&id=220485&id=220392&id=220445&id=211743&id=212923&id=204782&id=220494&id=3333163&id=217608&id=220501&id=220504:0
+[107688218ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=220395&id=220462&id=182388&id=220488&id=220453&id=1053268&id=1617079&id=2820933:0
+[107900189ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=97:0
+[107900190ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=98:0
+[107900250ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=99:0
+[107900251ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=207:0
+[107900251ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=76:0
+[107900253ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[107900254ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=220597&id=220516&id=71375&id=220530&id=3335238&id=2249921&id=152873&id=220579&id=410375&id=3321321&id=172573&id=220567&id=220581&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=220558&id=212513&id=220552&id=151500&id=220548&id=220533&id=220547&id=220376&id=3333175&id=220559&id=220514&id=220532&id=220436&id=220474&id=206585&id=220515&id=220308&id=220580&id=63340&id=208090&id=220536&id=220543:0
+[107900488ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=101:0
+[107900488ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=96:0
+[107900489ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[107900489ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=122:0
+[107900489ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=85:0
+[107900910ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=174:0
+[107900922ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=100:0
+[107900924ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[107900928ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[108009518ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=73:0
+[108009535ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=256:0
+[108009628ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=61:0
+[108009658ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[108009660ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?id=220597&id=220647&id=71375&id=220621&id=220590&id=220530&id=3335238&id=2249921&id=152873&id=220579&id=410375&id=3321321&id=172573&id=220567&id=220581&id=3063534&id=70087&id=119631&id=3335369&id=111629&id=220558&id=212513&id=220552&id=220583&id=151500&id=220548&id=220533&id=220547&id=220643&id=3333175&id=220559&id=220532&id=220436&id=220474&id=206585&id=220660&id=220580&id=63340&id=208090&id=220536:0
+[108013780ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=47:0
+[108013782ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=248:0
+[108015384ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=210:0
+[108015553ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=148:0
+[108017207ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=108:0
+[108017209ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=236:0
+[108017210ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=213:0
+[108063323ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=271:0
+[108117718ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[110036941ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=174:0
+[110036957ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=85:0
+[110037055ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=74:0
+[110065234ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=60:0
+[110065234ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=42:0
+[110066231ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=67:0
+[110066253ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[111052591ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[112024193ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=39:0
+[112024212ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=35:0
+[112024212ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=108:0
+[112024213ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[112024213ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[112024236ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[112024305ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=109:0
+[112024306ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=242:0
+[112027933ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=284:0
+[112027980ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[112027989ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=279:0
+[112027990ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=125:0
+[112027996ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=143:0
+[112027998ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=112:0
+[112781901ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=108:0
+[112781902ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[112781943ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=106:0
+[115700011ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=126:0
+[115700014ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=140:0
+[115700021ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=130:0
+[118379197ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=108:0
+[118379210ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[119401049ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=76:0
+[122047527ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=60:0
+[122047528ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=67:0
+[122047592ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[122048205ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=274:0
+[122048226ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=284:0
+[122048262ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=149:0
+[122067268ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=145:0
+[122067270ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=235:0
+[123770390ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=141:0
+[123770450ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=284:0
+[123770458ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=281:0
+[123772381ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=100:0
+[123772442ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=77:0
+[124736523ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=40:0
+[124736524ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=39:0
+[124736527ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=205:0
+[124736672ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=35:0
+[124757123ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=39:0
+[127424350ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=183:0
+[127424352ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[127424379ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[127424388ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[127424493ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=211:0
+[127424512ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=213:0
+[127424531ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=214:0
+[127424556ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=216:0
+[129419768ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=112:0
+[129419768ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=271:0
+[129419770ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=143:0
+[129419792ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://api.centerlink.co.th/api/positions?deviceId=119:0
+[130450068ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=72:0
+[130450070ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=256:0
+[130450075ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=61:0
+[131084229ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=109:0
+[131084296ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=108:0
+[131084301ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[131084377ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=106:0
+[131084415ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=104:0
+[131084468ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=105:0
+[134310943ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=97:0
+[134310958ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=98:0
+[134310996ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=99:0
+[134311151ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=101:0
+[134311180ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=88:0
+[134311189ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=90:0
+[136689783ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=92:0
+[136689840ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=226:0
+[139368935ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=100:0
+[141157131ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=134:0
+[141157133ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[141157144ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=127:0
+[144011387ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=129:0
+[144011420ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/devices:0
+[144011946ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=133:0
+[144011958ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=116:0
+[144012027ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=125:0
+[145726627ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=218:0
+[145726629ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=219:0
+[145726634ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=77:0
+[145726842ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=134:0
+[145726842ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=127:0
+[145726865ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=235:0
+[148643548ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=113:0
+[148643550ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=107:0
+[148643560ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=106:0
+[148643742ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=104:0
+[148643743ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=223:0
+[148643795ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=102:0
+[150360628ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=76:0
+[150360630ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=121:0
+[150360631ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=228:0
+[150360631ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[150360640ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=174:0
+[150360641ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=207:0
+[151344425ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=249:0
+[151345925ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[154020595ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=227:0
+[154020596ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=123:0
+[154020605ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=120:0
+[154020652ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=121:0
+[154973902ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions:0
+[155003926ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=139:0
+[155003946ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=126:0
+[155004311ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=128:0
+[155004732ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=142:0
+[155004793ms] [ERROR] Failed to load resource: net::ERR_NETWORK_CHANGED @ https://api.centerlink.co.th/api/positions?deviceId=220:0
+[155986060ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=225:0
+[155986127ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=249:0
+[156711178ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=214:0
+[156711234ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=235:0
+[156713115ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=112:0
+[156713316ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=97:0
+[165488611ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=275:0
+[165488621ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=274:0
+[165490893ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=182:0
+[165490902ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=78:0
+[165490942ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=250:0
+[165490943ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=140:0

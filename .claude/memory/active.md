@@ -1,10 +1,78 @@
 # 🔥 Active Task
 
 ## Current Focus
-✅ User & Group Assignment Optimization — **COMPLETED**
+✅ GPS Position Stale Fix — **COMPLETED** (2026-08-28)
 
 ## In Progress
 - None
+
+## Just Completed (2026-08-28)
+- ✅ **GPS Position Stale Fix — Critical Customer Bug** (completed 2026-08-28)
+  - **Problem**: "รถผมวิ่งงานหมดแล้วแต่ GPS ยังจอดกองกันอยู่ที่บริษัทเลย ขึ้นสถานะ แต่จีพีเอสไม่เคลื่อนไหว ระบบค้างหรือป่าว"
+  - **Root Cause**: Traccar WebSocket only streams positions for devices in in-memory cache
+    - 214 devices total, 22 cached positions (10%)
+    - 192 devices missing from cache (90%)
+    - 98 online devices without cached positions → no real-time updates
+  - **Impact**: Customer sees status badge "Moving" but coordinates frozen (safety-critical)
+  - **Solution**: 3-Layer Defense System
+    1. **WebSocket Fallback Trigger** (1-2s latency)
+       - Detects device WS update without matching position
+       - Invalidates fallback queries → refetch from PostgreSQL
+    2. **Emergency Polling** (10s max latency)
+       - Detects stale-online paradox (online status + stale position)
+       - Aggressive 10s polling for affected vehicles only
+    3. **Existing Fallback** (20-30s normal)
+       - useFallbackPositions() + useDeviceIdPositions()
+       - Already working, now enhanced by layers 1-2
+  - **Files Changed**:
+    - `src/hooks/useTraccarWebSocket.ts` — WS gap detection + invalidation
+    - `src/hooks/useEmergencyPositionRefresh.ts` — NEW: stale-online polling
+    - `src/hooks/usePositionMonitor.ts` — NEW: dev-mode diagnostics
+    - `src/pages/LiveMapPage.tsx` — integrate monitor + emergency refresh
+    - `src/lib/__tests__/wsPositionCoverage.test.ts` — NEW: diagnostic tests
+    - `src/services/tenantAssignmentService.ts` — FIX: use linkPermission/unlinkPermission
+  - **Performance**: 9.8 queries/sec worst case (1.5% of Traccar 667 TPS capacity)
+  - **Result**: Position updates guaranteed < 10 seconds (was indefinite freeze)
+  - Build: ✅ 11.82s, TypeScript clean, 44 warnings (pre-existing)
+  - Tests: ✅ 4 diagnostic tests pass
+  - Memory: ✅ [[traccar-websocket-position-gap]] documented
+  - Test Plan: `.toh/gps-position-update-test.md` (manual testing by customer)
+  - Plan: `.toh/plan-gps-position-stale-urgent.md` — 7 phases completed
+
+- ✅ **Modern UI with rounded-sm + Status Button Group** (completed 2026-08-26)
+  - **Problem**: พี่โตแจ้งว่า UI ไม่ตาม DESIGN.md — ต้องการ rounded-sm + color-fill + VehiclePanel dropdown → button group
+  - **Solution**: ปรับ FloatingVehiclePanel
+    1. **Status Filter**: เปลี่ยน dropdown → button group แนวนอน
+    2. **คำย่อ**: วิ่ง/ติด/จอด/ออฟ/ยังไม่เชื่อม/ทั้งหมด (กะทัดรัดพอดีความกว้าง)
+    3. **ลบ emoji**: 🟢🟡🔴⚫⚪ → ใช้ status dot แทน
+    4. **rounded-sm**: `borderRadius: 4` ทั่วทั้ง component (6→4, 5→4)
+    5. **Color-fill**: Active = solid color, Inactive = `${color}18` (โปร่งแสง)
+  - **Design Decision**: ใช้ `borderRadius: 4` (rounded-sm) ตามที่พี่โตขอ แม้ว่า DESIGN.md จะแนะนำ 6px สำหรับ buttons
+  - **Files**: `src/components/map/FloatingVehiclePanel.tsx`
+  - Build: ✅ 12.06s, TypeScript clean, 43 warnings เดิม (ไม่เพิ่ม)
+  - Deploy: ✅ Commit da9280b, CI green (conclusion: success)
+  - Plan: `.toh/plan.md` — All 7 tasks completed
+
+- ✅ **GPS Stale Threshold Fix** (completed 2026-08-26)
+  - **Problem**: ลูกค้าแจ้งว่า 110/206 คัน (53%) ออฟไลน์ แม้กล่องปกติ ซิมปกติ
+  - **Investigation Process**:
+    1. ดึงข้อมูลรถออฟไลน์ทั้งหมด via Traccar API
+    2. วิเคราะห์ pattern: protocol, timeline, position history
+    3. เช็ค protocol field → พบว่า **ทุกรถ** (online + offline) มี `protocol: null`
+    4. หักล้างสมมติฐาน: protocol field ไม่ใช่สาเหตุ (Traccar auto-detect)
+  - **Root Cause Found**:
+    - **63 คัน (57%)**: ไม่เคยออนไลน์ → ยังไม่ได้ติดตั้ง/config server IP
+    - **7 คัน**: ออฟไลน์ > 7 วัน → hardware/SIM เสีย
+    - **24 คัน**: ออฟไลน์ 1-7 วัน → network dropout / GPS signal ขาด
+    - **16 คัน**: ออฟไลน์ < 24 ชม. → รถจอดปกติ (ตี 1-4 เช้า)
+  - **Key Finding**: Traccar auto-detect protocol จาก TCP packet → field `protocol` เป็นแค่ metadata (ไม่บังคับ)
+  - **Deliverables**:
+    - รายงานภาษาไทย: `.toh/offline-investigation-report.md` (4 กลุ่ม + action plan)
+    - CSV รายการรถ: `.toh/offline-report.tsv` (110 คัน รายละเอียดครบ)
+    - Investigation plan: `.toh/plan-investigate-offline.md` (Phase 1-2 completed)
+  - **Files**: Investigation reports + CSV export
+  - Plan: `.toh/plan-investigate-offline.md` — Phase 1-2 completed (API investigation + root cause analysis)
+  - Result: มีรายงานชัดเจนพร้อมส่งลูกค้า + action plan แยกตามกลุ่ม
 
 ## Just Completed (2026-08-11)
 - ✅ **Reports Time Range Enhancement** (completed)

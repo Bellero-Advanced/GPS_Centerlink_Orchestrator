@@ -1,0 +1,5 @@
+[    1963ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-BPBXlHiF-1787729699366.js:236
+[    1965ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-BPBXlHiF-1787729699366.js:236
+[    3699ms] [LOG] [LayoutV2] Applying brand colors: {tenantTheme.primaryColor: #ff8800, slug: gpsthailand, finalColor: #ff8800, tenantLoading: false} @ https://gpsthailand.centerlink.co.th/assets/LayoutV2-BRCuJu2J-1787729699366.js:21
+[   26221ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=217:0
+[  297776ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.centerlink.co.th/api/devices:0

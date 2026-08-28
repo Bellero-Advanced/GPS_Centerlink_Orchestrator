@@ -1,0 +1,86 @@
+- generic [ref=f8e52]:
+  - generic [ref=f8e54]:
+    - region "Map" [ref=f8e55]
+    - generic:
+      - generic:
+        - button [ref=f8e57] [cursor=pointer]
+        - generic [ref=f8e60]:
+          - button "Zoom in" [ref=f8e61] [cursor=pointer]
+          - button "Zoom out" [ref=f8e63] [cursor=pointer]
+          - button "Drag to rotate map, click to reset north" [ref=f8e65]
+        - button "Find my location" [ref=f8e68] [cursor=pointer]
+        - button [ref=f8e71] [cursor=pointer]
+      - generic: 5000 km
+      - group [ref=f8e75]:
+        - generic "Toggle attribution" [ref=f8e76] [cursor=pointer]
+        - generic [ref=f8e77]:
+          - link "© LocationIQ" [ref=f8e78] [cursor=pointer]:
+            - /url: https://locationiq.com/?ref=maps
+          - link "© OpenStreetMap contributors" [ref=f8e79] [cursor=pointer]:
+            - /url: https://www.openstreetmap.org/copyright
+  - generic:
+    - generic [ref=f8e81]:
+      - button [ref=f8e82] [cursor=pointer]
+      - generic [ref=f8e85]:
+        - textbox "Search Devices" [ref=f8e86]
+        - button [ref=f8e88] [cursor=pointer]
+        - group
+      - button [ref=f8e92] [cursor=pointer]
+    - list [ref=f8e96]:
+      - button "84-7478 สมุทรปราการ Online" [ref=f8e98] [cursor=pointer]:
+        - generic [ref=f8e101]:
+          - generic [ref=f8e102]: 84-7478 สมุทรปราการ
+          - paragraph [ref=f8e103]: Online
+      - button "82-5856 24 days ago" [ref=f8e105] [cursor=pointer]:
+        - generic [ref=f8e108]:
+          - generic [ref=f8e109]: 82-5856
+          - paragraph [ref=f8e110]: 24 days ago
+      - button "86-0608 ชลบุรี a day ago" [ref=f8e112] [cursor=pointer]:
+        - generic [ref=f8e115]:
+          - generic [ref=f8e116]: 86-0608 ชลบุรี
+          - paragraph [ref=f8e117]: a day ago
+      - button "86-0607 ชลบุรี 8 days ago" [ref=f8e119] [cursor=pointer]:
+        - generic [ref=f8e122]:
+          - generic [ref=f8e123]: 86-0607 ชลบุรี
+          - paragraph [ref=f8e124]: 8 days ago
+      - button "86-0606 ชลบุรี 28 minutes ago" [ref=f8e126] [cursor=pointer]:
+        - generic [ref=f8e129]:
+          - generic [ref=f8e130]: 86-0606 ชลบุรี
+          - paragraph [ref=f8e131]: 28 minutes ago
+      - button "86-0373 ชลบุรี Online" [ref=f8e133] [cursor=pointer]:
+        - generic [ref=f8e136]:
+          - generic [ref=f8e137]: 86-0373 ชลบุรี
+          - paragraph [ref=f8e138]: Online
+      - button "86-0371 ชลบุรี Online" [ref=f8e140] [cursor=pointer]:
+        - generic [ref=f8e143]:
+          - generic [ref=f8e144]: 86-0371 ชลบุรี
+          - paragraph [ref=f8e145]: Online
+      - button "01 Offline" [ref=f8e147] [cursor=pointer]:
+        - generic [ref=f8e150]:
+          - generic [ref=f8e151]: "01"
+          - paragraph [ref=f8e152]: Offline
+      - button "81-3113 พิจิตร Online" [ref=f8e154] [cursor=pointer]:
+        - generic [ref=f8e157]:
+          - generic [ref=f8e158]: 81-3113 พิจิตร
+          - paragraph [ref=f8e159]: Online
+      - button "82-8661 Offline" [ref=f8e161] [cursor=pointer]:
+        - generic [ref=f8e164]:
+          - generic [ref=f8e165]: 82-8661
+          - paragraph [ref=f8e166]: Offline
+      - button "84-3210 Online" [ref=f8e168] [cursor=pointer]:
+        - generic [ref=f8e171]:
+          - generic [ref=f8e172]: 84-3210
+          - paragraph [ref=f8e173]: Online
+      - button "84-3323 7 hours ago" [ref=f8e175] [cursor=pointer]:
+        - generic [ref=f8e178]:
+          - generic [ref=f8e179]: 84-3323
+          - paragraph [ref=f8e180]: 7 hours ago
+      - button "FM1JNKA10416 Offline" [ref=f8e182] [cursor=pointer]:
+        - generic [ref=f8e185]:
+          - generic [ref=f8e186]: FM1JNKA10416
+          - paragraph [ref=f8e187]: Offline
+    - generic [ref=f8e191]:
+      - button "Map" [ref=f8e192] [cursor=pointer]
+      - button "Reports" [ref=f8e197] [cursor=pointer]
+      - button "Settings" [ref=f8e201] [cursor=pointer]
+      - button "Account" [ref=f8e205] [cursor=pointer]

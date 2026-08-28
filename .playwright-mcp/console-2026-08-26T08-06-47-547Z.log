@@ -1,0 +1,13 @@
+[    1838ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-DNrKrQdX-1787731522820.js:236
+[    1840ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-DNrKrQdX-1787731522820.js:236
+[   24963ms] [LOG] [LayoutV2] Applying brand colors: {tenantTheme.primaryColor: #ff8800, slug: gpsthailand, finalColor: #ff8800, tenantLoading: false} @ https://gpsthailand.centerlink.co.th/assets/LayoutV2-OCbaEOLo-1787731522820.js:21
+[   27944ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=149:0
+[   27975ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=137:0
+[   27989ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=139:0
+[   30321ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=211:0
+[   30350ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=99:0
+[   30369ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=98:0
+[   30446ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=130:0
+[   48260ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-DNrKrQdX-1787731522820.js:236
+[   48261ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-DNrKrQdX-1787731522820.js:236
+[   48632ms] [LOG] [LayoutV2] Applying brand colors: {tenantTheme.primaryColor: #ff8800, slug: gpsthailand, finalColor: #ff8800, tenantLoading: false} @ https://gpsthailand.centerlink.co.th/assets/LayoutV2-OCbaEOLo-1787731522820.js:21

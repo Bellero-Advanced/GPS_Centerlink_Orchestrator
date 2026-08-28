@@ -1,0 +1,93 @@
+- generic [ref=f2e44]:
+  - banner [ref=f2e45]:
+    - generic [ref=f2e47] [cursor=pointer]:
+      - img "GPS Thailand GPS" [ref=f2e48]
+      - generic [ref=f2e49]: GPS Thailand GPS
+    - button "ค้นหาทั่วทั้งระบบ... ⌘K" [ref=f2e51] [cursor=pointer]:
+      - generic [ref=f2e55]: ค้นหาทั่วทั้งระบบ...
+      - generic [ref=f2e56]: ⌘K
+    - generic [ref=f2e57]:
+      - generic [ref=f2e58]:
+        - generic [ref=f2e59]: "16"
+        - generic [ref=f2e63]: 107/206
+      - button "มืด" [ref=f2e67] [cursor=pointer]
+      - button "A" [ref=f2e71] [cursor=pointer]
+  - complementary [ref=f2e75]:
+    - navigation [ref=f2e76]:
+      - generic [ref=f2e77]: "13"
+      - generic [ref=f2e80]:
+        - link "แดชบอร์ด" [ref=f2e81] [cursor=pointer]:
+          - /url: /app/dashboard
+        - link "แผนที่ปัจจุบัน" [ref=f2e87] [cursor=pointer]:
+          - /url: /app/map
+        - link "ยานพาหนะ" [ref=f2e90] [cursor=pointer]:
+          - /url: /app/fleet
+      - generic [ref=f2e97]:
+        - link "รายงาน" [ref=f2e98] [cursor=pointer]:
+          - /url: /app/reports
+        - link "ความเร็ว" [ref=f2e102] [cursor=pointer]:
+          - /url: /app/speed
+        - link "ย้อนเส้นทาง" [ref=f2e105] [cursor=pointer]:
+          - /url: /app/replay
+        - link "Telematics" [ref=f2e109] [cursor=pointer]:
+          - /url: /app/telematics
+        - link "จุดสนใจ" [ref=f2e116] [cursor=pointer]:
+          - /url: /app/poi
+        - link "แจ้งเตือน" [ref=f2e120] [cursor=pointer]:
+          - /url: /app/alerts
+        - link "การแจ้งเตือน" [ref=f2e123] [cursor=pointer]:
+          - /url: /app/notifications
+      - generic [ref=f2e128]:
+        - link "Analytics" [ref=f2e129] [cursor=pointer]:
+          - /url: /app/analytics
+        - link "Dispatch" [ref=f2e131] [cursor=pointer]:
+          - /url: /app/dispatch
+        - link "บำรุงรักษา AI" [ref=f2e136] [cursor=pointer]:
+          - /url: /app/predictive
+        - link "กลุ่มยานพาหนะ" [ref=f2e140] [cursor=pointer]:
+          - /url: /app/groups
+        - link "คะแนนความปลอดภัย" [ref=f2e145] [cursor=pointer]:
+          - /url: /app/scoring
+        - link "คนขับรถ" [ref=f2e152] [cursor=pointer]:
+          - /url: /app/drivers
+        - link "บำรุงรักษา" [ref=f2e156] [cursor=pointer]:
+          - /url: /app/maintenance
+        - link "เชื้อเพลิง" [ref=f2e159] [cursor=pointer]:
+          - /url: /app/fuel
+        - link "หางลาก" [ref=f2e163] [cursor=pointer]:
+          - /url: /app/trailers
+        - link "ตรวจสภาพ" [ref=f2e169] [cursor=pointer]:
+          - /url: /app/inspection
+        - link "เอกสารสำคัญ" [ref=f2e174] [cursor=pointer]:
+          - /url: /app/compliance
+        - link "DLT GPS Web Service" [ref=f2e178] [cursor=pointer]:
+          - /url: /app/dlt
+        - link "Audit Log" [ref=f2e182] [cursor=pointer]:
+          - /url: /app/audit
+        - link "การเรียกเก็บเงิน" [ref=f2e187] [cursor=pointer]:
+          - /url: /app/billing
+      - generic [ref=f2e191]:
+        - link "กลุ่มความเร็ว" [ref=f2e192] [cursor=pointer]:
+          - /url: /app/speed-groups
+        - link "การแจ้งเตือน" [ref=f2e196] [cursor=pointer]:
+          - /url: /app/alert-settings
+        - link "รายงานอีเมล" [ref=f2e200] [cursor=pointer]:
+          - /url: /app/email-report-settings
+        - link "จัดการบัญชี" [ref=f2e204] [cursor=pointer]:
+          - /url: /app/team
+  - main [ref=f2e210]:
+    - generic [ref=f2e871]:
+      - generic [ref=f2e874]:
+        - heading "ค้นหา" [level=1] [ref=f2e876]
+        - paragraph [ref=f2e877]: ค้นหายานพาหนะ พนักงาน หรือ Geofence
+      - generic [ref=f2e878]:
+        - generic [ref=f2e879]:
+          - textbox "ค้นหายานพาหนะ, ทะเบียน, IMEI..." [active] [ref=f2e883]
+          - generic [ref=f2e884]: Esc
+        - generic [ref=f2e885]:
+          - paragraph [ref=f2e886]: ทางลัด
+          - generic [ref=f2e887]:
+            - button "แผนที่สด" [ref=f2e888] [cursor=pointer]
+            - button "ยานพาหนะทั้งหมด" [ref=f2e894] [cursor=pointer]
+            - button "พนักงาน" [ref=f2e903] [cursor=pointer]
+            - button "จุดสนใจ" [ref=f2e912] [cursor=pointer]

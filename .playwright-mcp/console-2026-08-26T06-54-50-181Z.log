@@ -1,0 +1,2 @@
+[   17612ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-VNRb2XwN.js:236
+[   17614ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-VNRb2XwN.js:236

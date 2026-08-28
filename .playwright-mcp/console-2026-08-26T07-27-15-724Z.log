@@ -1,0 +1,14 @@
+[    2206ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-DMtMxpKx-1787729163372.js:236
+[    2207ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-DMtMxpKx-1787729163372.js:236
+[   33775ms] [LOG] [LayoutV2] Applying brand colors: {tenantTheme.primaryColor: #ff8800, slug: gpsthailand, finalColor: #ff8800, tenantLoading: false} @ https://gpsthailand.centerlink.co.th/assets/LayoutV2-BAcnFkNr-1787729163372.js:21
+[  108548ms] [LOG] [tenantService] rowToTenant INPUT: {slug: gpsthailand, data.theme: Object, data.theme.primaryColor: #ff8800, full row.data keys: Array(13)} @ https://gpsthailand.centerlink.co.th/assets/index-DMtMxpKx-1787729163372.js:236
+[  108550ms] [LOG] [tenantService] rowToTenant OUTPUT: {slug: gpsthailand, theme.primaryColor: #ff8800, theme exists: true} @ https://gpsthailand.centerlink.co.th/assets/index-DMtMxpKx-1787729163372.js:236
+[  180538ms] [LOG] [LayoutV2] Applying brand colors: {tenantTheme.primaryColor: #ff8800, slug: gpsthailand, finalColor: #ff8800, tenantLoading: false} @ https://gpsthailand.centerlink.co.th/assets/LayoutV2-BAcnFkNr-1787729163372.js:21
+[  708057ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=144:0
+[  767737ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=217:0
+[  767754ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=211:0
+[  827694ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=40:0
+[  887595ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=73:0
+[  887597ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=80:0
+[  948169ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=42:0
+[  948196ms] [ERROR] Failed to load resource: the server responded with a status of 503 () @ https://api.centerlink.co.th/api/positions?deviceId=60:0

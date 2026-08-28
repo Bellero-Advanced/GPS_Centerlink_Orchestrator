@@ -1,0 +1,2665 @@
+- generic [ref=f10e3]:
+  - banner [ref=f10e4]:
+    - generic [ref=f10e6] [cursor=pointer]:
+      - img "GPS Thailand GPS" [ref=f10e7]
+      - generic [ref=f10e8]: GPS Thailand GPS
+    - button "ค้นหาทั่วทั้งระบบ... ⌘K" [ref=f10e10] [cursor=pointer]:
+      - generic [ref=f10e14]: ค้นหาทั่วทั้งระบบ...
+      - generic [ref=f10e15]: ⌘K
+    - generic [ref=f10e16]:
+      - generic [ref=f10e17]:
+        - generic [ref=f10e18]: "16"
+        - generic [ref=f10e22]: 107/206
+      - button "มืด" [ref=f10e26] [cursor=pointer]
+      - button "A" [ref=f10e30] [cursor=pointer]
+  - complementary [ref=f10e34]:
+    - navigation [ref=f10e35]:
+      - generic [ref=f10e36]: "15"
+      - generic [ref=f10e39]:
+        - link "แดชบอร์ด" [ref=f10e40] [cursor=pointer]:
+          - /url: /app/dashboard
+        - link "แผนที่ปัจจุบัน" [ref=f10e46] [cursor=pointer]:
+          - /url: /app/map
+        - link "ยานพาหนะ" [ref=f10e49] [cursor=pointer]:
+          - /url: /app/fleet
+      - generic [ref=f10e56]:
+        - link "รายงาน" [ref=f10e57] [cursor=pointer]:
+          - /url: /app/reports
+        - link "ความเร็ว" [ref=f10e61] [cursor=pointer]:
+          - /url: /app/speed
+        - link "ย้อนเส้นทาง" [ref=f10e64] [cursor=pointer]:
+          - /url: /app/replay
+        - link "Telematics" [ref=f10e68] [cursor=pointer]:
+          - /url: /app/telematics
+        - link "จุดสนใจ" [ref=f10e75] [cursor=pointer]:
+          - /url: /app/poi
+        - link "แจ้งเตือน" [ref=f10e79] [cursor=pointer]:
+          - /url: /app/alerts
+        - link "การแจ้งเตือน" [ref=f10e82] [cursor=pointer]:
+          - /url: /app/notifications
+      - generic [ref=f10e87]:
+        - link "Analytics" [ref=f10e88] [cursor=pointer]:
+          - /url: /app/analytics
+        - link "Dispatch" [ref=f10e90] [cursor=pointer]:
+          - /url: /app/dispatch
+        - link "บำรุงรักษา AI" [ref=f10e95] [cursor=pointer]:
+          - /url: /app/predictive
+        - link "กลุ่มยานพาหนะ" [ref=f10e99] [cursor=pointer]:
+          - /url: /app/groups
+        - link "คะแนนความปลอดภัย" [ref=f10e104] [cursor=pointer]:
+          - /url: /app/scoring
+        - link "คนขับรถ" [ref=f10e111] [cursor=pointer]:
+          - /url: /app/drivers
+        - link "บำรุงรักษา" [ref=f10e115] [cursor=pointer]:
+          - /url: /app/maintenance
+        - link "เชื้อเพลิง" [ref=f10e118] [cursor=pointer]:
+          - /url: /app/fuel
+        - link "หางลาก" [ref=f10e122] [cursor=pointer]:
+          - /url: /app/trailers
+        - link "ตรวจสภาพ" [ref=f10e128] [cursor=pointer]:
+          - /url: /app/inspection
+        - link "เอกสารสำคัญ" [ref=f10e133] [cursor=pointer]:
+          - /url: /app/compliance
+        - link "DLT GPS Web Service" [ref=f10e137] [cursor=pointer]:
+          - /url: /app/dlt
+        - link "Audit Log" [ref=f10e141] [cursor=pointer]:
+          - /url: /app/audit
+        - link "การเรียกเก็บเงิน" [ref=f10e146] [cursor=pointer]:
+          - /url: /app/billing
+      - generic [ref=f10e150]:
+        - link "กลุ่มความเร็ว" [ref=f10e151] [cursor=pointer]:
+          - /url: /app/speed-groups
+        - link "การแจ้งเตือน" [ref=f10e155] [cursor=pointer]:
+          - /url: /app/alert-settings
+        - link "รายงานอีเมล" [ref=f10e159] [cursor=pointer]:
+          - /url: /app/email-report-settings
+        - link "จัดการบัญชี" [ref=f10e163] [cursor=pointer]:
+          - /url: /app/team
+  - main [ref=f10e169]:
+    - generic [ref=f10e172]:
+      - generic [ref=f10e173]:
+        - generic [ref=f10e174]:
+          - button "ปิด" [ref=f10e176] [cursor=pointer]
+          - textbox "ค้นหาชื่อ, IMEI, ทะเบียน..." [ref=f10e184]
+          - combobox [ref=f10e186] [cursor=pointer]:
+            - option "สถานะทั้งหมด (206)" [selected]
+            - option "🟢 เคลื่อนที่ (16)"
+            - option "🟡 จอดติดเครื่อง (0)"
+            - option "🔴 จอดดับเครื่อง (28)"
+            - option "⚫ ออฟไลน์ (99)"
+            - option "⚪ ยังไม่เชื่อม GPS (63)"
+          - combobox [ref=f10e189] [cursor=pointer]:
+            - option "ทั้งหมด (กลุ่ม)" [selected]
+            - option "คำ เบ้าสมบูรณ์"
+            - option "ฉลวย ไตรทอง"
+            - option "ชลากร แซ่ตั้ง"
+            - option "ทองไพทูรย์"
+            - option "นัฐพนธ์ จรุงพันธ์"
+            - option "บริษัท ทรงไชยรุ่งเรืองขนส่ง จำกัด"
+            - option "บริษัท ปรัชญาพัฒนา ทรานสปอร์ต จำกัด"
+            - option "บริษัท สยามคาสท์ไนล่อน จำกัด"
+            - option "บริษัท อูเบะ เคมิคอลส์ (เอเชีย) จำกัด (มหาชน)"
+            - option "บริษัท เบญญาภา พร็อพเพอร์ตี้ จำกัด"
+            - option "บริษัท แอดวานซ์"
+            - option "บริษัท ไทย มะรุมะ โทไค จำกัด"
+            - option "บุญเพ็ชร เข็มจีนมะดัน"
+            - option "พรชัย ปราบพุดซา"
+            - option "วิเชียร ทานะเวช"
+            - option "สมาร์ท คอนกรีต"
+            - option "สุนา สงครามภู"
+            - option "สุรศักดิ์ ประทุมสูตร"
+            - option "หทัยเทพ อุปฮาด"
+            - option "ห้างหุ้นส่วนจำกัด รุ่งโรจน์ซัพพลาย (สหมอเตอร์)"
+            - option "ห้างหุ้นส่วนจำกัด วัฒนา ทราเวล 2019"
+            - option "ห้างหุ้นส่วนจำกัด วิชาญเจริญ เครน"
+            - option "อูเบะ เคมีคอล"
+            - option "เอกพัน ภูชัน"
+            - option "เอสดี"
+            - option "เอื้อนภา ตั้งจิตรวัฒนากุล"
+            - option "โรงสีร่วมเจริญ 1"
+            - option "ไทยสตีล"
+        - generic [ref=f10e190]:
+          - button "ยังไม่เชื่อม GPS 71-6656 0km/h 01 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e192] [cursor=pointer]:
+            - generic [ref=f10e194]:
+              - button [ref=f10e195]
+              - generic [ref=f10e203]: ยังไม่เชื่อม GPS
+              - generic "71-6656" [ref=f10e204]
+              - generic [ref=f10e205]: 0km/h
+            - generic [ref=f10e206]:
+              - generic [ref=f10e207]: "01"
+              - generic [ref=f10e208]: ยังไม่รูดบัตร
+            - generic [ref=f10e213]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e218]: —
+          - button "ยังไม่เชื่อม GPS 90-6905 นครราชสีมา 0km/h 01 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e224] [cursor=pointer]:
+            - generic [ref=f10e226]:
+              - button [ref=f10e227]
+              - generic [ref=f10e235]: ยังไม่เชื่อม GPS
+              - generic "90-6905 นครราชสีมา" [ref=f10e236]
+              - generic [ref=f10e237]: 0km/h
+            - generic [ref=f10e238]:
+              - generic [ref=f10e239]: "01"
+              - generic [ref=f10e240]: ยังไม่รูดบัตร
+            - generic [ref=f10e245]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e250]: —
+          - button "ออฟไลน์ 1ฒค-3774 กรุงเทพ 0km/h 1ฒค-3774 กรุงเทพ ยังไม่รูดบัตร ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี 23/08/2569 08:11:11 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e256] [cursor=pointer]:
+            - generic [ref=f10e258]:
+              - button [ref=f10e259]
+              - generic [ref=f10e267]: ออฟไลน์
+              - generic "1ฒค-3774 กรุงเทพ" [ref=f10e268]
+              - generic [ref=f10e269]: 0km/h
+            - generic [ref=f10e270]:
+              - generic [ref=f10e271]: 1ฒค-3774 กรุงเทพ
+              - generic [ref=f10e272]: ยังไม่รูดบัตร
+            - generic [ref=f10e277]: ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี
+            - generic [ref=f10e282]:
+              - generic [ref=f10e286]: 23/08/2569 08:11:11
+              - generic [ref=f10e287]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "จอดดับเครื่อง 2ฒฌ-3550 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา 0km/h 2ฒฌ-3550 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:03:40" [ref=f10e289] [cursor=pointer]:
+            - generic [ref=f10e291]:
+              - button [ref=f10e292]
+              - generic [ref=f10e300]: จอดดับเครื่อง
+              - generic "2ฒฌ-3550 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา" [ref=f10e301]
+              - generic [ref=f10e302]: 0km/h
+            - generic [ref=f10e303]:
+              - generic [ref=f10e304]: 2ฒฌ-3550 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา
+              - generic [ref=f10e305]: ยังไม่รูดบัตร
+            - generic [ref=f10e310]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e315]: 26/08/2569 15:03:40
+          - button "ออฟไลน์ 2ฒฌ-3552 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา 0km/h 2ฒฌ-3552 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 07:37:24 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e321] [cursor=pointer]:
+            - generic [ref=f10e323]:
+              - button [ref=f10e324]
+              - generic [ref=f10e332]: ออฟไลน์
+              - generic "2ฒฌ-3552 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา" [ref=f10e333]
+              - generic [ref=f10e334]: 0km/h
+            - generic [ref=f10e335]:
+              - generic [ref=f10e336]: 2ฒฌ-3552 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา
+              - generic [ref=f10e337]: ยังไม่รูดบัตร
+            - generic [ref=f10e342]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e347]:
+              - generic [ref=f10e351]: 23/08/2569 07:37:24
+              - generic [ref=f10e352]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 2ฒฌ-5637 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา 0km/h 2ฒฌ-5637 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:13:37 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e354] [cursor=pointer]:
+            - generic [ref=f10e356]:
+              - button [ref=f10e357]
+              - generic [ref=f10e365]: ออฟไลน์
+              - generic "2ฒฌ-5637 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา" [ref=f10e366]
+              - generic [ref=f10e367]: 0km/h
+            - generic [ref=f10e368]:
+              - generic [ref=f10e369]: 2ฒฌ-5637 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา
+              - generic [ref=f10e370]: ยังไม่รูดบัตร
+            - generic [ref=f10e375]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e380]:
+              - generic [ref=f10e384]: 23/08/2569 08:13:37
+              - generic [ref=f10e385]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 2ฒฌ-5638 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา 0km/h 2ฒฌ-5638 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 25/08/2569 23:12:45 ข้อมูลเก่า ประมาณ 16 ชั่วโมงที่ผ่านมา" [ref=f10e387] [cursor=pointer]:
+            - generic [ref=f10e389]:
+              - button [ref=f10e390]
+              - generic [ref=f10e398]: ออฟไลน์
+              - generic "2ฒฌ-5638 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา" [ref=f10e399]
+              - generic [ref=f10e400]: 0km/h
+            - generic [ref=f10e401]:
+              - generic [ref=f10e402]: 2ฒฌ-5638 (บ.ฟิลเตอร์มาร์ท) พระนครศรีอยุธยา
+              - generic [ref=f10e403]: ยังไม่รูดบัตร
+            - generic [ref=f10e408]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e413]:
+              - generic [ref=f10e417]: 25/08/2569 23:12:45
+              - generic [ref=f10e418]: ข้อมูลเก่า ประมาณ 16 ชั่วโมงที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 2ฒฌ-5640 (บ.ฟิลเตอร์มาร์ท) รถคืนซาก พระนครศรีอยุธยา 0km/h 2ฒฌ-5640 (บ.ฟิลเตอร์มาร์ท) รถคืนซาก พระนครศรีอยุธยา ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e420] [cursor=pointer]:
+            - generic [ref=f10e422]:
+              - button [ref=f10e423]
+              - generic [ref=f10e431]: ยังไม่เชื่อม GPS
+              - generic "2ฒฌ-5640 (บ.ฟิลเตอร์มาร์ท) รถคืนซาก พระนครศรีอยุธยา" [ref=f10e432]
+              - generic [ref=f10e433]: 0km/h
+            - generic [ref=f10e434]:
+              - generic [ref=f10e435]: 2ฒฌ-5640 (บ.ฟิลเตอร์มาร์ท) รถคืนซาก พระนครศรีอยุธยา
+              - generic [ref=f10e436]: ยังไม่รูดบัตร
+            - generic [ref=f10e441]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e446]: —
+          - button "ออฟไลน์ 0km/h 359857080904881 ยังไม่รูดบัตร แขวงคันนายาว เขตคันนายาว กรุงเทพมหานคร 21/08/2569 01:41:38 ข้อมูลเก่า 6 วันที่ผ่านมา" [ref=f10e452] [cursor=pointer]:
+            - generic [ref=f10e454]:
+              - button [ref=f10e455]
+              - generic [ref=f10e463]: ออฟไลน์
+              - generic [ref=f10e464]: 0km/h
+            - generic [ref=f10e465]:
+              - generic [ref=f10e466]: "359857080904881"
+              - generic [ref=f10e467]: ยังไม่รูดบัตร
+            - generic [ref=f10e472]: แขวงคันนายาว เขตคันนายาว กรุงเทพมหานคร
+            - generic [ref=f10e477]:
+              - generic [ref=f10e481]: 21/08/2569 01:41:38
+              - generic [ref=f10e482]: ข้อมูลเก่า 6 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 0km/h 359857081303216 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e484] [cursor=pointer]:
+            - generic [ref=f10e486]:
+              - button [ref=f10e487]
+              - generic [ref=f10e495]: ยังไม่เชื่อม GPS
+              - generic [ref=f10e496]: 0km/h
+            - generic [ref=f10e497]:
+              - generic [ref=f10e498]: "359857081303216"
+              - generic [ref=f10e499]: ยังไม่รูดบัตร
+            - generic [ref=f10e504]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e509]: —
+          - button "ออฟไลน์ 3ฒย-5075 กรุงเทพ 0km/h 3ฒย-5075 กรุงเทพ ยังไม่รูดบัตร ต.ท่าเกษม อ.เมืองสระแก้ว จ.สระแก้ว 25/08/2569 05:30:48 ข้อมูลเก่า 1 วันที่ผ่านมา" [ref=f10e515] [cursor=pointer]:
+            - generic [ref=f10e517]:
+              - button [ref=f10e518]
+              - generic [ref=f10e526]: ออฟไลน์
+              - generic "3ฒย-5075 กรุงเทพ" [ref=f10e527]
+              - generic [ref=f10e528]: 0km/h
+            - generic [ref=f10e529]:
+              - generic [ref=f10e530]: 3ฒย-5075 กรุงเทพ
+              - generic [ref=f10e531]: ยังไม่รูดบัตร
+            - generic [ref=f10e536]: ต.ท่าเกษม อ.เมืองสระแก้ว จ.สระแก้ว
+            - generic [ref=f10e541]:
+              - generic [ref=f10e545]: 25/08/2569 05:30:48
+              - generic [ref=f10e546]: ข้อมูลเก่า 1 วันที่ผ่านมา
+          - button "ออฟไลน์ 70-3048 ราชบุรี 0km/h 70-3048 ราชบุรี ยังไม่รูดบัตร น้ำมัน 0% ต.หัวสะพาน อ.เมืองเพชรบุรี จ.เพชรบุรี 23/08/2569 01:13:28 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e548] [cursor=pointer]:
+            - generic [ref=f10e550]:
+              - button [ref=f10e551]
+              - generic [ref=f10e559]: ออฟไลน์
+              - generic "70-3048 ราชบุรี" [ref=f10e560]
+              - generic [ref=f10e561]: 0km/h
+            - generic [ref=f10e562]:
+              - generic [ref=f10e563]: 70-3048 ราชบุรี
+              - generic [ref=f10e564]: ยังไม่รูดบัตร
+            - generic [ref=f10e570]:
+              - generic [ref=f10e574]: น้ำมัน
+              - generic [ref=f10e575]: 0%
+            - generic [ref=f10e577]: ต.หัวสะพาน อ.เมืองเพชรบุรี จ.เพชรบุรี
+            - generic [ref=f10e582]:
+              - generic [ref=f10e586]: 23/08/2569 01:13:28
+              - generic [ref=f10e587]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 70-3063 ราชบุรี 0km/h 70-3063 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e589] [cursor=pointer]:
+            - generic [ref=f10e591]:
+              - button [ref=f10e592]
+              - generic [ref=f10e600]: ยังไม่เชื่อม GPS
+              - generic "70-3063 ราชบุรี" [ref=f10e601]
+              - generic [ref=f10e602]: 0km/h
+            - generic [ref=f10e603]:
+              - generic [ref=f10e604]: 70-3063
+              - generic [ref=f10e605]: ยังไม่รูดบัตร
+            - generic [ref=f10e610]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e615]: —
+          - button "ออฟไลน์ 70-3063 0km/h 70-3063 ราชบุรี ยังไม่รูดบัตร ต.เชียงรากน้อย อ.บางปะอิน จ.พระนครศรีอยุธยา 22/08/2569 17:34:34 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e621] [cursor=pointer]:
+            - generic [ref=f10e623]:
+              - button [ref=f10e624]
+              - generic [ref=f10e632]: ออฟไลน์
+              - generic "70-3063" [ref=f10e633]
+              - generic [ref=f10e634]: 0km/h
+            - generic [ref=f10e635]:
+              - generic [ref=f10e636]: 70-3063 ราชบุรี
+              - generic [ref=f10e637]: ยังไม่รูดบัตร
+            - generic [ref=f10e642]: ต.เชียงรากน้อย อ.บางปะอิน จ.พระนครศรีอยุธยา
+            - generic [ref=f10e647]:
+              - generic [ref=f10e651]: 22/08/2569 17:34:34
+              - generic [ref=f10e652]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 70-3118 ราชบุรี 0km/h 70-3118 ยังไม่รูดบัตร ต.คลองจิก อ.บางปะอิน จ.พระนครศรีอยุธยา 23/08/2569 07:53:38 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e654] [cursor=pointer]:
+            - generic [ref=f10e656]:
+              - button [ref=f10e657]
+              - generic [ref=f10e665]: ออฟไลน์
+              - generic "70-3118 ราชบุรี" [ref=f10e666]
+              - generic [ref=f10e667]: 0km/h
+            - generic [ref=f10e668]:
+              - generic [ref=f10e669]: 70-3118
+              - generic [ref=f10e670]: ยังไม่รูดบัตร
+            - generic [ref=f10e675]: ต.คลองจิก อ.บางปะอิน จ.พระนครศรีอยุธยา
+            - generic [ref=f10e680]:
+              - generic [ref=f10e684]: 23/08/2569 07:53:38
+              - generic [ref=f10e685]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 70-3120 ราชบุรี 0km/h 70-3120 ยังไม่รูดบัตร น้ำมัน 0% ต.หัวเตย อ.พุนพิน จ.สุราษฎร์ธานี 23/08/2569 01:10:51 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e687] [cursor=pointer]:
+            - generic [ref=f10e689]:
+              - button [ref=f10e690]
+              - generic [ref=f10e698]: ออฟไลน์
+              - generic "70-3120 ราชบุรี" [ref=f10e699]
+              - generic [ref=f10e700]: 0km/h
+            - generic [ref=f10e701]:
+              - generic [ref=f10e702]: 70-3120
+              - generic [ref=f10e703]: ยังไม่รูดบัตร
+            - generic [ref=f10e709]:
+              - generic [ref=f10e713]: น้ำมัน
+              - generic [ref=f10e714]: 0%
+            - generic [ref=f10e716]: ต.หัวเตย อ.พุนพิน จ.สุราษฎร์ธานี
+            - generic [ref=f10e721]:
+              - generic [ref=f10e725]: 23/08/2569 01:10:51
+              - generic [ref=f10e726]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 70-3714 ราชบุรี 0km/h 70-3714 ราชบุรี ยังไม่รูดบัตร ต.สินปุน อ.พระแสง จ.สุราษฎร์ธานี 23/08/2569 07:53:23 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e728] [cursor=pointer]:
+            - generic [ref=f10e730]:
+              - button [ref=f10e731]
+              - generic [ref=f10e739]: ออฟไลน์
+              - generic "70-3714 ราชบุรี" [ref=f10e740]
+              - generic [ref=f10e741]: 0km/h
+            - generic [ref=f10e742]:
+              - generic [ref=f10e743]: 70-3714 ราชบุรี
+              - generic [ref=f10e744]: ยังไม่รูดบัตร
+            - generic [ref=f10e749]: ต.สินปุน อ.พระแสง จ.สุราษฎร์ธานี
+            - generic [ref=f10e754]:
+              - generic [ref=f10e758]: 23/08/2569 07:53:23
+              - generic [ref=f10e759]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 70-3743 เลย 0km/h 70-3743 เลย ยังไม่รูดบัตร ต.โคกไทย อ.ปักธงชัย จ.นครราชสีมา 24/04/2569 02:48:13 ข้อมูลเก่า 4 เดือนที่ผ่านมา" [ref=f10e761] [cursor=pointer]:
+            - generic [ref=f10e763]:
+              - button [ref=f10e764]
+              - generic [ref=f10e772]: ออฟไลน์
+              - generic "70-3743 เลย" [ref=f10e773]
+              - generic [ref=f10e774]: 0km/h
+            - generic [ref=f10e775]:
+              - generic [ref=f10e776]: 70-3743 เลย
+              - generic [ref=f10e777]: ยังไม่รูดบัตร
+            - generic [ref=f10e782]: ต.โคกไทย อ.ปักธงชัย จ.นครราชสีมา
+            - generic [ref=f10e787]:
+              - generic [ref=f10e791]: 24/04/2569 02:48:13
+              - generic [ref=f10e792]: ข้อมูลเก่า 4 เดือนที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 70-4342 หนองคาย 0km/h 70-4342 หนองคาย ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e794] [cursor=pointer]:
+            - generic [ref=f10e796]:
+              - button [ref=f10e797]
+              - generic [ref=f10e805]: ยังไม่เชื่อม GPS
+              - generic "70-4342 หนองคาย" [ref=f10e806]
+              - generic [ref=f10e807]: 0km/h
+            - generic [ref=f10e808]:
+              - generic [ref=f10e809]: 70-4342 หนองคาย
+              - generic [ref=f10e810]: ยังไม่รูดบัตร
+            - generic [ref=f10e815]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e820]: —
+          - button "ยังไม่เชื่อม GPS 70-4369 หนองคาย 0km/h 70-4369 หนองคาย ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e826] [cursor=pointer]:
+            - generic [ref=f10e828]:
+              - button [ref=f10e829]
+              - generic [ref=f10e837]: ยังไม่เชื่อม GPS
+              - generic "70-4369 หนองคาย" [ref=f10e838]
+              - generic [ref=f10e839]: 0km/h
+            - generic [ref=f10e840]:
+              - generic [ref=f10e841]: 70-4369 หนองคาย
+              - generic [ref=f10e842]: ยังไม่รูดบัตร
+            - generic [ref=f10e847]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e852]: —
+          - button "ออฟไลน์ 70-4449 หนองคาย 0km/h 70-4449 หนองคาย ยังไม่รูดบัตร ต.หนองกอมเกาะ อ.เมืองหนองคาย จ.หนองคาย 24/08/2569 15:12:16 ข้อมูลเก่า 2 วันที่ผ่านมา" [ref=f10e858] [cursor=pointer]:
+            - generic [ref=f10e860]:
+              - button [ref=f10e861]
+              - generic [ref=f10e869]: ออฟไลน์
+              - generic "70-4449 หนองคาย" [ref=f10e870]
+              - generic [ref=f10e871]: 0km/h
+            - generic [ref=f10e872]:
+              - generic [ref=f10e873]: 70-4449 หนองคาย
+              - generic [ref=f10e874]: ยังไม่รูดบัตร
+            - generic [ref=f10e879]: ต.หนองกอมเกาะ อ.เมืองหนองคาย จ.หนองคาย
+            - generic [ref=f10e884]:
+              - generic [ref=f10e888]: 24/08/2569 15:12:16
+              - generic [ref=f10e889]: ข้อมูลเก่า 2 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 70-4511 หนองคาย 0km/h 70-4511 หนองคาย ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e891] [cursor=pointer]:
+            - generic [ref=f10e893]:
+              - button [ref=f10e894]
+              - generic [ref=f10e902]: ยังไม่เชื่อม GPS
+              - generic "70-4511 หนองคาย" [ref=f10e903]
+              - generic [ref=f10e904]: 0km/h
+            - generic [ref=f10e905]:
+              - generic [ref=f10e906]: 70-4511 หนองคาย
+              - generic [ref=f10e907]: ยังไม่รูดบัตร
+            - generic [ref=f10e912]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e917]: —
+          - button "ยังไม่เชื่อม GPS 70-4591 หนองคาย 0km/h 70-4591 หนองคาย ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e923] [cursor=pointer]:
+            - generic [ref=f10e925]:
+              - button [ref=f10e926]
+              - generic [ref=f10e934]: ยังไม่เชื่อม GPS
+              - generic "70-4591 หนองคาย" [ref=f10e935]
+              - generic [ref=f10e936]: 0km/h
+            - generic [ref=f10e937]:
+              - generic [ref=f10e938]: 70-4591 หนองคาย
+              - generic [ref=f10e939]: ยังไม่รูดบัตร
+            - generic [ref=f10e944]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e949]: —
+          - button "ยังไม่เชื่อม GPS 70-4593 หนองคาย 0km/h 70-4593 หนองคาย ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e955] [cursor=pointer]:
+            - generic [ref=f10e957]:
+              - button [ref=f10e958]
+              - generic [ref=f10e966]: ยังไม่เชื่อม GPS
+              - generic "70-4593 หนองคาย" [ref=f10e967]
+              - generic [ref=f10e968]: 0km/h
+            - generic [ref=f10e969]:
+              - generic [ref=f10e970]: 70-4593 หนองคาย
+              - generic [ref=f10e971]: ยังไม่รูดบัตร
+            - generic [ref=f10e976]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e981]: —
+          - button "ยังไม่เชื่อม GPS 70-4789 หนองคาย 0km/h 70-4789 หนองคาย ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e987] [cursor=pointer]:
+            - generic [ref=f10e989]:
+              - button [ref=f10e990]
+              - generic [ref=f10e998]: ยังไม่เชื่อม GPS
+              - generic "70-4789 หนองคาย" [ref=f10e999]
+              - generic [ref=f10e1000]: 0km/h
+            - generic [ref=f10e1001]:
+              - generic [ref=f10e1002]: 70-4789 หนองคาย
+              - generic [ref=f10e1003]: ยังไม่รูดบัตร
+            - generic [ref=f10e1008]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1013]: —
+          - button "ออฟไลน์ 70-4791 หนองคาย 0km/h 70-4791 หนองคาย ยังไม่รูดบัตร Myawaddy Township, Myawaddy District, Kayin State 20/08/2569 01:27:18 ข้อมูลเก่า 7 วันที่ผ่านมา" [ref=f10e1019] [cursor=pointer]:
+            - generic [ref=f10e1021]:
+              - button [ref=f10e1022]
+              - generic [ref=f10e1030]: ออฟไลน์
+              - generic "70-4791 หนองคาย" [ref=f10e1031]
+              - generic [ref=f10e1032]: 0km/h
+            - generic [ref=f10e1033]:
+              - generic [ref=f10e1034]: 70-4791 หนองคาย
+              - generic [ref=f10e1035]: ยังไม่รูดบัตร
+            - generic [ref=f10e1040]: Myawaddy Township, Myawaddy District, Kayin State
+            - generic [ref=f10e1045]:
+              - generic [ref=f10e1049]: 20/08/2569 01:27:18
+              - generic [ref=f10e1050]: ข้อมูลเก่า 7 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 70-4793 หนองคาย 0km/h 70-4793 หนองคาย ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1052] [cursor=pointer]:
+            - generic [ref=f10e1054]:
+              - button [ref=f10e1055]
+              - generic [ref=f10e1063]: ยังไม่เชื่อม GPS
+              - generic "70-4793 หนองคาย" [ref=f10e1064]
+              - generic [ref=f10e1065]: 0km/h
+            - generic [ref=f10e1066]:
+              - generic [ref=f10e1067]: 70-4793 หนองคาย
+              - generic [ref=f10e1068]: ยังไม่รูดบัตร
+            - generic [ref=f10e1073]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1078]: —
+          - button "ออฟไลน์ 70-7160 ราชบุรี 0km/h 70-7160 ยังไม่รูดบัตร น้ำมัน 0% ต.นาหมอบุญ อ.จุฬาภรณ์ จ.นครศรีธรรมราช 23/08/2569 01:13:25 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e1084] [cursor=pointer]:
+            - generic [ref=f10e1086]:
+              - button [ref=f10e1087]
+              - generic [ref=f10e1095]: ออฟไลน์
+              - generic "70-7160 ราชบุรี" [ref=f10e1096]
+              - generic [ref=f10e1097]: 0km/h
+            - generic [ref=f10e1098]:
+              - generic [ref=f10e1099]: 70-7160
+              - generic [ref=f10e1100]: ยังไม่รูดบัตร
+            - generic [ref=f10e1106]:
+              - generic [ref=f10e1110]: น้ำมัน
+              - generic [ref=f10e1111]: 0%
+            - generic [ref=f10e1113]: ต.นาหมอบุญ อ.จุฬาภรณ์ จ.นครศรีธรรมราช
+            - generic [ref=f10e1118]:
+              - generic [ref=f10e1122]: 23/08/2569 01:13:25
+              - generic [ref=f10e1123]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 70-7642 ราชบุรี 0km/h 70-7642 ยังไม่รูดบัตร ต.ทรัพย์ทวี อ.บ้านนาเดิม จ.สุราษฎร์ธานี 23/08/2569 07:32:16 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e1125] [cursor=pointer]:
+            - generic [ref=f10e1127]:
+              - button [ref=f10e1128]
+              - generic [ref=f10e1136]: ออฟไลน์
+              - generic "70-7642 ราชบุรี" [ref=f10e1137]
+              - generic [ref=f10e1138]: 0km/h
+            - generic [ref=f10e1139]:
+              - generic [ref=f10e1140]: 70-7642
+              - generic [ref=f10e1141]: ยังไม่รูดบัตร
+            - generic [ref=f10e1146]: ต.ทรัพย์ทวี อ.บ้านนาเดิม จ.สุราษฎร์ธานี
+            - generic [ref=f10e1151]:
+              - generic [ref=f10e1155]: 23/08/2569 07:32:16
+              - generic [ref=f10e1156]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 70-7861 ราชบุรี 0km/h 70-7861 ยังไม่รูดบัตร ต.บ้านเกาะ อ.เมืองสมุทรสาคร จ.สมุทรสาคร 20/08/2569 18:56:25 ข้อมูลเก่า 6 วันที่ผ่านมา" [ref=f10e1158] [cursor=pointer]:
+            - generic [ref=f10e1160]:
+              - button [ref=f10e1161]
+              - generic [ref=f10e1169]: ออฟไลน์
+              - generic "70-7861 ราชบุรี" [ref=f10e1170]
+              - generic [ref=f10e1171]: 0km/h
+            - generic [ref=f10e1172]:
+              - generic [ref=f10e1173]: 70-7861
+              - generic [ref=f10e1174]: ยังไม่รูดบัตร
+            - generic [ref=f10e1179]: ต.บ้านเกาะ อ.เมืองสมุทรสาคร จ.สมุทรสาคร
+            - generic [ref=f10e1184]:
+              - generic [ref=f10e1188]: 20/08/2569 18:56:25
+              - generic [ref=f10e1189]: ข้อมูลเก่า 6 วันที่ผ่านมา
+          - button "ออฟไลน์ 70-8393 ราชบุรี 0km/h 70-8393 ราชบุรี ยังไม่รูดบัตร ต.บ้านเกาะ อ.เมืองสมุทรสาคร จ.สมุทรสาคร 25/08/2569 19:39:42 ข้อมูลเก่า ประมาณ 19 ชั่วโมงที่ผ่านมา" [ref=f10e1191] [cursor=pointer]:
+            - generic [ref=f10e1193]:
+              - button [ref=f10e1194]
+              - generic [ref=f10e1202]: ออฟไลน์
+              - generic "70-8393 ราชบุรี" [ref=f10e1203]
+              - generic [ref=f10e1204]: 0km/h
+            - generic [ref=f10e1205]:
+              - generic [ref=f10e1206]: 70-8393 ราชบุรี
+              - generic [ref=f10e1207]: ยังไม่รูดบัตร
+            - generic [ref=f10e1212]: ต.บ้านเกาะ อ.เมืองสมุทรสาคร จ.สมุทรสาคร
+            - generic [ref=f10e1217]:
+              - generic [ref=f10e1221]: 25/08/2569 19:39:42
+              - generic [ref=f10e1222]: ข้อมูลเก่า ประมาณ 19 ชั่วโมงที่ผ่านมา
+          - button "เคลื่อนที่ 70-8504 ราชบุรี 51km/h 70-8504 ยังไม่รูดบัตร ต.นาโพธิ์ อ.ทุ่งสง จ.นครศรีธรรมราช 26/08/2569 15:07:16" [ref=f10e1224] [cursor=pointer]:
+            - generic [ref=f10e1226]:
+              - button [ref=f10e1227]
+              - generic [ref=f10e1235]: เคลื่อนที่
+              - generic "70-8504 ราชบุรี" [ref=f10e1236]
+              - generic [ref=f10e1237]: 51km/h
+            - generic [ref=f10e1238]:
+              - generic [ref=f10e1239]: 70-8504
+              - generic [ref=f10e1240]: ยังไม่รูดบัตร
+            - generic [ref=f10e1245]: ต.นาโพธิ์ อ.ทุ่งสง จ.นครศรีธรรมราช
+            - generic [ref=f10e1250]: 26/08/2569 15:07:16
+          - button "ออฟไลน์ 70-9571 สระบุรี 0km/h 70-9571 สระบุรี ยังไม่รูดบัตร ต.แก่งเสี้ยน อ.เมืองกาญจนบุรี จ.กาญจนบุรี 21/08/2569 19:05:27 ข้อมูลเก่า 5 วันที่ผ่านมา" [ref=f10e1256] [cursor=pointer]:
+            - generic [ref=f10e1258]:
+              - button [ref=f10e1259]
+              - generic [ref=f10e1267]: ออฟไลน์
+              - generic "70-9571 สระบุรี" [ref=f10e1268]
+              - generic [ref=f10e1269]: 0km/h
+            - generic [ref=f10e1270]:
+              - generic [ref=f10e1271]: 70-9571 สระบุรี
+              - generic [ref=f10e1272]: ยังไม่รูดบัตร
+            - generic [ref=f10e1277]: ต.แก่งเสี้ยน อ.เมืองกาญจนบุรี จ.กาญจนบุรี
+            - generic [ref=f10e1282]:
+              - generic [ref=f10e1286]: 21/08/2569 19:05:27
+              - generic [ref=f10e1287]: ข้อมูลเก่า 5 วันที่ผ่านมา
+          - button "ออฟไลน์ 74-6152 ชลบุรี 0km/h 74-6152 ชลบุรี ยังไม่รูดบัตร ต.เขาคันทรง อ.ศรีราชา จ.ชลบุรี 23/08/2569 08:13:45 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e1289] [cursor=pointer]:
+            - generic [ref=f10e1291]:
+              - button [ref=f10e1292]
+              - generic [ref=f10e1300]: ออฟไลน์
+              - generic "74-6152 ชลบุรี" [ref=f10e1301]
+              - generic [ref=f10e1302]: 0km/h
+            - generic [ref=f10e1303]:
+              - generic [ref=f10e1304]: 74-6152 ชลบุรี
+              - generic [ref=f10e1305]: ยังไม่รูดบัตร
+            - generic [ref=f10e1310]: ต.เขาคันทรง อ.ศรีราชา จ.ชลบุรี
+            - generic [ref=f10e1315]:
+              - generic [ref=f10e1319]: 23/08/2569 08:13:45
+              - generic [ref=f10e1320]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ รถ 6 ล้อ 0km/h 80-4593 หนองบัวลำภู ยังไม่รูดบัตร ต.กุดดินจี่ อ.นากลาง จ.หนองบัวลำภู 23/08/2569 07:53:28 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e1322] [cursor=pointer]:
+            - generic [ref=f10e1324]:
+              - button [ref=f10e1325]
+              - generic [ref=f10e1333]: ออฟไลน์
+              - generic "รถ 6 ล้อ" [ref=f10e1334]
+              - generic [ref=f10e1335]: 0km/h
+            - generic [ref=f10e1336]:
+              - generic [ref=f10e1337]: 80-4593 หนองบัวลำภู
+              - generic [ref=f10e1338]: ยังไม่รูดบัตร
+            - generic [ref=f10e1343]: ต.กุดดินจี่ อ.นากลาง จ.หนองบัวลำภู
+            - generic [ref=f10e1348]:
+              - generic [ref=f10e1352]: 23/08/2569 07:53:28
+              - generic [ref=f10e1353]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 80-7008 หนองบัวลำภู 0km/h 80-7008 หนองบัวลำภู ยังไม่รูดบัตร ต.กุดดินจี่ อ.นากลาง จ.หนองบัวลำภู 06/08/2569 20:50:30 ข้อมูลเก่า 20 วันที่ผ่านมา" [ref=f10e1355] [cursor=pointer]:
+            - generic [ref=f10e1357]:
+              - button [ref=f10e1358]
+              - generic [ref=f10e1366]: ออฟไลน์
+              - generic "80-7008 หนองบัวลำภู" [ref=f10e1367]
+              - generic [ref=f10e1368]: 0km/h
+            - generic [ref=f10e1369]:
+              - generic [ref=f10e1370]: 80-7008 หนองบัวลำภู
+              - generic [ref=f10e1371]: ยังไม่รูดบัตร
+            - generic [ref=f10e1376]: ต.กุดดินจี่ อ.นากลาง จ.หนองบัวลำภู
+            - generic [ref=f10e1381]:
+              - generic [ref=f10e1385]: 06/08/2569 20:50:30
+              - generic [ref=f10e1386]: ข้อมูลเก่า 20 วันที่ผ่านมา
+          - button "ออฟไลน์ 80-7125 สระบุรี 0km/h 80-7125 สระบุรี ยังไม่รูดบัตร ต.เสมา อ.สูงเนิน จ.นครราชสีมา 18/08/2569 09:33:26 ข้อมูลเก่า 8 วันที่ผ่านมา" [ref=f10e1388] [cursor=pointer]:
+            - generic [ref=f10e1390]:
+              - button [ref=f10e1391]
+              - generic [ref=f10e1399]: ออฟไลน์
+              - generic "80-7125 สระบุรี" [ref=f10e1400]
+              - generic [ref=f10e1401]: 0km/h
+            - generic [ref=f10e1402]:
+              - generic [ref=f10e1403]: 80-7125 สระบุรี
+              - generic [ref=f10e1404]: ยังไม่รูดบัตร
+            - generic [ref=f10e1409]: ต.เสมา อ.สูงเนิน จ.นครราชสีมา
+            - generic [ref=f10e1414]:
+              - generic [ref=f10e1418]: 18/08/2569 09:33:26
+              - generic [ref=f10e1419]: ข้อมูลเก่า 8 วันที่ผ่านมา
+          - button "จอดดับเครื่อง 81-3113 พิจิตร 0km/h 81-3113 พิจิตร ยังไม่รูดบัตร ต.หอไกร อ.บางมูลนาก จ.พิจิตร 26/08/2569 15:05:16" [ref=f10e1421] [cursor=pointer]:
+            - generic [ref=f10e1423]:
+              - button [ref=f10e1424]
+              - generic [ref=f10e1432]: จอดดับเครื่อง
+              - generic "81-3113 พิจิตร" [ref=f10e1433]
+              - generic [ref=f10e1434]: 0km/h
+            - generic [ref=f10e1435]:
+              - generic [ref=f10e1436]: 81-3113 พิจิตร
+              - generic [ref=f10e1437]: ยังไม่รูดบัตร
+            - generic [ref=f10e1442]: ต.หอไกร อ.บางมูลนาก จ.พิจิตร
+            - generic [ref=f10e1447]: 26/08/2569 15:05:16
+          - button "เคลื่อนที่ 81-4179 พิจิตร 80km/h 81-4179 พิจิตร ยังไม่รูดบัตร ต.หันสัง อ.บางปะหัน จ.พระนครศรีอยุธยา 26/08/2569 15:07:31" [ref=f10e1453] [cursor=pointer]:
+            - generic [ref=f10e1455]:
+              - button [ref=f10e1456]
+              - generic [ref=f10e1464]: เคลื่อนที่
+              - generic "81-4179 พิจิตร" [ref=f10e1465]
+              - generic [ref=f10e1466]: 80km/h
+            - generic [ref=f10e1467]:
+              - generic [ref=f10e1468]: 81-4179 พิจิตร
+              - generic [ref=f10e1469]: ยังไม่รูดบัตร
+            - generic [ref=f10e1474]: ต.หันสัง อ.บางปะหัน จ.พระนครศรีอยุธยา
+            - generic [ref=f10e1479]: 26/08/2569 15:07:31
+          - button "เคลื่อนที่ 81-4188 พิจิตร 52km/h 81-4188 พิจิตร ยังไม่รูดบัตร ต.บางกระสั้น อ.บางปะอิน จ.พระนครศรีอยุธยา 26/08/2569 15:07:25" [ref=f10e1485] [cursor=pointer]:
+            - generic [ref=f10e1487]:
+              - button [ref=f10e1488]
+              - generic [ref=f10e1496]: เคลื่อนที่
+              - generic "81-4188 พิจิตร" [ref=f10e1497]
+              - generic [ref=f10e1498]: 52km/h
+            - generic [ref=f10e1499]:
+              - generic [ref=f10e1500]: 81-4188 พิจิตร
+              - generic [ref=f10e1501]: ยังไม่รูดบัตร
+            - generic [ref=f10e1506]: ต.บางกระสั้น อ.บางปะอิน จ.พระนครศรีอยุธยา
+            - generic [ref=f10e1511]: 26/08/2569 15:07:25
+          - button "เคลื่อนที่ 81-5239 พิจิตร 13km/h 81-5239 พิจิตร ยังไม่รูดบัตร ต.หอไกร อ.บางมูลนาก จ.พิจิตร 26/08/2569 15:07:17" [ref=f10e1517] [cursor=pointer]:
+            - generic [ref=f10e1519]:
+              - button [ref=f10e1520]
+              - generic [ref=f10e1528]: เคลื่อนที่
+              - generic "81-5239 พิจิตร" [ref=f10e1529]
+              - generic [ref=f10e1530]: 13km/h
+            - generic [ref=f10e1531]:
+              - generic [ref=f10e1532]: 81-5239 พิจิตร
+              - generic [ref=f10e1533]: ยังไม่รูดบัตร
+            - generic [ref=f10e1538]: ต.หอไกร อ.บางมูลนาก จ.พิจิตร
+            - generic [ref=f10e1543]: 26/08/2569 15:07:17
+          - button "ออฟไลน์ 81-6700 พิจิตร 0km/h 81-6700 พิจิตร ยังไม่รูดบัตร ต.หอไกร อ.บางมูลนาก จ.พิจิตร 21/08/2569 19:50:12 ข้อมูลเก่า 5 วันที่ผ่านมา" [ref=f10e1549] [cursor=pointer]:
+            - generic [ref=f10e1551]:
+              - button [ref=f10e1552]
+              - generic [ref=f10e1560]: ออฟไลน์
+              - generic "81-6700 พิจิตร" [ref=f10e1561]
+              - generic [ref=f10e1562]: 0km/h
+            - generic [ref=f10e1563]:
+              - generic [ref=f10e1564]: 81-6700 พิจิตร
+              - generic [ref=f10e1565]: ยังไม่รูดบัตร
+            - generic [ref=f10e1570]: ต.หอไกร อ.บางมูลนาก จ.พิจิตร
+            - generic [ref=f10e1575]:
+              - generic [ref=f10e1579]: 21/08/2569 19:50:12
+              - generic [ref=f10e1580]: ข้อมูลเก่า 5 วันที่ผ่านมา
+          - button "ออฟไลน์ 82-3751 นนทบุรี 0km/h 82-3751 ยังไม่รูดบัตร ต.เสม็ด อ.เมืองชลบุรี จ.ชลบุรี 23/08/2569 08:13:23 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e1582] [cursor=pointer]:
+            - generic [ref=f10e1584]:
+              - button [ref=f10e1585]
+              - generic [ref=f10e1593]: ออฟไลน์
+              - generic "82-3751 นนทบุรี" [ref=f10e1594]
+              - generic [ref=f10e1595]: 0km/h
+            - generic [ref=f10e1596]:
+              - generic [ref=f10e1597]: 82-3751
+              - generic [ref=f10e1598]: ยังไม่รูดบัตร
+            - generic [ref=f10e1603]: ต.เสม็ด อ.เมืองชลบุรี จ.ชลบุรี
+            - generic [ref=f10e1608]:
+              - generic [ref=f10e1612]: 23/08/2569 08:13:23
+              - generic [ref=f10e1613]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 82-5856 0km/h 82-5856 ยังไม่รูดบัตร ต.ท่าสีดา อ.หนองพอก จ.ร้อยเอ็ด 02/08/2569 18:10:52 ข้อมูลเก่า 24 วันที่ผ่านมา" [ref=f10e1615] [cursor=pointer]:
+            - generic [ref=f10e1617]:
+              - button [ref=f10e1618]
+              - generic [ref=f10e1626]: ออฟไลน์
+              - generic "82-5856" [ref=f10e1627]
+              - generic [ref=f10e1628]: 0km/h
+            - generic [ref=f10e1629]:
+              - generic [ref=f10e1630]: 82-5856
+              - generic [ref=f10e1631]: ยังไม่รูดบัตร
+            - generic [ref=f10e1636]: ต.ท่าสีดา อ.หนองพอก จ.ร้อยเอ็ด
+            - generic [ref=f10e1641]:
+              - generic [ref=f10e1645]: 02/08/2569 18:10:52
+              - generic [ref=f10e1646]: ข้อมูลเก่า 24 วันที่ผ่านมา
+          - button "ออฟไลน์ 82-6620 สุรินทร์ 0km/h 82-6620 ยังไม่รูดบัตร ต.คลองไผ่ อ.สีคิ้ว จ.นครราชสีมา 23/08/2569 08:12:57 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e1648] [cursor=pointer]:
+            - generic [ref=f10e1650]:
+              - button [ref=f10e1651]
+              - generic [ref=f10e1659]: ออฟไลน์
+              - generic "82-6620 สุรินทร์" [ref=f10e1660]
+              - generic [ref=f10e1661]: 0km/h
+            - generic [ref=f10e1662]:
+              - generic [ref=f10e1663]: 82-6620
+              - generic [ref=f10e1664]: ยังไม่รูดบัตร
+            - generic [ref=f10e1669]: ต.คลองไผ่ อ.สีคิ้ว จ.นครราชสีมา
+            - generic [ref=f10e1674]:
+              - generic [ref=f10e1678]: 23/08/2569 08:12:57
+              - generic [ref=f10e1679]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 82-8218 สมุทรปราการ 0km/h 82-8218 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1681] [cursor=pointer]:
+            - generic [ref=f10e1683]:
+              - button [ref=f10e1684]
+              - generic [ref=f10e1692]: ยังไม่เชื่อม GPS
+              - generic "82-8218 สมุทรปราการ" [ref=f10e1693]
+              - generic [ref=f10e1694]: 0km/h
+            - generic [ref=f10e1695]:
+              - generic [ref=f10e1696]: 82-8218 สมุทรปราการ
+              - generic [ref=f10e1697]: ยังไม่รูดบัตร
+            - generic [ref=f10e1702]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1707]: —
+          - button "ยังไม่เชื่อม GPS 82-8235 สมุทรปราการ 0km/h 82-8235 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1713] [cursor=pointer]:
+            - generic [ref=f10e1715]:
+              - button [ref=f10e1716]
+              - generic [ref=f10e1724]: ยังไม่เชื่อม GPS
+              - generic "82-8235 สมุทรปราการ" [ref=f10e1725]
+              - generic [ref=f10e1726]: 0km/h
+            - generic [ref=f10e1727]:
+              - generic [ref=f10e1728]: 82-8235 สมุทรปราการ
+              - generic [ref=f10e1729]: ยังไม่รูดบัตร
+            - generic [ref=f10e1734]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1739]: —
+          - button "ยังไม่เชื่อม GPS 82-8330 กรุงเทพมหานคร 0km/h 82-8330 กรุงเทพมหานคร ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1745] [cursor=pointer]:
+            - generic [ref=f10e1747]:
+              - button [ref=f10e1748]
+              - generic [ref=f10e1756]: ยังไม่เชื่อม GPS
+              - generic "82-8330 กรุงเทพมหานคร" [ref=f10e1757]
+              - generic [ref=f10e1758]: 0km/h
+            - generic [ref=f10e1759]:
+              - generic [ref=f10e1760]: 82-8330 กรุงเทพมหานคร
+              - generic [ref=f10e1761]: ยังไม่รูดบัตร
+            - generic [ref=f10e1766]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1771]: —
+          - button "ยังไม่เชื่อม GPS 82-8660 สุรินทร์ 0km/h 82-8660 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1777] [cursor=pointer]:
+            - generic [ref=f10e1779]:
+              - button [ref=f10e1780]
+              - generic [ref=f10e1788]: ยังไม่เชื่อม GPS
+              - generic "82-8660 สุรินทร์" [ref=f10e1789]
+              - generic [ref=f10e1790]: 0km/h
+            - generic [ref=f10e1791]:
+              - generic [ref=f10e1792]: 82-8660
+              - generic [ref=f10e1793]: ยังไม่รูดบัตร
+            - generic [ref=f10e1798]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1803]: —
+          - button "ยังไม่เชื่อม GPS 82-8661 สุรินทร์ 0km/h 82-8661 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1809] [cursor=pointer]:
+            - generic [ref=f10e1811]:
+              - button [ref=f10e1812]
+              - generic [ref=f10e1820]: ยังไม่เชื่อม GPS
+              - generic "82-8661 สุรินทร์" [ref=f10e1821]
+              - generic [ref=f10e1822]: 0km/h
+            - generic [ref=f10e1823]:
+              - generic [ref=f10e1824]: 82-8661
+              - generic [ref=f10e1825]: ยังไม่รูดบัตร
+            - generic [ref=f10e1830]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1835]: —
+          - button "ยังไม่เชื่อม GPS 82-8662 สุรินทร์ 0km/h 82-8662 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1841] [cursor=pointer]:
+            - generic [ref=f10e1843]:
+              - button [ref=f10e1844]
+              - generic [ref=f10e1852]: ยังไม่เชื่อม GPS
+              - generic "82-8662 สุรินทร์" [ref=f10e1853]
+              - generic [ref=f10e1854]: 0km/h
+            - generic [ref=f10e1855]:
+              - generic [ref=f10e1856]: 82-8662
+              - generic [ref=f10e1857]: ยังไม่รูดบัตร
+            - generic [ref=f10e1862]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1867]: —
+          - button "ยังไม่เชื่อม GPS 82-8910 สุรินทร์ 0km/h 82-8910 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1873] [cursor=pointer]:
+            - generic [ref=f10e1875]:
+              - button [ref=f10e1876]
+              - generic [ref=f10e1884]: ยังไม่เชื่อม GPS
+              - generic "82-8910 สุรินทร์" [ref=f10e1885]
+              - generic [ref=f10e1886]: 0km/h
+            - generic [ref=f10e1887]:
+              - generic [ref=f10e1888]: 82-8910
+              - generic [ref=f10e1889]: ยังไม่รูดบัตร
+            - generic [ref=f10e1894]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1899]: —
+          - button "ออฟไลน์ 82-9453 สุรินทร์ 0km/h 82-9453 ยังไม่รูดบัตร ต.แกใหญ่ อ.เมืองสุรินทร์ จ.สุรินทร์ 23/08/2569 08:13:38 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e1905] [cursor=pointer]:
+            - generic [ref=f10e1907]:
+              - button [ref=f10e1908]
+              - generic [ref=f10e1916]: ออฟไลน์
+              - generic "82-9453 สุรินทร์" [ref=f10e1917]
+              - generic [ref=f10e1918]: 0km/h
+            - generic [ref=f10e1919]:
+              - generic [ref=f10e1920]: 82-9453
+              - generic [ref=f10e1921]: ยังไม่รูดบัตร
+            - generic [ref=f10e1926]: ต.แกใหญ่ อ.เมืองสุรินทร์ จ.สุรินทร์
+            - generic [ref=f10e1931]:
+              - generic [ref=f10e1935]: 23/08/2569 08:13:38
+              - generic [ref=f10e1936]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 83-0557 สุรินทร์ 0km/h 83-0557 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1938] [cursor=pointer]:
+            - generic [ref=f10e1940]:
+              - button [ref=f10e1941]
+              - generic [ref=f10e1949]: ยังไม่เชื่อม GPS
+              - generic "83-0557 สุรินทร์" [ref=f10e1950]
+              - generic [ref=f10e1951]: 0km/h
+            - generic [ref=f10e1952]:
+              - generic [ref=f10e1953]: 83-0557
+              - generic [ref=f10e1954]: ยังไม่รูดบัตร
+            - generic [ref=f10e1959]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1964]: —
+          - button "ยังไม่เชื่อม GPS 83-0654 สุรินทร์ 0km/h 83-0654 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e1970] [cursor=pointer]:
+            - generic [ref=f10e1972]:
+              - button [ref=f10e1973]
+              - generic [ref=f10e1981]: ยังไม่เชื่อม GPS
+              - generic "83-0654 สุรินทร์" [ref=f10e1982]
+              - generic [ref=f10e1983]: 0km/h
+            - generic [ref=f10e1984]:
+              - generic [ref=f10e1985]: 83-0654
+              - generic [ref=f10e1986]: ยังไม่รูดบัตร
+            - generic [ref=f10e1991]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e1996]: —
+          - button "ยังไม่เชื่อม GPS 83-1009 สมุทรปราการ 0km/h 83-1009 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2002] [cursor=pointer]:
+            - generic [ref=f10e2004]:
+              - button [ref=f10e2005]
+              - generic [ref=f10e2013]: ยังไม่เชื่อม GPS
+              - generic "83-1009 สมุทรปราการ" [ref=f10e2014]
+              - generic [ref=f10e2015]: 0km/h
+            - generic [ref=f10e2016]:
+              - generic [ref=f10e2017]: 83-1009 สมุทรปราการ
+              - generic [ref=f10e2018]: ยังไม่รูดบัตร
+            - generic [ref=f10e2023]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2028]: —
+          - button "ยังไม่เชื่อม GPS 83-1355 สมุทรปราการ 0km/h 83-1355 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2034] [cursor=pointer]:
+            - generic [ref=f10e2036]:
+              - button [ref=f10e2037]
+              - generic [ref=f10e2045]: ยังไม่เชื่อม GPS
+              - generic "83-1355 สมุทรปราการ" [ref=f10e2046]
+              - generic [ref=f10e2047]: 0km/h
+            - generic [ref=f10e2048]:
+              - generic [ref=f10e2049]: 83-1355 สมุทรปราการ
+              - generic [ref=f10e2050]: ยังไม่รูดบัตร
+            - generic [ref=f10e2055]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2060]: —
+          - button "ออฟไลน์ 83-2466 พระนครศรีอยุธยา 0km/h 83-2466 พระนครศรีอยุธยา ยังไม่รูดบัตร น้ำมัน 0% ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 01:13:00 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e2066] [cursor=pointer]:
+            - generic [ref=f10e2068]:
+              - button [ref=f10e2069]
+              - generic [ref=f10e2077]: ออฟไลน์
+              - generic "83-2466 พระนครศรีอยุธยา" [ref=f10e2078]
+              - generic [ref=f10e2079]: 0km/h
+            - generic [ref=f10e2080]:
+              - generic [ref=f10e2081]: 83-2466 พระนครศรีอยุธยา
+              - generic [ref=f10e2082]: ยังไม่รูดบัตร
+            - generic [ref=f10e2088]:
+              - generic [ref=f10e2092]: น้ำมัน
+              - generic [ref=f10e2093]: 0%
+            - generic [ref=f10e2095]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e2100]:
+              - generic [ref=f10e2104]: 23/08/2569 01:13:00
+              - generic [ref=f10e2105]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 83-2785 จอดซ่อม สมุทรปราการ 0km/h 83-2785 จอดซ่อม สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2107] [cursor=pointer]:
+            - generic [ref=f10e2109]:
+              - button [ref=f10e2110]
+              - generic [ref=f10e2118]: ยังไม่เชื่อม GPS
+              - generic "83-2785 จอดซ่อม สมุทรปราการ" [ref=f10e2119]
+              - generic [ref=f10e2120]: 0km/h
+            - generic [ref=f10e2121]:
+              - generic [ref=f10e2122]: 83-2785 จอดซ่อม สมุทรปราการ
+              - generic [ref=f10e2123]: ยังไม่รูดบัตร
+            - generic [ref=f10e2128]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2133]: —
+          - button "ยังไม่เชื่อม GPS 83-3063 สมุทรปราการ 0km/h 83-3063 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2139] [cursor=pointer]:
+            - generic [ref=f10e2141]:
+              - button [ref=f10e2142]
+              - generic [ref=f10e2150]: ยังไม่เชื่อม GPS
+              - generic "83-3063 สมุทรปราการ" [ref=f10e2151]
+              - generic [ref=f10e2152]: 0km/h
+            - generic [ref=f10e2153]:
+              - generic [ref=f10e2154]: 83-3063 สมุทรปราการ
+              - generic [ref=f10e2155]: ยังไม่รูดบัตร
+            - generic [ref=f10e2160]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2165]: —
+          - button "ยังไม่เชื่อม GPS 83-4814 สมุทรปราการ 0km/h 83-4814 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2171] [cursor=pointer]:
+            - generic [ref=f10e2173]:
+              - button [ref=f10e2174]
+              - generic [ref=f10e2182]: ยังไม่เชื่อม GPS
+              - generic "83-4814 สมุทรปราการ" [ref=f10e2183]
+              - generic [ref=f10e2184]: 0km/h
+            - generic [ref=f10e2185]:
+              - generic [ref=f10e2186]: 83-4814 สมุทรปราการ
+              - generic [ref=f10e2187]: ยังไม่รูดบัตร
+            - generic [ref=f10e2192]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2197]: —
+          - button "จอดดับเครื่อง 83-5488 นนทบุรี 0km/h 83-5488 ยังไม่รูดบัตร ต.ห้วยโป่ง อ.เมืองระยอง จ.ระยอง 26/08/2569 15:05:37" [ref=f10e2203] [cursor=pointer]:
+            - generic [ref=f10e2205]:
+              - button [ref=f10e2206]
+              - generic [ref=f10e2214]: จอดดับเครื่อง
+              - generic "83-5488 นนทบุรี" [ref=f10e2215]
+              - generic [ref=f10e2216]: 0km/h
+            - generic [ref=f10e2217]:
+              - generic [ref=f10e2218]: 83-5488
+              - generic [ref=f10e2219]: ยังไม่รูดบัตร
+            - generic [ref=f10e2224]: ต.ห้วยโป่ง อ.เมืองระยอง จ.ระยอง
+            - generic [ref=f10e2229]: 26/08/2569 15:05:37
+          - button "ออฟไลน์ 83-6151 สมุทรปราการ 0km/h 83-6151 สมุทรปราการ ยังไม่รูดบัตร ต.คูบางหลวง อ.ลาดหลุมแก้ว จ.ปทุมธานี 02/01/2569 19:03:42 ข้อมูลเก่า 8 เดือนที่ผ่านมา" [ref=f10e2235] [cursor=pointer]:
+            - generic [ref=f10e2237]:
+              - button [ref=f10e2238]
+              - generic [ref=f10e2246]: ออฟไลน์
+              - generic "83-6151 สมุทรปราการ" [ref=f10e2247]
+              - generic [ref=f10e2248]: 0km/h
+            - generic [ref=f10e2249]:
+              - generic [ref=f10e2250]: 83-6151 สมุทรปราการ
+              - generic [ref=f10e2251]: ยังไม่รูดบัตร
+            - generic [ref=f10e2256]: ต.คูบางหลวง อ.ลาดหลุมแก้ว จ.ปทุมธานี
+            - generic [ref=f10e2261]:
+              - generic [ref=f10e2265]: 02/01/2569 19:03:42
+              - generic [ref=f10e2266]: ข้อมูลเก่า 8 เดือนที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 83-6326 ขอนแก่น 0km/h 83-6326 ขอนแก่น ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2268] [cursor=pointer]:
+            - generic [ref=f10e2270]:
+              - button [ref=f10e2271]
+              - generic [ref=f10e2279]: ยังไม่เชื่อม GPS
+              - generic "83-6326 ขอนแก่น" [ref=f10e2280]
+              - generic [ref=f10e2281]: 0km/h
+            - generic [ref=f10e2282]:
+              - generic [ref=f10e2283]: 83-6326 ขอนแก่น
+              - generic [ref=f10e2284]: ยังไม่รูดบัตร
+            - generic [ref=f10e2289]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2294]: —
+          - button "ยังไม่เชื่อม GPS 83-7585 นนทบุรี 0km/h 83-7585 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2300] [cursor=pointer]:
+            - generic [ref=f10e2302]:
+              - button [ref=f10e2303]
+              - generic [ref=f10e2311]: ยังไม่เชื่อม GPS
+              - generic "83-7585 นนทบุรี" [ref=f10e2312]
+              - generic [ref=f10e2313]: 0km/h
+            - generic [ref=f10e2314]:
+              - generic [ref=f10e2315]: 83-7585
+              - generic [ref=f10e2316]: ยังไม่รูดบัตร
+            - generic [ref=f10e2321]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2326]: —
+          - button "จอดดับเครื่อง 83-7586 นนทบุรี 0km/h 83-7586 ยังไม่รูดบัตร ต.น้ำคอก อ.เมืองระยอง จ.ระยอง 26/08/2569 15:06:14" [ref=f10e2332] [cursor=pointer]:
+            - generic [ref=f10e2334]:
+              - button [ref=f10e2335]
+              - generic [ref=f10e2343]: จอดดับเครื่อง
+              - generic "83-7586 นนทบุรี" [ref=f10e2344]
+              - generic [ref=f10e2345]: 0km/h
+            - generic [ref=f10e2346]:
+              - generic [ref=f10e2347]: 83-7586
+              - generic [ref=f10e2348]: ยังไม่รูดบัตร
+            - generic [ref=f10e2353]: ต.น้ำคอก อ.เมืองระยอง จ.ระยอง
+            - generic [ref=f10e2358]: 26/08/2569 15:06:14
+          - button "จอดดับเครื่อง 83-8275 นนทบุรี 0km/h 83-8275 ยังไม่รูดบัตร ต.บ้านปึก อ.เมืองชลบุรี จ.ชลบุรี 26/08/2569 15:03:48" [ref=f10e2364] [cursor=pointer]:
+            - generic [ref=f10e2366]:
+              - button [ref=f10e2367]
+              - generic [ref=f10e2375]: จอดดับเครื่อง
+              - generic "83-8275 นนทบุรี" [ref=f10e2376]
+              - generic [ref=f10e2377]: 0km/h
+            - generic [ref=f10e2378]:
+              - generic [ref=f10e2379]: 83-8275
+              - generic [ref=f10e2380]: ยังไม่รูดบัตร
+            - generic [ref=f10e2385]: ต.บ้านปึก อ.เมืองชลบุรี จ.ชลบุรี
+            - generic [ref=f10e2390]: 26/08/2569 15:03:48
+          - button "ยังไม่เชื่อม GPS 83-9803 สมุทรปราการ 0km/h 83-9803 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2396] [cursor=pointer]:
+            - generic [ref=f10e2398]:
+              - button [ref=f10e2399]
+              - generic [ref=f10e2407]: ยังไม่เชื่อม GPS
+              - generic "83-9803 สมุทรปราการ" [ref=f10e2408]
+              - generic [ref=f10e2409]: 0km/h
+            - generic [ref=f10e2410]:
+              - generic [ref=f10e2411]: 83-9803 สมุทรปราการ
+              - generic [ref=f10e2412]: ยังไม่รูดบัตร
+            - generic [ref=f10e2417]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2422]: —
+          - button "ออฟไลน์ 84-0411 0km/h 84-0411 ชลบุรี (รถ 6 ล้อ) ยังไม่รูดบัตร ต.มาบไผ่ อ.บ้านบึง จ.ชลบุรี 23/08/2569 08:14:04 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e2428] [cursor=pointer]:
+            - generic [ref=f10e2430]:
+              - button [ref=f10e2431]
+              - generic [ref=f10e2439]: ออฟไลน์
+              - generic "84-0411" [ref=f10e2440]
+              - generic [ref=f10e2441]: 0km/h
+            - generic [ref=f10e2442]:
+              - generic [ref=f10e2443]: 84-0411 ชลบุรี (รถ 6 ล้อ)
+              - generic [ref=f10e2444]: ยังไม่รูดบัตร
+            - generic [ref=f10e2449]: ต.มาบไผ่ อ.บ้านบึง จ.ชลบุรี
+            - generic [ref=f10e2454]:
+              - generic [ref=f10e2458]: 23/08/2569 08:14:04
+              - generic [ref=f10e2459]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 84-0787 สมุทรปราการ 0km/h 84-0787 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2461] [cursor=pointer]:
+            - generic [ref=f10e2463]:
+              - button [ref=f10e2464]
+              - generic [ref=f10e2472]: ยังไม่เชื่อม GPS
+              - generic "84-0787 สมุทรปราการ" [ref=f10e2473]
+              - generic [ref=f10e2474]: 0km/h
+            - generic [ref=f10e2475]:
+              - generic [ref=f10e2476]: 84-0787 สมุทรปราการ
+              - generic [ref=f10e2477]: ยังไม่รูดบัตร
+            - generic [ref=f10e2482]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2487]: —
+          - button "ออฟไลน์ 84-0918 สมุทรปราการ 0km/h 84-0918 สมุทรปราการ ยังไม่รูดบัตร ต.คูบางหลวง อ.ลาดหลุมแก้ว จ.ปทุมธานี 16/08/2569 15:01:56 ข้อมูลเก่า 10 วันที่ผ่านมา" [ref=f10e2493] [cursor=pointer]:
+            - generic [ref=f10e2495]:
+              - button [ref=f10e2496]
+              - generic [ref=f10e2504]: ออฟไลน์
+              - generic "84-0918 สมุทรปราการ" [ref=f10e2505]
+              - generic [ref=f10e2506]: 0km/h
+            - generic [ref=f10e2507]:
+              - generic [ref=f10e2508]: 84-0918 สมุทรปราการ
+              - generic [ref=f10e2509]: ยังไม่รูดบัตร
+            - generic [ref=f10e2514]: ต.คูบางหลวง อ.ลาดหลุมแก้ว จ.ปทุมธานี
+            - generic [ref=f10e2519]:
+              - generic [ref=f10e2523]: 16/08/2569 15:01:56
+              - generic [ref=f10e2524]: ข้อมูลเก่า 10 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 84-1503 กรุงเทพมหานคร 0km/h 84-1503 รถจอดไม่ใช้งาน กรุงเทพมหานคร ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2526] [cursor=pointer]:
+            - generic [ref=f10e2528]:
+              - button [ref=f10e2529]
+              - generic [ref=f10e2537]: ยังไม่เชื่อม GPS
+              - generic "84-1503 กรุงเทพมหานคร" [ref=f10e2538]
+              - generic [ref=f10e2539]: 0km/h
+            - generic [ref=f10e2540]:
+              - generic [ref=f10e2541]: 84-1503 รถจอดไม่ใช้งาน กรุงเทพมหานคร
+              - generic [ref=f10e2542]: ยังไม่รูดบัตร
+            - generic [ref=f10e2547]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2552]: —
+          - button "ยังไม่เชื่อม GPS 84-2027 สมุทรปราการ 0km/h 84-2027 สมุทรปราการ EV02 ไม่มีพิกัดล่าสุด —" [ref=f10e2558] [cursor=pointer]:
+            - generic [ref=f10e2560]:
+              - button [ref=f10e2561]
+              - generic [ref=f10e2569]: ยังไม่เชื่อม GPS
+              - generic "84-2027 สมุทรปราการ" [ref=f10e2570]
+              - generic [ref=f10e2571]: 0km/h
+            - generic [ref=f10e2572]:
+              - generic [ref=f10e2573]: 84-2027 สมุทรปราการ
+              - generic [ref=f10e2574]: EV02
+            - generic [ref=f10e2579]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2584]: —
+          - button "ออฟไลน์ 84-2480 สมุทรปราการ 0km/h 84-2480 สมุทรปราการ ยังไม่รูดบัตร ต.คูบางหลวง อ.ลาดหลุมแก้ว จ.ปทุมธานี 22/08/2569 18:31:35 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e2590] [cursor=pointer]:
+            - generic [ref=f10e2592]:
+              - button [ref=f10e2593]
+              - generic [ref=f10e2601]: ออฟไลน์
+              - generic "84-2480 สมุทรปราการ" [ref=f10e2602]
+              - generic [ref=f10e2603]: 0km/h
+            - generic [ref=f10e2604]:
+              - generic [ref=f10e2605]: 84-2480 สมุทรปราการ
+              - generic [ref=f10e2606]: ยังไม่รูดบัตร
+            - generic [ref=f10e2611]: ต.คูบางหลวง อ.ลาดหลุมแก้ว จ.ปทุมธานี
+            - generic [ref=f10e2616]:
+              - generic [ref=f10e2620]: 22/08/2569 18:31:35
+              - generic [ref=f10e2621]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 84-2604 0km/h 84-2604 ชลบุรี ยังไม่รูดบัตร ต.บางโฉลง อ.บางพลี จ.สมุทรปราการ 23/08/2569 08:14:39 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e2623] [cursor=pointer]:
+            - generic [ref=f10e2625]:
+              - button [ref=f10e2626]
+              - generic [ref=f10e2634]: ออฟไลน์
+              - generic "84-2604" [ref=f10e2635]
+              - generic [ref=f10e2636]: 0km/h
+            - generic [ref=f10e2637]:
+              - generic [ref=f10e2638]: 84-2604 ชลบุรี
+              - generic [ref=f10e2639]: ยังไม่รูดบัตร
+            - generic [ref=f10e2644]: ต.บางโฉลง อ.บางพลี จ.สมุทรปราการ
+            - generic [ref=f10e2649]:
+              - generic [ref=f10e2653]: 23/08/2569 08:14:39
+              - generic [ref=f10e2654]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ CW41M05751 ปทุมธานี 0km/h 84-3210 ยังไม่รูดบัตร ต.คูบางหลวง อ.ลาดหลุมแก้ว จ.ปทุมธานี 24/08/2569 22:28:39 ข้อมูลเก่า 1 วันที่ผ่านมา" [ref=f10e2656] [cursor=pointer]:
+            - generic [ref=f10e2658]:
+              - button [ref=f10e2659]
+              - generic [ref=f10e2667]: ออฟไลน์
+              - generic "CW41M05751 ปทุมธานี" [ref=f10e2668]
+              - generic [ref=f10e2669]: 0km/h
+            - generic [ref=f10e2670]:
+              - generic [ref=f10e2671]: 84-3210
+              - generic [ref=f10e2672]: ยังไม่รูดบัตร
+            - generic [ref=f10e2677]: ต.คูบางหลวง อ.ลาดหลุมแก้ว จ.ปทุมธานี
+            - generic [ref=f10e2682]:
+              - generic [ref=f10e2686]: 24/08/2569 22:28:39
+              - generic [ref=f10e2687]: ข้อมูลเก่า 1 วันที่ผ่านมา
+          - button "ออฟไลน์ CWM454HTA01175 0km/h 84-3323 ยังไม่รูดบัตร ต.ลำไทร อ.วังน้อย จ.พระนครศรีอยุธยา 23/08/2569 08:13:58 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e2689] [cursor=pointer]:
+            - generic [ref=f10e2691]:
+              - button [ref=f10e2692]
+              - generic [ref=f10e2700]: ออฟไลน์
+              - generic "CWM454HTA01175" [ref=f10e2701]
+              - generic [ref=f10e2702]: 0km/h
+            - generic [ref=f10e2703]:
+              - generic [ref=f10e2704]: 84-3323
+              - generic [ref=f10e2705]: ยังไม่รูดบัตร
+            - generic [ref=f10e2710]: ต.ลำไทร อ.วังน้อย จ.พระนครศรีอยุธยา
+            - generic [ref=f10e2715]:
+              - generic [ref=f10e2719]: 23/08/2569 08:13:58
+              - generic [ref=f10e2720]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 84-3683 สมุทรปราการ 0km/h 84-3683 สมุทรปราการ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2722] [cursor=pointer]:
+            - generic [ref=f10e2724]:
+              - button [ref=f10e2725]
+              - generic [ref=f10e2733]: ยังไม่เชื่อม GPS
+              - generic "84-3683 สมุทรปราการ" [ref=f10e2734]
+              - generic [ref=f10e2735]: 0km/h
+            - generic [ref=f10e2736]:
+              - generic [ref=f10e2737]: 84-3683 สมุทรปราการ
+              - generic [ref=f10e2738]: ยังไม่รูดบัตร
+            - generic [ref=f10e2743]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2748]: —
+          - button "ออฟไลน์ 84-4344 0km/h 84-4344 อุดรธานี ยังไม่รูดบัตร 🪪 231001156640205 ต.หนองบัว อ.เมืองอุดรธานี จ.อุดรธานี 20/08/2569 16:51:13 ข้อมูลเก่า 6 วันที่ผ่านมา" [ref=f10e2754] [cursor=pointer]:
+            - generic [ref=f10e2756]:
+              - button [ref=f10e2757]
+              - generic [ref=f10e2765]: ออฟไลน์
+              - generic "84-4344" [ref=f10e2766]
+              - generic [ref=f10e2767]: 0km/h
+            - generic [ref=f10e2768]:
+              - generic [ref=f10e2769]: 84-4344 อุดรธานี
+              - generic [ref=f10e2770]: ยังไม่รูดบัตร
+              - generic [ref=f10e2775]: 🪪 231001156640205
+            - generic [ref=f10e2776]: ต.หนองบัว อ.เมืองอุดรธานี จ.อุดรธานี
+            - generic [ref=f10e2781]:
+              - generic [ref=f10e2785]: 20/08/2569 16:51:13
+              - generic [ref=f10e2786]: ข้อมูลเก่า 6 วันที่ผ่านมา
+          - button "ออฟไลน์ 84-7478 สมุทรปราการ 0km/h 84-7478 สมุทรปราการ ยังไม่รูดบัตร 🪪 221001466910600 ต.บางหลวง อ.เมืองปทุมธานี จ.ปทุมธานี 07/08/2569 03:33:09 ข้อมูลเก่า 19 วันที่ผ่านมา" [ref=f10e2788] [cursor=pointer]:
+            - generic [ref=f10e2790]:
+              - button [ref=f10e2791]
+              - generic [ref=f10e2799]: ออฟไลน์
+              - generic "84-7478 สมุทรปราการ" [ref=f10e2800]
+              - generic [ref=f10e2801]: 0km/h
+            - generic [ref=f10e2802]:
+              - generic [ref=f10e2803]: 84-7478 สมุทรปราการ
+              - generic [ref=f10e2804]: ยังไม่รูดบัตร
+              - generic [ref=f10e2809]: 🪪 221001466910600
+            - generic [ref=f10e2810]: ต.บางหลวง อ.เมืองปทุมธานี จ.ปทุมธานี
+            - generic [ref=f10e2815]:
+              - generic [ref=f10e2819]: 07/08/2569 03:33:09
+              - generic [ref=f10e2820]: ข้อมูลเก่า 19 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 84-7782 นครสวรรค์ 0km/h 84-7782 นครสวรรค์ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2822] [cursor=pointer]:
+            - generic [ref=f10e2824]:
+              - button [ref=f10e2825]
+              - generic [ref=f10e2833]: ยังไม่เชื่อม GPS
+              - generic "84-7782 นครสวรรค์" [ref=f10e2834]
+              - generic [ref=f10e2835]: 0km/h
+            - generic [ref=f10e2836]:
+              - generic [ref=f10e2837]: 84-7782 นครสวรรค์
+              - generic [ref=f10e2838]: ยังไม่รูดบัตร
+            - generic [ref=f10e2843]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2848]: —
+          - button "ยังไม่เชื่อม GPS 84-7855 นครสวรรค์ 0km/h 84-7855 นครสวรรค์ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2854] [cursor=pointer]:
+            - generic [ref=f10e2856]:
+              - button [ref=f10e2857]
+              - generic [ref=f10e2865]: ยังไม่เชื่อม GPS
+              - generic "84-7855 นครสวรรค์" [ref=f10e2866]
+              - generic [ref=f10e2867]: 0km/h
+            - generic [ref=f10e2868]:
+              - generic [ref=f10e2869]: 84-7855 นครสวรรค์
+              - generic [ref=f10e2870]: ยังไม่รูดบัตร
+            - generic [ref=f10e2875]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2880]: —
+          - button "ออฟไลน์ 84-8103 นครสวรรค์ 0km/h 84-8103 นครสวรรค์ ยังไม่รูดบัตร ต.วังเพลิง อ.โคกสำโรง จ.ลพบุรี 24/08/2569 22:19:29 ข้อมูลเก่า 1 วันที่ผ่านมา" [ref=f10e2886] [cursor=pointer]:
+            - generic [ref=f10e2888]:
+              - button [ref=f10e2889]
+              - generic [ref=f10e2897]: ออฟไลน์
+              - generic "84-8103 นครสวรรค์" [ref=f10e2898]
+              - generic [ref=f10e2899]: 0km/h
+            - generic [ref=f10e2900]:
+              - generic [ref=f10e2901]: 84-8103 นครสวรรค์
+              - generic [ref=f10e2902]: ยังไม่รูดบัตร
+            - generic [ref=f10e2907]: ต.วังเพลิง อ.โคกสำโรง จ.ลพบุรี
+            - generic [ref=f10e2912]:
+              - generic [ref=f10e2916]: 24/08/2569 22:19:29
+              - generic [ref=f10e2917]: ข้อมูลเก่า 1 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 85-6816 ขอนแก่น 0km/h 85-6816 ขอนแก่น ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e2919] [cursor=pointer]:
+            - generic [ref=f10e2921]:
+              - button [ref=f10e2922]
+              - generic [ref=f10e2930]: ยังไม่เชื่อม GPS
+              - generic "85-6816 ขอนแก่น" [ref=f10e2931]
+              - generic [ref=f10e2932]: 0km/h
+            - generic [ref=f10e2933]:
+              - generic [ref=f10e2934]: 85-6816 ขอนแก่น
+              - generic [ref=f10e2935]: ยังไม่รูดบัตร
+            - generic [ref=f10e2940]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e2945]: —
+          - button "ออฟไลน์ 85-8328 นครราชสีมา 0km/h 85-8328 นครราชสีมา ยังไม่รูดบัตร 🪪 231000456930506 ต.มะเกลือเก่า อ.สูงเนิน จ.นครราชสีมา 23/08/2569 08:10:37 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e2951] [cursor=pointer]:
+            - generic [ref=f10e2953]:
+              - button [ref=f10e2954]
+              - generic [ref=f10e2962]: ออฟไลน์
+              - generic "85-8328 นครราชสีมา" [ref=f10e2963]
+              - generic [ref=f10e2964]: 0km/h
+            - generic [ref=f10e2965]:
+              - generic [ref=f10e2966]: 85-8328 นครราชสีมา
+              - generic [ref=f10e2967]: ยังไม่รูดบัตร
+              - generic [ref=f10e2972]: 🪪 231000456930506
+            - generic [ref=f10e2973]: ต.มะเกลือเก่า อ.สูงเนิน จ.นครราชสีมา
+            - generic [ref=f10e2978]:
+              - generic [ref=f10e2982]: 23/08/2569 08:10:37
+              - generic [ref=f10e2983]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "จอดดับเครื่อง 86-0371 0km/h 86-0371 ชลบุรี ยังไม่รูดบัตร ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี 26/08/2569 15:06:52" [ref=f10e2985] [cursor=pointer]:
+            - generic [ref=f10e2987]:
+              - button [ref=f10e2988]
+              - generic [ref=f10e2996]: จอดดับเครื่อง
+              - generic "86-0371" [ref=f10e2997]
+              - generic [ref=f10e2998]: 0km/h
+            - generic [ref=f10e2999]:
+              - generic [ref=f10e3000]: 86-0371 ชลบุรี
+              - generic [ref=f10e3001]: ยังไม่รูดบัตร
+            - generic [ref=f10e3006]: ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี
+            - generic [ref=f10e3011]: 26/08/2569 15:06:52
+          - button "เคลื่อนที่ 86-0373 6km/h 86-0373 ชลบุรี ยังไม่รูดบัตร ต.พิมพา อ.บางปะกง จ.ฉะเชิงเทรา 26/08/2569 15:06:55" [ref=f10e3017] [cursor=pointer]:
+            - generic [ref=f10e3019]:
+              - button [ref=f10e3020]
+              - generic [ref=f10e3028]: เคลื่อนที่
+              - generic "86-0373" [ref=f10e3029]
+              - generic [ref=f10e3030]: 6km/h
+            - generic [ref=f10e3031]:
+              - generic [ref=f10e3032]: 86-0373 ชลบุรี
+              - generic [ref=f10e3033]: ยังไม่รูดบัตร
+            - generic [ref=f10e3038]: ต.พิมพา อ.บางปะกง จ.ฉะเชิงเทรา
+            - generic [ref=f10e3043]: 26/08/2569 15:06:55
+          - button "ออฟไลน์ 86-0605 ชลบุรี 0km/h 86-0605 ชลบุรี ยังไม่รูดบัตร ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี 23/08/2569 07:37:55 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e3049] [cursor=pointer]:
+            - generic [ref=f10e3051]:
+              - button [ref=f10e3052]
+              - generic [ref=f10e3060]: ออฟไลน์
+              - generic "86-0605 ชลบุรี" [ref=f10e3061]
+              - generic [ref=f10e3062]: 0km/h
+            - generic [ref=f10e3063]:
+              - generic [ref=f10e3064]: 86-0605 ชลบุรี
+              - generic [ref=f10e3065]: ยังไม่รูดบัตร
+            - generic [ref=f10e3070]: ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี
+            - generic [ref=f10e3075]:
+              - generic [ref=f10e3079]: 23/08/2569 07:37:55
+              - generic [ref=f10e3080]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 86-0606 0km/h 86-0606 ชลบุรี ยังไม่รูดบัตร น้ำมัน 0% ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี 23/08/2569 01:10:35 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e3082] [cursor=pointer]:
+            - generic [ref=f10e3084]:
+              - button [ref=f10e3085]
+              - generic [ref=f10e3093]: ออฟไลน์
+              - generic "86-0606" [ref=f10e3094]
+              - generic [ref=f10e3095]: 0km/h
+            - generic [ref=f10e3096]:
+              - generic [ref=f10e3097]: 86-0606 ชลบุรี
+              - generic [ref=f10e3098]: ยังไม่รูดบัตร
+            - generic [ref=f10e3104]:
+              - generic [ref=f10e3108]: น้ำมัน
+              - generic [ref=f10e3109]: 0%
+            - generic [ref=f10e3111]: ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี
+            - generic [ref=f10e3116]:
+              - generic [ref=f10e3120]: 23/08/2569 01:10:35
+              - generic [ref=f10e3121]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 86-0607 0km/h 86-0607 ชลบุรี ยังไม่รูดบัตร น้ำมัน 0% ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี 18/08/2569 22:08:22 ข้อมูลเก่า 8 วันที่ผ่านมา" [ref=f10e3123] [cursor=pointer]:
+            - generic [ref=f10e3125]:
+              - button [ref=f10e3126]
+              - generic [ref=f10e3134]: ออฟไลน์
+              - generic "86-0607" [ref=f10e3135]
+              - generic [ref=f10e3136]: 0km/h
+            - generic [ref=f10e3137]:
+              - generic [ref=f10e3138]: 86-0607 ชลบุรี
+              - generic [ref=f10e3139]: ยังไม่รูดบัตร
+            - generic [ref=f10e3145]:
+              - generic [ref=f10e3149]: น้ำมัน
+              - generic [ref=f10e3150]: 0%
+            - generic [ref=f10e3152]: ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี
+            - generic [ref=f10e3157]:
+              - generic [ref=f10e3161]: 18/08/2569 22:08:22
+              - generic [ref=f10e3162]: ข้อมูลเก่า 8 วันที่ผ่านมา
+          - button "ออฟไลน์ 86-0608 0km/h 86-0608 ชลบุรี ยังไม่รูดบัตร น้ำมัน 0% ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี 23/08/2569 01:13:39 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e3164] [cursor=pointer]:
+            - generic [ref=f10e3166]:
+              - button [ref=f10e3167]
+              - generic [ref=f10e3175]: ออฟไลน์
+              - generic "86-0608" [ref=f10e3176]
+              - generic [ref=f10e3177]: 0km/h
+            - generic [ref=f10e3178]:
+              - generic [ref=f10e3179]: 86-0608 ชลบุรี
+              - generic [ref=f10e3180]: ยังไม่รูดบัตร
+            - generic [ref=f10e3186]:
+              - generic [ref=f10e3190]: น้ำมัน
+              - generic [ref=f10e3191]: 0%
+            - generic [ref=f10e3193]: ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี
+            - generic [ref=f10e3198]:
+              - generic [ref=f10e3202]: 23/08/2569 01:13:39
+              - generic [ref=f10e3203]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 86-0609 รถ 6 ล้อ ชลบุรี 0km/h 86-0609 รถ 6 ล้อ ชลบุรี ยังไม่รูดบัตร ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี 23/08/2569 08:03:09 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e3205] [cursor=pointer]:
+            - generic [ref=f10e3207]:
+              - button [ref=f10e3208]
+              - generic [ref=f10e3216]: ออฟไลน์
+              - generic "86-0609 รถ 6 ล้อ ชลบุรี" [ref=f10e3217]
+              - generic [ref=f10e3218]: 0km/h
+            - generic [ref=f10e3219]:
+              - generic [ref=f10e3220]: 86-0609 รถ 6 ล้อ ชลบุรี
+              - generic [ref=f10e3221]: ยังไม่รูดบัตร
+            - generic [ref=f10e3226]: ต.หนองอิรุณ อ.บ้านบึง จ.ชลบุรี
+            - generic [ref=f10e3231]:
+              - generic [ref=f10e3235]: 23/08/2569 08:03:09
+              - generic [ref=f10e3236]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 86-3706 ขอนแก่น 0km/h 86-3706 ขอนแก่น ยังไม่รูดบัตร ต.นาฝาย อ.ภูผาม่าน จ.ขอนแก่น 10/08/2569 01:46:37 ข้อมูลเก่า 17 วันที่ผ่านมา" [ref=f10e3238] [cursor=pointer]:
+            - generic [ref=f10e3240]:
+              - button [ref=f10e3241]
+              - generic [ref=f10e3249]: ออฟไลน์
+              - generic "86-3706 ขอนแก่น" [ref=f10e3250]
+              - generic [ref=f10e3251]: 0km/h
+            - generic [ref=f10e3252]:
+              - generic [ref=f10e3253]: 86-3706 ขอนแก่น
+              - generic [ref=f10e3254]: ยังไม่รูดบัตร
+            - generic [ref=f10e3259]: ต.นาฝาย อ.ภูผาม่าน จ.ขอนแก่น
+            - generic [ref=f10e3264]:
+              - generic [ref=f10e3268]: 10/08/2569 01:46:37
+              - generic [ref=f10e3269]: ข้อมูลเก่า 17 วันที่ผ่านมา
+          - button "ออฟไลน์ 86-5853 ขอนแก่น 0km/h 86-5853 ขอนแก่น ยังไม่รูดบัตร ต.นาเชือก อ.ยางตลาด จ.กาฬสินธุ์ 22/08/2569 23:40:32 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e3271] [cursor=pointer]:
+            - generic [ref=f10e3273]:
+              - button [ref=f10e3274]
+              - generic [ref=f10e3282]: ออฟไลน์
+              - generic "86-5853 ขอนแก่น" [ref=f10e3283]
+              - generic [ref=f10e3284]: 0km/h
+            - generic [ref=f10e3285]:
+              - generic [ref=f10e3286]: 86-5853 ขอนแก่น
+              - generic [ref=f10e3287]: ยังไม่รูดบัตร
+            - generic [ref=f10e3292]: ต.นาเชือก อ.ยางตลาด จ.กาฬสินธุ์
+            - generic [ref=f10e3297]:
+              - generic [ref=f10e3301]: 22/08/2569 23:40:32
+              - generic [ref=f10e3302]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 86-6076 0km/h 86-6076 ชลบุรี ยังไม่รูดบัตร ต.หนองขาม อ.ศรีราชา จ.ชลบุรี 26/08/2569 15:01:16 ข้อมูลเก่า 6 นาทีที่ผ่านมา" [ref=f10e3304] [cursor=pointer]:
+            - generic [ref=f10e3306]:
+              - button [ref=f10e3307]
+              - generic [ref=f10e3315]: ออฟไลน์
+              - generic "86-6076" [ref=f10e3316]
+              - generic [ref=f10e3317]: 0km/h
+            - generic [ref=f10e3318]:
+              - generic [ref=f10e3319]: 86-6076 ชลบุรี
+              - generic [ref=f10e3320]: ยังไม่รูดบัตร
+            - generic [ref=f10e3325]: ต.หนองขาม อ.ศรีราชา จ.ชลบุรี
+            - generic [ref=f10e3330]:
+              - generic [ref=f10e3334]: 26/08/2569 15:01:16
+              - generic [ref=f10e3335]: ข้อมูลเก่า 6 นาทีที่ผ่านมา
+          - button "จอดดับเครื่อง 88-3587 นครราชสีมา 0km/h 88-3587 นครราชสีมา ยังไม่รูดบัตร ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา 26/08/2569 15:06:54" [ref=f10e3337] [cursor=pointer]:
+            - generic [ref=f10e3339]:
+              - button [ref=f10e3340]
+              - generic [ref=f10e3348]: จอดดับเครื่อง
+              - generic "88-3587 นครราชสีมา" [ref=f10e3349]
+              - generic [ref=f10e3350]: 0km/h
+            - generic [ref=f10e3351]:
+              - generic [ref=f10e3352]: 88-3587 นครราชสีมา
+              - generic [ref=f10e3353]: ยังไม่รูดบัตร
+            - generic [ref=f10e3358]: ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา
+            - generic [ref=f10e3363]: 26/08/2569 15:06:54
+          - button "ออฟไลน์ 0km/h 88-9432 นครราชสีมา ยังไม่รูดบัตร ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา 23/08/2569 00:37:27 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e3369] [cursor=pointer]:
+            - generic [ref=f10e3371]:
+              - button [ref=f10e3372]
+              - generic [ref=f10e3380]: ออฟไลน์
+              - generic [ref=f10e3381]: 0km/h
+            - generic [ref=f10e3382]:
+              - generic [ref=f10e3383]: 88-9432 นครราชสีมา
+              - generic [ref=f10e3384]: ยังไม่รูดบัตร
+            - generic [ref=f10e3389]: ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา
+            - generic [ref=f10e3394]:
+              - generic [ref=f10e3398]: 23/08/2569 00:37:27
+              - generic [ref=f10e3399]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 89-7270 นครราชสีมา 0km/h 89-7270 นครราชสีมา ยังไม่รูดบัตร ต.หนองโบสถ์ อ.นางรอง จ.บุรีรัมย์ 23/08/2569 00:36:56 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e3401] [cursor=pointer]:
+            - generic [ref=f10e3403]:
+              - button [ref=f10e3404]
+              - generic [ref=f10e3412]: ออฟไลน์
+              - generic "89-7270 นครราชสีมา" [ref=f10e3413]
+              - generic [ref=f10e3414]: 0km/h
+            - generic [ref=f10e3415]:
+              - generic [ref=f10e3416]: 89-7270 นครราชสีมา
+              - generic [ref=f10e3417]: ยังไม่รูดบัตร
+            - generic [ref=f10e3422]: ต.หนองโบสถ์ อ.นางรอง จ.บุรีรัมย์
+            - generic [ref=f10e3427]:
+              - generic [ref=f10e3431]: 23/08/2569 00:36:56
+              - generic [ref=f10e3432]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 90-1505 นครราชสีมา 0km/h 90-1505 นครราชสีมา ยังไม่รูดบัตร ต.จอหอ อ.เมืองนครราชสีมา จ.นครราชสีมา 23/08/2569 07:59:25 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e3434] [cursor=pointer]:
+            - generic [ref=f10e3436]:
+              - button [ref=f10e3437]
+              - generic [ref=f10e3445]: ออฟไลน์
+              - generic "90-1505 นครราชสีมา" [ref=f10e3446]
+              - generic [ref=f10e3447]: 0km/h
+            - generic [ref=f10e3448]:
+              - generic [ref=f10e3449]: 90-1505 นครราชสีมา
+              - generic [ref=f10e3450]: ยังไม่รูดบัตร
+            - generic [ref=f10e3455]: ต.จอหอ อ.เมืองนครราชสีมา จ.นครราชสีมา
+            - generic [ref=f10e3460]:
+              - generic [ref=f10e3464]: 23/08/2569 07:59:25
+              - generic [ref=f10e3465]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ 90-3254 0km/h 90-3254 นครราชสีมา 121004556530505 ต.นิคมสร้างตนเอง อ.พิมาย จ.นครราชสีมา 22/08/2569 00:03:48 ข้อมูลเก่า 5 วันที่ผ่านมา" [ref=f10e3467] [cursor=pointer]:
+            - generic [ref=f10e3469]:
+              - button [ref=f10e3470]
+              - generic [ref=f10e3478]: ออฟไลน์
+              - generic "90-3254" [ref=f10e3479]
+              - generic [ref=f10e3480]: 0km/h
+            - generic [ref=f10e3481]:
+              - generic [ref=f10e3482]: 90-3254 นครราชสีมา
+              - generic [ref=f10e3483]: "121004556530505"
+            - generic [ref=f10e3488]: ต.นิคมสร้างตนเอง อ.พิมาย จ.นครราชสีมา
+            - generic [ref=f10e3493]:
+              - generic [ref=f10e3497]: 22/08/2569 00:03:48
+              - generic [ref=f10e3498]: ข้อมูลเก่า 5 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 90-4591 กรุงเทพ 0km/h 90-4591 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3500] [cursor=pointer]:
+            - generic [ref=f10e3502]:
+              - button [ref=f10e3503]
+              - generic [ref=f10e3511]: ยังไม่เชื่อม GPS
+              - generic "90-4591 กรุงเทพ" [ref=f10e3512]
+              - generic [ref=f10e3513]: 0km/h
+            - generic [ref=f10e3514]:
+              - generic [ref=f10e3515]: 90-4591 กรุงเทพ
+              - generic [ref=f10e3516]: ยังไม่รูดบัตร
+            - generic [ref=f10e3521]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3526]: —
+          - button "ยังไม่เชื่อม GPS 93-0556 กรุงเทพ 0km/h 93-0556 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3532] [cursor=pointer]:
+            - generic [ref=f10e3534]:
+              - button [ref=f10e3535]
+              - generic [ref=f10e3543]: ยังไม่เชื่อม GPS
+              - generic "93-0556 กรุงเทพ" [ref=f10e3544]
+              - generic [ref=f10e3545]: 0km/h
+            - generic [ref=f10e3546]:
+              - generic [ref=f10e3547]: 93-0556 กรุงเทพ
+              - generic [ref=f10e3548]: ยังไม่รูดบัตร
+            - generic [ref=f10e3553]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3558]: —
+          - button "ยังไม่เชื่อม GPS 93-0557 กรุงเทพ 0km/h 93-0557 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3564] [cursor=pointer]:
+            - generic [ref=f10e3566]:
+              - button [ref=f10e3567]
+              - generic [ref=f10e3575]: ยังไม่เชื่อม GPS
+              - generic "93-0557 กรุงเทพ" [ref=f10e3576]
+              - generic [ref=f10e3577]: 0km/h
+            - generic [ref=f10e3578]:
+              - generic [ref=f10e3579]: 93-0557 กรุงเทพ
+              - generic [ref=f10e3580]: ยังไม่รูดบัตร
+            - generic [ref=f10e3585]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3590]: —
+          - button "ยังไม่เชื่อม GPS 93-0558 กรุงเทพ 0km/h 93-0558 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3596] [cursor=pointer]:
+            - generic [ref=f10e3598]:
+              - button [ref=f10e3599]
+              - generic [ref=f10e3607]: ยังไม่เชื่อม GPS
+              - generic "93-0558 กรุงเทพ" [ref=f10e3608]
+              - generic [ref=f10e3609]: 0km/h
+            - generic [ref=f10e3610]:
+              - generic [ref=f10e3611]: 93-0558 กรุงเทพ
+              - generic [ref=f10e3612]: ยังไม่รูดบัตร
+            - generic [ref=f10e3617]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3622]: —
+          - button "ยังไม่เชื่อม GPS 93-1454 กรุงเทพ 0km/h 93-1454 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3628] [cursor=pointer]:
+            - generic [ref=f10e3630]:
+              - button [ref=f10e3631]
+              - generic [ref=f10e3639]: ยังไม่เชื่อม GPS
+              - generic "93-1454 กรุงเทพ" [ref=f10e3640]
+              - generic [ref=f10e3641]: 0km/h
+            - generic [ref=f10e3642]:
+              - generic [ref=f10e3643]: 93-1454 กรุงเทพ
+              - generic [ref=f10e3644]: ยังไม่รูดบัตร
+            - generic [ref=f10e3649]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3654]: —
+          - button "ออฟไลน์ 93-2499 กรุงเทพ 0km/h 93-2499 กรุงเทพ ยังไม่รูดบัตร ต.หนองปลิง อ.นครหลวง จ.พระนครศรีอยุธยา 23/08/2569 08:12:39 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e3660] [cursor=pointer]:
+            - generic [ref=f10e3662]:
+              - button [ref=f10e3663]
+              - generic [ref=f10e3671]: ออฟไลน์
+              - generic "93-2499 กรุงเทพ" [ref=f10e3672]
+              - generic [ref=f10e3673]: 0km/h
+            - generic [ref=f10e3674]:
+              - generic [ref=f10e3675]: 93-2499 กรุงเทพ
+              - generic [ref=f10e3676]: ยังไม่รูดบัตร
+            - generic [ref=f10e3681]: ต.หนองปลิง อ.นครหลวง จ.พระนครศรีอยุธยา
+            - generic [ref=f10e3686]:
+              - generic [ref=f10e3690]: 23/08/2569 08:12:39
+              - generic [ref=f10e3691]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 93-5950 กรุงเทพ 0km/h 93-5950 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3693] [cursor=pointer]:
+            - generic [ref=f10e3695]:
+              - button [ref=f10e3696]
+              - generic [ref=f10e3704]: ยังไม่เชื่อม GPS
+              - generic "93-5950 กรุงเทพ" [ref=f10e3705]
+              - generic [ref=f10e3706]: 0km/h
+            - generic [ref=f10e3707]:
+              - generic [ref=f10e3708]: 93-5950 กรุงเทพ
+              - generic [ref=f10e3709]: ยังไม่รูดบัตร
+            - generic [ref=f10e3714]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3719]: —
+          - button "ยังไม่เชื่อม GPS 93-8397 กรุงเทพ 0km/h 93-8397 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3725] [cursor=pointer]:
+            - generic [ref=f10e3727]:
+              - button [ref=f10e3728]
+              - generic [ref=f10e3736]: ยังไม่เชื่อม GPS
+              - generic "93-8397 กรุงเทพ" [ref=f10e3737]
+              - generic [ref=f10e3738]: 0km/h
+            - generic [ref=f10e3739]:
+              - generic [ref=f10e3740]: 93-8397 กรุงเทพ
+              - generic [ref=f10e3741]: ยังไม่รูดบัตร
+            - generic [ref=f10e3746]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3751]: —
+          - button "ยังไม่เชื่อม GPS 96-3964 กรุงเทพ 0km/h 96-3964 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3757] [cursor=pointer]:
+            - generic [ref=f10e3759]:
+              - button [ref=f10e3760]
+              - generic [ref=f10e3768]: ยังไม่เชื่อม GPS
+              - generic "96-3964 กรุงเทพ" [ref=f10e3769]
+              - generic [ref=f10e3770]: 0km/h
+            - generic [ref=f10e3771]:
+              - generic [ref=f10e3772]: 96-3964 กรุงเทพ
+              - generic [ref=f10e3773]: ยังไม่รูดบัตร
+            - generic [ref=f10e3778]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3783]: —
+          - button "ยังไม่เชื่อม GPS 97-4640 กรุงเทพ 0km/h 97-4640 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3789] [cursor=pointer]:
+            - generic [ref=f10e3791]:
+              - button [ref=f10e3792]
+              - generic [ref=f10e3800]: ยังไม่เชื่อม GPS
+              - generic "97-4640 กรุงเทพ" [ref=f10e3801]
+              - generic [ref=f10e3802]: 0km/h
+            - generic [ref=f10e3803]:
+              - generic [ref=f10e3804]: 97-4640 กรุงเทพ
+              - generic [ref=f10e3805]: ยังไม่รูดบัตร
+            - generic [ref=f10e3810]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3815]: —
+          - button "ยังไม่เชื่อม GPS 97-4641 กรุงเทพ 0km/h 97-4641 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3821] [cursor=pointer]:
+            - generic [ref=f10e3823]:
+              - button [ref=f10e3824]
+              - generic [ref=f10e3832]: ยังไม่เชื่อม GPS
+              - generic "97-4641 กรุงเทพ" [ref=f10e3833]
+              - generic [ref=f10e3834]: 0km/h
+            - generic [ref=f10e3835]:
+              - generic [ref=f10e3836]: 97-4641 กรุงเทพ
+              - generic [ref=f10e3837]: ยังไม่รูดบัตร
+            - generic [ref=f10e3842]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3847]: —
+          - button "ยังไม่เชื่อม GPS 97-4642 กรุงเทพ 0km/h 97-4642 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3853] [cursor=pointer]:
+            - generic [ref=f10e3855]:
+              - button [ref=f10e3856]
+              - generic [ref=f10e3864]: ยังไม่เชื่อม GPS
+              - generic "97-4642 กรุงเทพ" [ref=f10e3865]
+              - generic [ref=f10e3866]: 0km/h
+            - generic [ref=f10e3867]:
+              - generic [ref=f10e3868]: 97-4642 กรุงเทพ
+              - generic [ref=f10e3869]: ยังไม่รูดบัตร
+            - generic [ref=f10e3874]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3879]: —
+          - button "ออฟไลน์ 9กฬ-7860 กรุงเทพมหานคร 0km/h 9กฬ-7860 กรุงเทพมหานคร ยังไม่รูดบัตร ต.หน้าเมือง อ.เมืองปราจีนบุรี จ.ปราจีนบุรี 23/08/2569 08:08:40 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e3885] [cursor=pointer]:
+            - generic [ref=f10e3887]:
+              - button [ref=f10e3888]
+              - generic [ref=f10e3896]: ออฟไลน์
+              - generic "9กฬ-7860 กรุงเทพมหานคร" [ref=f10e3897]
+              - generic [ref=f10e3898]: 0km/h
+            - generic [ref=f10e3899]:
+              - generic [ref=f10e3900]: 9กฬ-7860 กรุงเทพมหานคร
+              - generic [ref=f10e3901]: ยังไม่รูดบัตร
+            - generic [ref=f10e3906]: ต.หน้าเมือง อ.เมืองปราจีนบุรี จ.ปราจีนบุรี
+            - generic [ref=f10e3911]:
+              - generic [ref=f10e3915]: 23/08/2569 08:08:40
+              - generic [ref=f10e3916]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 81-0502 0km/h FM1JNKA10416 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3918] [cursor=pointer]:
+            - generic [ref=f10e3920]:
+              - button [ref=f10e3921]
+              - generic [ref=f10e3929]: ยังไม่เชื่อม GPS
+              - generic "81-0502" [ref=f10e3930]
+              - generic [ref=f10e3931]: 0km/h
+            - generic [ref=f10e3932]:
+              - generic [ref=f10e3933]: FM1JNKA10416
+              - generic [ref=f10e3934]: ยังไม่รูดบัตร
+            - generic [ref=f10e3939]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3944]: —
+          - button "ยังไม่เชื่อม GPS 85-0337 0km/h MP1FXZ777GT001793 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e3950] [cursor=pointer]:
+            - generic [ref=f10e3952]:
+              - button [ref=f10e3953]
+              - generic [ref=f10e3961]: ยังไม่เชื่อม GPS
+              - generic "85-0337" [ref=f10e3962]
+              - generic [ref=f10e3963]: 0km/h
+            - generic [ref=f10e3964]:
+              - generic [ref=f10e3965]: MP1FXZ777GT001793
+              - generic [ref=f10e3966]: ยังไม่รูดบัตร
+            - generic [ref=f10e3971]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e3976]: —
+          - button "ออฟไลน์ 81-6387 0km/h T333 81-6387 ยังไม่รูดบัตร น้ำมัน 0% ต.กุดดินจี่ อ.นากลาง จ.หนองบัวลำภู 23/08/2569 01:12:37 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e3982] [cursor=pointer]:
+            - generic [ref=f10e3984]:
+              - button [ref=f10e3985]
+              - generic [ref=f10e3993]: ออฟไลน์
+              - generic "81-6387" [ref=f10e3994]
+              - generic [ref=f10e3995]: 0km/h
+            - generic [ref=f10e3996]:
+              - generic [ref=f10e3997]: T333 81-6387
+              - generic [ref=f10e3998]: ยังไม่รูดบัตร
+            - generic [ref=f10e4004]:
+              - generic [ref=f10e4008]: น้ำมัน
+              - generic [ref=f10e4009]: 0%
+            - generic [ref=f10e4011]: ต.กุดดินจี่ อ.นากลาง จ.หนองบัวลำภู
+            - generic [ref=f10e4016]:
+              - generic [ref=f10e4020]: 23/08/2569 01:12:37
+              - generic [ref=f10e4021]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ 82-3665 0km/h VT200L 82-3665 ยังไม่รูดบัตร ต.เขาหินซ้อน อ.พนมสารคาม จ.ฉะเชิงเทรา 06/08/2569 15:11:49 ข้อมูลเก่า 20 วันที่ผ่านมา" [ref=f10e4023] [cursor=pointer]:
+            - generic [ref=f10e4025]:
+              - button [ref=f10e4026]
+              - generic [ref=f10e4034]: ออฟไลน์
+              - generic "82-3665" [ref=f10e4035]
+              - generic [ref=f10e4036]: 0km/h
+            - generic [ref=f10e4037]:
+              - generic [ref=f10e4038]: VT200L 82-3665
+              - generic [ref=f10e4039]: ยังไม่รูดบัตร
+            - generic [ref=f10e4044]: ต.เขาหินซ้อน อ.พนมสารคาม จ.ฉะเชิงเทรา
+            - generic [ref=f10e4049]:
+              - generic [ref=f10e4053]: 06/08/2569 15:11:49
+              - generic [ref=f10e4054]: ข้อมูลเก่า 20 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS VTP บษ-2520 พระนครศรีอยุธยา 0km/h VTP บษ-2520 พระนครศรีอยุธยา ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e4056] [cursor=pointer]:
+            - generic [ref=f10e4058]:
+              - button [ref=f10e4059]
+              - generic [ref=f10e4067]: ยังไม่เชื่อม GPS
+              - generic "VTP บษ-2520 พระนครศรีอยุธยา" [ref=f10e4068]
+              - generic [ref=f10e4069]: 0km/h
+            - generic [ref=f10e4070]:
+              - generic [ref=f10e4071]: VTP บษ-2520 พระนครศรีอยุธยา
+              - generic [ref=f10e4072]: ยังไม่รูดบัตร
+            - generic [ref=f10e4077]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e4082]: —
+          - button "จอดดับเครื่อง [TSL02] ผน-6361 ระยอง 0km/h [TSL02] ผน-6361 ระยอง ยังไม่รูดบัตร ต.ตะพง อ.เมืองระยอง จ.ระยอง 26/08/2569 15:03:54" [ref=f10e4088] [cursor=pointer]:
+            - generic [ref=f10e4090]:
+              - button [ref=f10e4091]
+              - generic [ref=f10e4099]: จอดดับเครื่อง
+              - generic "[TSL02] ผน-6361 ระยอง" [ref=f10e4100]
+              - generic [ref=f10e4101]: 0km/h
+            - generic [ref=f10e4102]:
+              - generic [ref=f10e4103]: "[TSL02] ผน-6361 ระยอง"
+              - generic [ref=f10e4104]: ยังไม่รูดบัตร
+            - generic [ref=f10e4109]: ต.ตะพง อ.เมืองระยอง จ.ระยอง
+            - generic [ref=f10e4114]: 26/08/2569 15:03:54
+          - button "ออฟไลน์ [TSL04] 1นค-443 กรุงเทพ 0km/h [TSL04] 1นค-443 กรุงเทพ ยังไม่รูดบัตร แขวงสีลม เขตบางรัก กรุงเทพมหานคร 26/08/2569 07:41:57 ข้อมูลเก่า ประมาณ 7 ชั่วโมงที่ผ่านมา" [ref=f10e4120] [cursor=pointer]:
+            - generic [ref=f10e4122]:
+              - button [ref=f10e4123]
+              - generic [ref=f10e4131]: ออฟไลน์
+              - generic "[TSL04] 1นค-443 กรุงเทพ" [ref=f10e4132]
+              - generic [ref=f10e4133]: 0km/h
+            - generic [ref=f10e4134]:
+              - generic [ref=f10e4135]: "[TSL04] 1นค-443 กรุงเทพ"
+              - generic [ref=f10e4136]: ยังไม่รูดบัตร
+            - generic [ref=f10e4141]: แขวงสีลม เขตบางรัก กรุงเทพมหานคร
+            - generic [ref=f10e4146]:
+              - generic [ref=f10e4150]: 26/08/2569 07:41:57
+              - generic [ref=f10e4151]: ข้อมูลเก่า ประมาณ 7 ชั่วโมงที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS [UCHA-11] ขย-8280 ระยอง 0km/h [UCHA-11] ขย-8280 ระยอง ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e4153] [cursor=pointer]:
+            - generic [ref=f10e4155]:
+              - button [ref=f10e4156]
+              - generic [ref=f10e4164]: ยังไม่เชื่อม GPS
+              - generic "[UCHA-11] ขย-8280 ระยอง" [ref=f10e4165]
+              - generic [ref=f10e4166]: 0km/h
+            - generic [ref=f10e4167]:
+              - generic [ref=f10e4168]: "[UCHA-11] ขย-8280 ระยอง"
+              - generic [ref=f10e4169]: ยังไม่รูดบัตร
+            - generic [ref=f10e4174]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e4179]: —
+          - button "จอดดับเครื่อง [UCHA01] ผน-6364 ระยอง 0km/h [UCHA01] ผน-6364 ระยอง ยังไม่รูดบัตร ต.ตะพง อ.เมืองระยอง จ.ระยอง 26/08/2569 15:06:48" [ref=f10e4185] [cursor=pointer]:
+            - generic [ref=f10e4187]:
+              - button [ref=f10e4188]
+              - generic [ref=f10e4196]: จอดดับเครื่อง
+              - generic "[UCHA01] ผน-6364 ระยอง" [ref=f10e4197]
+              - generic [ref=f10e4198]: 0km/h
+            - generic [ref=f10e4199]:
+              - generic [ref=f10e4200]: "[UCHA01] ผน-6364 ระยอง"
+              - generic [ref=f10e4201]: ยังไม่รูดบัตร
+            - generic [ref=f10e4206]: ต.ตะพง อ.เมืองระยอง จ.ระยอง
+            - generic [ref=f10e4211]: 26/08/2569 15:06:48
+          - button "จอดดับเครื่อง [UCHA03] ผน-6755 ระยอง 0km/h [UCHA03] ผน-6755 ระยอง ยังไม่รูดบัตร ต.ตะพง อ.เมืองระยอง จ.ระยอง 26/08/2569 15:04:43" [ref=f10e4217] [cursor=pointer]:
+            - generic [ref=f10e4219]:
+              - button [ref=f10e4220]
+              - generic [ref=f10e4228]: จอดดับเครื่อง
+              - generic "[UCHA03] ผน-6755 ระยอง" [ref=f10e4229]
+              - generic [ref=f10e4230]: 0km/h
+            - generic [ref=f10e4231]:
+              - generic [ref=f10e4232]: "[UCHA03] ผน-6755 ระยอง"
+              - generic [ref=f10e4233]: ยังไม่รูดบัตร
+            - generic [ref=f10e4238]: ต.ตะพง อ.เมืองระยอง จ.ระยอง
+            - generic [ref=f10e4243]: 26/08/2569 15:04:43
+          - button "ยังไม่เชื่อม GPS [UCHA05] ผน-6754 ระยอง 0km/h [UCHA05] ผน-6754 ระยอง ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e4249] [cursor=pointer]:
+            - generic [ref=f10e4251]:
+              - button [ref=f10e4252]
+              - generic [ref=f10e4260]: ยังไม่เชื่อม GPS
+              - generic "[UCHA05] ผน-6754 ระยอง" [ref=f10e4261]
+              - generic [ref=f10e4262]: 0km/h
+            - generic [ref=f10e4263]:
+              - generic [ref=f10e4264]: "[UCHA05] ผน-6754 ระยอง"
+              - generic [ref=f10e4265]: ยังไม่รูดบัตร
+            - generic [ref=f10e4270]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e4275]: —
+          - button "เคลื่อนที่ [UCHA06] 1นค-440 กรุงเทพ 29km/h [UCHA06] 1นค-440 กรุงเทพ ยังไม่รูดบัตร ต.ตะพง อ.เมืองระยอง จ.ระยอง 26/08/2569 15:07:17" [ref=f10e4281] [cursor=pointer]:
+            - generic [ref=f10e4283]:
+              - button [ref=f10e4284]
+              - generic [ref=f10e4292]: เคลื่อนที่
+              - generic "[UCHA06] 1นค-440 กรุงเทพ" [ref=f10e4293]
+              - generic [ref=f10e4294]: 29km/h
+            - generic [ref=f10e4295]:
+              - generic [ref=f10e4296]: "[UCHA06] 1นค-440 กรุงเทพ"
+              - generic [ref=f10e4297]: ยังไม่รูดบัตร
+            - generic [ref=f10e4302]: ต.ตะพง อ.เมืองระยอง จ.ระยอง
+            - generic [ref=f10e4307]: 26/08/2569 15:07:17
+          - button "ออฟไลน์ [UCHA09] ขล-7290 ระยอง 0km/h [UCHA09] ขล-7290 ระยอง ยังไม่รูดบัตร ต.ตะพง อ.เมืองระยอง จ.ระยอง 23/08/2569 08:10:12 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e4313] [cursor=pointer]:
+            - generic [ref=f10e4315]:
+              - button [ref=f10e4316]
+              - generic [ref=f10e4324]: ออฟไลน์
+              - generic "[UCHA09] ขล-7290 ระยอง" [ref=f10e4325]
+              - generic [ref=f10e4326]: 0km/h
+            - generic [ref=f10e4327]:
+              - generic [ref=f10e4328]: "[UCHA09] ขล-7290 ระยอง"
+              - generic [ref=f10e4329]: ยังไม่รูดบัตร
+            - generic [ref=f10e4334]: ต.ตะพง อ.เมืองระยอง จ.ระยอง
+            - generic [ref=f10e4339]:
+              - generic [ref=f10e4343]: 23/08/2569 08:10:12
+              - generic [ref=f10e4344]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "จอดดับเครื่อง [UCHA12บัส] 32-1652 ระยอง 0km/h [UCHA12บัส] 32-1652 ระยอง ยังไม่รูดบัตร ต.ตะพง อ.เมืองระยอง จ.ระยอง 26/08/2569 15:06:07" [ref=f10e4346] [cursor=pointer]:
+            - generic [ref=f10e4348]:
+              - button [ref=f10e4349]
+              - generic [ref=f10e4357]: จอดดับเครื่อง
+              - generic "[UCHA12บัส] 32-1652 ระยอง" [ref=f10e4358]
+              - generic [ref=f10e4359]: 0km/h
+            - generic [ref=f10e4360]:
+              - generic [ref=f10e4361]: "[UCHA12บัส] 32-1652 ระยอง"
+              - generic [ref=f10e4362]: ยังไม่รูดบัตร
+            - generic [ref=f10e4367]: ต.ตะพง อ.เมืองระยอง จ.ระยอง
+            - generic [ref=f10e4372]: 26/08/2569 15:06:07
+          - button "ยังไม่เชื่อม GPS กธ-4191 สระบุรี 0km/h กธ-4191 สระบุรี ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e4378] [cursor=pointer]:
+            - generic [ref=f10e4380]:
+              - button [ref=f10e4381]
+              - generic [ref=f10e4389]: ยังไม่เชื่อม GPS
+              - generic "กธ-4191 สระบุรี" [ref=f10e4390]
+              - generic [ref=f10e4391]: 0km/h
+            - generic [ref=f10e4392]:
+              - generic [ref=f10e4393]: กธ-4191 สระบุรี
+              - generic [ref=f10e4394]: ยังไม่รูดบัตร
+            - generic [ref=f10e4399]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e4404]: —
+          - button "ออฟไลน์ กธ-5005 สระบุรี 0km/h กธ-5005 สระบุรี ยังไม่รูดบัตร ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี 23/08/2569 07:57:56 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e4410] [cursor=pointer]:
+            - generic [ref=f10e4412]:
+              - button [ref=f10e4413]
+              - generic [ref=f10e4421]: ออฟไลน์
+              - generic "กธ-5005 สระบุรี" [ref=f10e4422]
+              - generic [ref=f10e4423]: 0km/h
+            - generic [ref=f10e4424]:
+              - generic [ref=f10e4425]: กธ-5005 สระบุรี
+              - generic [ref=f10e4426]: ยังไม่รูดบัตร
+            - generic [ref=f10e4431]: ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี
+            - generic [ref=f10e4436]:
+              - generic [ref=f10e4440]: 23/08/2569 07:57:56
+              - generic [ref=f10e4441]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ ขจ-6424 ขอนแก่น 0km/h ขจ-6424 ขอนแก่น ยังไม่รูดบัตร ต.ห้วยยาง อ.เมืองสกลนคร จ.สกลนคร 23/08/2569 08:13:51 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e4443] [cursor=pointer]:
+            - generic [ref=f10e4445]:
+              - button [ref=f10e4446]
+              - generic [ref=f10e4454]: ออฟไลน์
+              - generic "ขจ-6424 ขอนแก่น" [ref=f10e4455]
+              - generic [ref=f10e4456]: 0km/h
+            - generic [ref=f10e4457]:
+              - generic [ref=f10e4458]: ขจ-6424 ขอนแก่น
+              - generic [ref=f10e4459]: ยังไม่รูดบัตร
+            - generic [ref=f10e4464]: ต.ห้วยยาง อ.เมืองสกลนคร จ.สกลนคร
+            - generic [ref=f10e4469]:
+              - generic [ref=f10e4473]: 23/08/2569 08:13:51
+              - generic [ref=f10e4474]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ ขว-3115 0km/h ขว-3115 ระยอง ยังไม่รูดบัตร แขวงสีลม เขตบางรัก กรุงเทพมหานคร 23/08/2569 00:37:08 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e4476] [cursor=pointer]:
+            - generic [ref=f10e4478]:
+              - button [ref=f10e4479]
+              - generic [ref=f10e4487]: ออฟไลน์
+              - generic "ขว-3115" [ref=f10e4488]
+              - generic [ref=f10e4489]: 0km/h
+            - generic [ref=f10e4490]:
+              - generic [ref=f10e4491]: ขว-3115 ระยอง
+              - generic [ref=f10e4492]: ยังไม่รูดบัตร
+            - generic [ref=f10e4497]: แขวงสีลม เขตบางรัก กรุงเทพมหานคร
+            - generic [ref=f10e4502]:
+              - generic [ref=f10e4506]: 23/08/2569 00:37:08
+              - generic [ref=f10e4507]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS ฒบ-2166 พระนครศรีอยุธยา 0km/h ฒบ-2166 พระนครศรีอยุธยา ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e4509] [cursor=pointer]:
+            - generic [ref=f10e4511]:
+              - button [ref=f10e4512]
+              - generic [ref=f10e4520]: ยังไม่เชื่อม GPS
+              - generic "ฒบ-2166 พระนครศรีอยุธยา" [ref=f10e4521]
+              - generic [ref=f10e4522]: 0km/h
+            - generic [ref=f10e4523]:
+              - generic [ref=f10e4524]: ฒบ-2166 พระนครศรีอยุธยา
+              - generic [ref=f10e4525]: ยังไม่รูดบัตร
+            - generic [ref=f10e4530]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e4535]: —
+          - button "ออฟไลน์ ฒว-150 จอดอู่ ไม่มีแบต พระนครศรีอยุธยา 0km/h ฒว-150 จอดอู่ ไม่มีแบต พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 07:34:59 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e4541] [cursor=pointer]:
+            - generic [ref=f10e4543]:
+              - button [ref=f10e4544]
+              - generic [ref=f10e4552]: ออฟไลน์
+              - generic "ฒว-150 จอดอู่ ไม่มีแบต พระนครศรีอยุธยา" [ref=f10e4553]
+              - generic [ref=f10e4554]: 0km/h
+            - generic [ref=f10e4555]:
+              - generic [ref=f10e4556]: ฒว-150 จอดอู่ ไม่มีแบต พระนครศรีอยุธยา
+              - generic [ref=f10e4557]: ยังไม่รูดบัตร
+            - generic [ref=f10e4562]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4567]:
+              - generic [ref=f10e4571]: 23/08/2569 07:34:59
+              - generic [ref=f10e4572]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ ถร-7336 พระนครศรีอยุธยา 0km/h ถร-7336 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:01:32 ข้อมูลเก่า 6 นาทีที่ผ่านมา" [ref=f10e4574] [cursor=pointer]:
+            - generic [ref=f10e4576]:
+              - button [ref=f10e4577]
+              - generic [ref=f10e4585]: ออฟไลน์
+              - generic "ถร-7336 พระนครศรีอยุธยา" [ref=f10e4586]
+              - generic [ref=f10e4587]: 0km/h
+            - generic [ref=f10e4588]:
+              - generic [ref=f10e4589]: ถร-7336 พระนครศรีอยุธยา
+              - generic [ref=f10e4590]: ยังไม่รูดบัตร
+            - generic [ref=f10e4595]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4600]:
+              - generic [ref=f10e4604]: 26/08/2569 15:01:32
+              - generic [ref=f10e4605]: ข้อมูลเก่า 6 นาทีที่ผ่านมา
+          - button "จอดดับเครื่อง ถห-2667 พระนครศรีอยุธยา 0km/h ถห-2667 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:03:17" [ref=f10e4607] [cursor=pointer]:
+            - generic [ref=f10e4609]:
+              - button [ref=f10e4610]
+              - generic [ref=f10e4618]: จอดดับเครื่อง
+              - generic "ถห-2667 พระนครศรีอยุธยา" [ref=f10e4619]
+              - generic [ref=f10e4620]: 0km/h
+            - generic [ref=f10e4621]:
+              - generic [ref=f10e4622]: ถห-2667 พระนครศรีอยุธยา
+              - generic [ref=f10e4623]: ยังไม่รูดบัตร
+            - generic [ref=f10e4628]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4633]: 26/08/2569 15:03:17
+          - button "ออฟไลน์ นค-454 0km/h นค-454 ระยอง ยังไม่รูดบัตร แขวงสีลม เขตบางรัก กรุงเทพมหานคร 23/08/2569 00:37:40 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e4639] [cursor=pointer]:
+            - generic [ref=f10e4641]:
+              - button [ref=f10e4642]
+              - generic [ref=f10e4650]: ออฟไลน์
+              - generic "นค-454" [ref=f10e4651]
+              - generic [ref=f10e4652]: 0km/h
+            - generic [ref=f10e4653]:
+              - generic [ref=f10e4654]: นค-454 ระยอง
+              - generic [ref=f10e4655]: ยังไม่รูดบัตร
+            - generic [ref=f10e4660]: แขวงสีลม เขตบางรัก กรุงเทพมหานคร
+            - generic [ref=f10e4665]:
+              - generic [ref=f10e4669]: 23/08/2569 00:37:40
+              - generic [ref=f10e4670]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ บฉ-6193 พระนครศรีอยุธยา 0km/h บฉ-6193 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:13:11 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e4672] [cursor=pointer]:
+            - generic [ref=f10e4674]:
+              - button [ref=f10e4675]
+              - generic [ref=f10e4683]: ออฟไลน์
+              - generic "บฉ-6193 พระนครศรีอยุธยา" [ref=f10e4684]
+              - generic [ref=f10e4685]: 0km/h
+            - generic [ref=f10e4686]:
+              - generic [ref=f10e4687]: บฉ-6193 พระนครศรีอยุธยา
+              - generic [ref=f10e4688]: ยังไม่รูดบัตร
+            - generic [ref=f10e4693]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4698]:
+              - generic [ref=f10e4702]: 23/08/2569 08:13:11
+              - generic [ref=f10e4703]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "จอดดับเครื่อง บธ-1304 รถจอดซ่อมอยู่อู่ พระนครศรีอยุธยา 0km/h บธ-1304 รถจอดซ่อมอยู่อู่ พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:07:00" [ref=f10e4705] [cursor=pointer]:
+            - generic [ref=f10e4707]:
+              - button [ref=f10e4708]
+              - generic [ref=f10e4716]: จอดดับเครื่อง
+              - generic "บธ-1304 รถจอดซ่อมอยู่อู่ พระนครศรีอยุธยา" [ref=f10e4717]
+              - generic [ref=f10e4718]: 0km/h
+            - generic [ref=f10e4719]:
+              - generic [ref=f10e4720]: บธ-1304 รถจอดซ่อมอยู่อู่ พระนครศรีอยุธยา
+              - generic [ref=f10e4721]: ยังไม่รูดบัตร
+            - generic [ref=f10e4726]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4731]: 26/08/2569 15:07:00
+          - button "จอดดับเครื่อง บธ-1871 พระนครศรีอยุธยา 0km/h บธ-1871 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:04:07" [ref=f10e4737] [cursor=pointer]:
+            - generic [ref=f10e4739]:
+              - button [ref=f10e4740]
+              - generic [ref=f10e4748]: จอดดับเครื่อง
+              - generic "บธ-1871 พระนครศรีอยุธยา" [ref=f10e4749]
+              - generic [ref=f10e4750]: 0km/h
+            - generic [ref=f10e4751]:
+              - generic [ref=f10e4752]: บธ-1871 พระนครศรีอยุธยา
+              - generic [ref=f10e4753]: ยังไม่รูดบัตร
+            - generic [ref=f10e4758]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4763]: 26/08/2569 15:04:07
+          - button "ยังไม่เชื่อม GPS บธ-7447 สุรินทร์ 0km/h บธ-7447 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e4769] [cursor=pointer]:
+            - generic [ref=f10e4771]:
+              - button [ref=f10e4772]
+              - generic [ref=f10e4780]: ยังไม่เชื่อม GPS
+              - generic "บธ-7447 สุรินทร์" [ref=f10e4781]
+              - generic [ref=f10e4782]: 0km/h
+            - generic [ref=f10e4783]:
+              - generic [ref=f10e4784]: บธ-7447
+              - generic [ref=f10e4785]: ยังไม่รูดบัตร
+            - generic [ref=f10e4790]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e4795]: —
+          - button "ออฟไลน์ บธ-7476 พระนครศรีอยุธยา 0km/h บธ-7476 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 12:25:04 ข้อมูลเก่า ประมาณ 3 ชั่วโมงที่ผ่านมา" [ref=f10e4801] [cursor=pointer]:
+            - generic [ref=f10e4803]:
+              - button [ref=f10e4804]
+              - generic [ref=f10e4812]: ออฟไลน์
+              - generic "บธ-7476 พระนครศรีอยุธยา" [ref=f10e4813]
+              - generic [ref=f10e4814]: 0km/h
+            - generic [ref=f10e4815]:
+              - generic [ref=f10e4816]: บธ-7476 พระนครศรีอยุธยา
+              - generic [ref=f10e4817]: ยังไม่รูดบัตร
+            - generic [ref=f10e4822]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4827]:
+              - generic [ref=f10e4831]: 26/08/2569 12:25:04
+              - generic [ref=f10e4832]: ข้อมูลเก่า ประมาณ 3 ชั่วโมงที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS บธ-7667 สุรินทร์ 0km/h บธ-7667 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e4834] [cursor=pointer]:
+            - generic [ref=f10e4836]:
+              - button [ref=f10e4837]
+              - generic [ref=f10e4845]: ยังไม่เชื่อม GPS
+              - generic "บธ-7667 สุรินทร์" [ref=f10e4846]
+              - generic [ref=f10e4847]: 0km/h
+            - generic [ref=f10e4848]:
+              - generic [ref=f10e4849]: บธ-7667
+              - generic [ref=f10e4850]: ยังไม่รูดบัตร
+            - generic [ref=f10e4855]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e4860]: —
+          - button "จอดดับเครื่อง บน-8649 พระนครศรีอยุธยา 0km/h บน-8649 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:02:56" [ref=f10e4866] [cursor=pointer]:
+            - generic [ref=f10e4868]:
+              - button [ref=f10e4869]
+              - generic [ref=f10e4877]: จอดดับเครื่อง
+              - generic "บน-8649 พระนครศรีอยุธยา" [ref=f10e4878]
+              - generic [ref=f10e4879]: 0km/h
+            - generic [ref=f10e4880]:
+              - generic [ref=f10e4881]: บน-8649 พระนครศรีอยุธยา
+              - generic [ref=f10e4882]: ยังไม่รูดบัตร
+            - generic [ref=f10e4887]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4892]: 26/08/2569 15:02:56
+          - button "ออฟไลน์ บน-8692 พระนครศรีอยุธยา 0km/h บน-8692 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 07:43:21 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e4898] [cursor=pointer]:
+            - generic [ref=f10e4900]:
+              - button [ref=f10e4901]
+              - generic [ref=f10e4909]: ออฟไลน์
+              - generic "บน-8692 พระนครศรีอยุธยา" [ref=f10e4910]
+              - generic [ref=f10e4911]: 0km/h
+            - generic [ref=f10e4912]:
+              - generic [ref=f10e4913]: บน-8692 พระนครศรีอยุธยา
+              - generic [ref=f10e4914]: ยังไม่รูดบัตร
+            - generic [ref=f10e4919]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e4924]:
+              - generic [ref=f10e4928]: 23/08/2569 07:43:21
+              - generic [ref=f10e4929]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "จอดดับเครื่อง บน-8693 พระนครศรีอยุธยา 0km/h บน-8693 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.ท้ายเกาะ อ.สามโคก จ.ปทุมธานี 26/08/2569 15:05:15" [ref=f10e4931] [cursor=pointer]:
+            - generic [ref=f10e4933]:
+              - button [ref=f10e4934]
+              - generic [ref=f10e4942]: จอดดับเครื่อง
+              - generic "บน-8693 พระนครศรีอยุธยา" [ref=f10e4943]
+              - generic [ref=f10e4944]: 0km/h
+            - generic [ref=f10e4945]:
+              - generic [ref=f10e4946]: บน-8693 พระนครศรีอยุธยา
+              - generic [ref=f10e4947]: ยังไม่รูดบัตร
+            - generic [ref=f10e4952]: ต.ท้ายเกาะ อ.สามโคก จ.ปทุมธานี
+            - generic [ref=f10e4957]: 26/08/2569 15:05:15
+          - button "ออฟไลน์ บน-9346 พระนครศรีอยุธยา 0km/h บน-9346 พระนครศรีอยุธยา ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด 26/08/2569 15:07:29" [ref=f10e4963] [cursor=pointer]:
+            - generic [ref=f10e4965]:
+              - button [ref=f10e4966]
+              - generic [ref=f10e4974]: ออฟไลน์
+              - generic "บน-9346 พระนครศรีอยุธยา" [ref=f10e4975]
+              - generic [ref=f10e4976]: 0km/h
+            - generic [ref=f10e4977]:
+              - generic [ref=f10e4978]: บน-9346 พระนครศรีอยุธยา
+              - generic [ref=f10e4979]: ยังไม่รูดบัตร
+            - generic [ref=f10e4984]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e4989]: 26/08/2569 15:07:29
+          - button "ออฟไลน์ บบ-3199 พระนครศรีอยุธยา 0km/h บบ-3199 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 09:13:20 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e4995] [cursor=pointer]:
+            - generic [ref=f10e4997]:
+              - button [ref=f10e4998]
+              - generic [ref=f10e5006]: ออฟไลน์
+              - generic "บบ-3199 พระนครศรีอยุธยา" [ref=f10e5007]
+              - generic [ref=f10e5008]: 0km/h
+            - generic [ref=f10e5009]:
+              - generic [ref=f10e5010]: บบ-3199 พระนครศรีอยุธยา
+              - generic [ref=f10e5011]: ยังไม่รูดบัตร
+            - generic [ref=f10e5016]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5021]:
+              - generic [ref=f10e5025]: 23/08/2569 09:13:20
+              - generic [ref=f10e5026]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "เคลื่อนที่ บบ-395 พระนครศรีอยุธยา 10km/h บบ-395 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.ท้ายเกาะ อ.สามโคก จ.ปทุมธานี 26/08/2569 15:07:28" [ref=f10e5028] [cursor=pointer]:
+            - generic [ref=f10e5030]:
+              - button [ref=f10e5031]
+              - generic [ref=f10e5039]: เคลื่อนที่
+              - generic "บบ-395 พระนครศรีอยุธยา" [ref=f10e5040]
+              - generic [ref=f10e5041]: 10km/h
+            - generic [ref=f10e5042]:
+              - generic [ref=f10e5043]: บบ-395 พระนครศรีอยุธยา
+              - generic [ref=f10e5044]: ยังไม่รูดบัตร
+            - generic [ref=f10e5049]: ต.ท้ายเกาะ อ.สามโคก จ.ปทุมธานี
+            - generic [ref=f10e5054]: 26/08/2569 15:07:28
+          - button "จอดดับเครื่อง บบ-5258 พระนครศรีอยุธยา 0km/h บบ-5258 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:04:26" [ref=f10e5060] [cursor=pointer]:
+            - generic [ref=f10e5062]:
+              - button [ref=f10e5063]
+              - generic [ref=f10e5071]: จอดดับเครื่อง
+              - generic "บบ-5258 พระนครศรีอยุธยา" [ref=f10e5072]
+              - generic [ref=f10e5073]: 0km/h
+            - generic [ref=f10e5074]:
+              - generic [ref=f10e5075]: บบ-5258 พระนครศรีอยุธยา
+              - generic [ref=f10e5076]: ยังไม่รูดบัตร
+            - generic [ref=f10e5081]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5086]: 26/08/2569 15:04:26
+          - button "ออฟไลน์ บบ-5262 พระนครศรีอยุธยา 0km/h บบ-5262 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:08:22 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5092] [cursor=pointer]:
+            - generic [ref=f10e5094]:
+              - button [ref=f10e5095]
+              - generic [ref=f10e5103]: ออฟไลน์
+              - generic "บบ-5262 พระนครศรีอยุธยา" [ref=f10e5104]
+              - generic [ref=f10e5105]: 0km/h
+            - generic [ref=f10e5106]:
+              - generic [ref=f10e5107]: บบ-5262 พระนครศรีอยุธยา
+              - generic [ref=f10e5108]: ยังไม่รูดบัตร
+            - generic [ref=f10e5113]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5118]:
+              - generic [ref=f10e5122]: 23/08/2569 08:08:22
+              - generic [ref=f10e5123]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "จอดดับเครื่อง บบ-5266 พระนครศรีอยุธยา 0km/h บบ-5266 พระนครศรีอยุธยา ยังไม่รูดบัตร แขวงดอนเมือง เขตดอนเมือง กรุงเทพมหานคร 26/08/2569 15:05:26" [ref=f10e5125] [cursor=pointer]:
+            - generic [ref=f10e5127]:
+              - button [ref=f10e5128]
+              - generic [ref=f10e5136]: จอดดับเครื่อง
+              - generic "บบ-5266 พระนครศรีอยุธยา" [ref=f10e5137]
+              - generic [ref=f10e5138]: 0km/h
+            - generic [ref=f10e5139]:
+              - generic [ref=f10e5140]: บบ-5266 พระนครศรีอยุธยา
+              - generic [ref=f10e5141]: ยังไม่รูดบัตร
+            - generic [ref=f10e5146]: แขวงดอนเมือง เขตดอนเมือง กรุงเทพมหานคร
+            - generic [ref=f10e5151]: 26/08/2569 15:05:26
+          - button "ออฟไลน์ บบ-784 พระนครศรีอยุธยา 0km/h บบ-784 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.ท้ายเกาะ อ.สามโคก จ.ปทุมธานี 23/08/2569 08:12:33 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5157] [cursor=pointer]:
+            - generic [ref=f10e5159]:
+              - button [ref=f10e5160]
+              - generic [ref=f10e5168]: ออฟไลน์
+              - generic "บบ-784 พระนครศรีอยุธยา" [ref=f10e5169]
+              - generic [ref=f10e5170]: 0km/h
+            - generic [ref=f10e5171]:
+              - generic [ref=f10e5172]: บบ-784 พระนครศรีอยุธยา
+              - generic [ref=f10e5173]: ยังไม่รูดบัตร
+            - generic [ref=f10e5178]: ต.ท้ายเกาะ อ.สามโคก จ.ปทุมธานี
+            - generic [ref=f10e5183]:
+              - generic [ref=f10e5187]: 23/08/2569 08:12:33
+              - generic [ref=f10e5188]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ บบ-787 พระนครศรีอยุธยา 0km/h บบ-787 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 07:36:56 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5190] [cursor=pointer]:
+            - generic [ref=f10e5192]:
+              - button [ref=f10e5193]
+              - generic [ref=f10e5201]: ออฟไลน์
+              - generic "บบ-787 พระนครศรีอยุธยา" [ref=f10e5202]
+              - generic [ref=f10e5203]: 0km/h
+            - generic [ref=f10e5204]:
+              - generic [ref=f10e5205]: บบ-787 พระนครศรีอยุธยา
+              - generic [ref=f10e5206]: ยังไม่รูดบัตร
+            - generic [ref=f10e5211]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5216]:
+              - generic [ref=f10e5220]: 23/08/2569 07:36:56
+              - generic [ref=f10e5221]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ บพ-2396 สระบุรี 0km/h บพ-2396 สระบุรี ยังไม่รูดบัตร ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี 23/08/2569 08:10:30 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5223] [cursor=pointer]:
+            - generic [ref=f10e5225]:
+              - button [ref=f10e5226]
+              - generic [ref=f10e5234]: ออฟไลน์
+              - generic "บพ-2396 สระบุรี" [ref=f10e5235]
+              - generic [ref=f10e5236]: 0km/h
+            - generic [ref=f10e5237]:
+              - generic [ref=f10e5238]: บพ-2396 สระบุรี
+              - generic [ref=f10e5239]: ยังไม่รูดบัตร
+            - generic [ref=f10e5244]: ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี
+            - generic [ref=f10e5249]:
+              - generic [ref=f10e5253]: 23/08/2569 08:10:30
+              - generic [ref=f10e5254]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ บม-5697 พระนครศรีอยุธยา 0km/h บม-5697 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:06:54 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5256] [cursor=pointer]:
+            - generic [ref=f10e5258]:
+              - button [ref=f10e5259]
+              - generic [ref=f10e5267]: ออฟไลน์
+              - generic "บม-5697 พระนครศรีอยุธยา" [ref=f10e5268]
+              - generic [ref=f10e5269]: 0km/h
+            - generic [ref=f10e5270]:
+              - generic [ref=f10e5271]: บม-5697 พระนครศรีอยุธยา
+              - generic [ref=f10e5272]: ยังไม่รูดบัตร
+            - generic [ref=f10e5277]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5282]:
+              - generic [ref=f10e5286]: 23/08/2569 08:06:54
+              - generic [ref=f10e5287]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ บม-5698 พระนครศรีอยุธยา 0km/h บม-5698 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:09:19 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5289] [cursor=pointer]:
+            - generic [ref=f10e5291]:
+              - button [ref=f10e5292]
+              - generic [ref=f10e5300]: ออฟไลน์
+              - generic "บม-5698 พระนครศรีอยุธยา" [ref=f10e5301]
+              - generic [ref=f10e5302]: 0km/h
+            - generic [ref=f10e5303]:
+              - generic [ref=f10e5304]: บม-5698 พระนครศรีอยุธยา
+              - generic [ref=f10e5305]: ยังไม่รูดบัตร
+            - generic [ref=f10e5310]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5315]:
+              - generic [ref=f10e5319]: 23/08/2569 08:09:19
+              - generic [ref=f10e5320]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "เคลื่อนที่ บม-5701 พระนครศรีอยุธยา 89km/h บม-5701 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.บางหลวง อ.เมืองปทุมธานี จ.ปทุมธานี 26/08/2569 15:07:06" [ref=f10e5322] [cursor=pointer]:
+            - generic [ref=f10e5324]:
+              - button [ref=f10e5325]
+              - generic [ref=f10e5333]: เคลื่อนที่
+              - generic "บม-5701 พระนครศรีอยุธยา" [ref=f10e5334]
+              - generic [ref=f10e5335]: 89km/h
+            - generic [ref=f10e5336]:
+              - generic [ref=f10e5337]: บม-5701 พระนครศรีอยุธยา
+              - generic [ref=f10e5338]: ยังไม่รูดบัตร
+            - generic [ref=f10e5343]: ต.บางหลวง อ.เมืองปทุมธานี จ.ปทุมธานี
+            - generic [ref=f10e5348]: 26/08/2569 15:07:06
+          - button "เคลื่อนที่ บม-5702 พระนครศรีอยุธยา 55km/h บม-5702 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.คลองสาม อ.คลองหลวง จ.ปทุมธานี 26/08/2569 15:07:15" [ref=f10e5354] [cursor=pointer]:
+            - generic [ref=f10e5356]:
+              - button [ref=f10e5357]
+              - generic [ref=f10e5365]: เคลื่อนที่
+              - generic "บม-5702 พระนครศรีอยุธยา" [ref=f10e5366]
+              - generic [ref=f10e5367]: 55km/h
+            - generic [ref=f10e5368]:
+              - generic [ref=f10e5369]: บม-5702 พระนครศรีอยุธยา
+              - generic [ref=f10e5370]: ยังไม่รูดบัตร
+            - generic [ref=f10e5375]: ต.คลองสาม อ.คลองหลวง จ.ปทุมธานี
+            - generic [ref=f10e5380]: 26/08/2569 15:07:15
+          - button "เคลื่อนที่ บม-5703 พระนครศรีอยุธยา 12km/h บม-5703 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.ศาลายา อ.พุทธมณฑล จ.นครปฐม 26/08/2569 15:07:19" [ref=f10e5386] [cursor=pointer]:
+            - generic [ref=f10e5388]:
+              - button [ref=f10e5389]
+              - generic [ref=f10e5397]: เคลื่อนที่
+              - generic "บม-5703 พระนครศรีอยุธยา" [ref=f10e5398]
+              - generic [ref=f10e5399]: 12km/h
+            - generic [ref=f10e5400]:
+              - generic [ref=f10e5401]: บม-5703 พระนครศรีอยุธยา
+              - generic [ref=f10e5402]: ยังไม่รูดบัตร
+            - generic [ref=f10e5407]: ต.ศาลายา อ.พุทธมณฑล จ.นครปฐม
+            - generic [ref=f10e5412]: 26/08/2569 15:07:19
+          - button "จอดดับเครื่อง บร-3567 พระนครศรีอยุธยา 0km/h บร-3567 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:06:26" [ref=f10e5418] [cursor=pointer]:
+            - generic [ref=f10e5420]:
+              - button [ref=f10e5421]
+              - generic [ref=f10e5429]: จอดดับเครื่อง
+              - generic "บร-3567 พระนครศรีอยุธยา" [ref=f10e5430]
+              - generic [ref=f10e5431]: 0km/h
+            - generic [ref=f10e5432]:
+              - generic [ref=f10e5433]: บร-3567 พระนครศรีอยุธยา
+              - generic [ref=f10e5434]: ยังไม่รูดบัตร
+            - generic [ref=f10e5439]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5444]: 26/08/2569 15:06:26
+          - button "เคลื่อนที่ บร-4285 พระนครศรีอยุธยา 74km/h บร-4285 พระนครศรีอยุธยา ยังไม่รูดบัตร แขวงคูหาสวรรค์ เขตภาษีเจริญ กรุงเทพมหานคร 26/08/2569 15:06:35" [ref=f10e5450] [cursor=pointer]:
+            - generic [ref=f10e5452]:
+              - button [ref=f10e5453]
+              - generic [ref=f10e5461]: เคลื่อนที่
+              - generic "บร-4285 พระนครศรีอยุธยา" [ref=f10e5462]
+              - generic [ref=f10e5463]: 74km/h
+            - generic [ref=f10e5464]:
+              - generic [ref=f10e5465]: บร-4285 พระนครศรีอยุธยา
+              - generic [ref=f10e5466]: ยังไม่รูดบัตร
+            - generic [ref=f10e5471]: แขวงคูหาสวรรค์ เขตภาษีเจริญ กรุงเทพมหานคร
+            - generic [ref=f10e5476]: 26/08/2569 15:06:35
+          - button "ออฟไลน์ บล-567 สุรินทร์ 0km/h บล-567 ยังไม่รูดบัตร ต.แกใหญ่ อ.เมืองสุรินทร์ จ.สุรินทร์ 26/08/2569 03:03:48 ข้อมูลเก่า ประมาณ 12 ชั่วโมงที่ผ่านมา" [ref=f10e5482] [cursor=pointer]:
+            - generic [ref=f10e5484]:
+              - button [ref=f10e5485]
+              - generic [ref=f10e5493]: ออฟไลน์
+              - generic "บล-567 สุรินทร์" [ref=f10e5494]
+              - generic [ref=f10e5495]: 0km/h
+            - generic [ref=f10e5496]:
+              - generic [ref=f10e5497]: บล-567
+              - generic [ref=f10e5498]: ยังไม่รูดบัตร
+            - generic [ref=f10e5503]: ต.แกใหญ่ อ.เมืองสุรินทร์ จ.สุรินทร์
+            - generic [ref=f10e5508]:
+              - generic [ref=f10e5512]: 26/08/2569 03:03:48
+              - generic [ref=f10e5513]: ข้อมูลเก่า ประมาณ 12 ชั่วโมงที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS บล-8209 สระบุรี 0km/h บล-8209 สระบุรี ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e5515] [cursor=pointer]:
+            - generic [ref=f10e5517]:
+              - button [ref=f10e5518]
+              - generic [ref=f10e5526]: ยังไม่เชื่อม GPS
+              - generic "บล-8209 สระบุรี" [ref=f10e5527]
+              - generic [ref=f10e5528]: 0km/h
+            - generic [ref=f10e5529]:
+              - generic [ref=f10e5530]: บล-8209 สระบุรี
+              - generic [ref=f10e5531]: ยังไม่รูดบัตร
+            - generic [ref=f10e5536]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e5541]: —
+          - button "จอดดับเครื่อง บว-4335 กรุงเทพมหานคร 0km/h บว-4335 กรุงเทพมหานคร ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:03:16" [ref=f10e5547] [cursor=pointer]:
+            - generic [ref=f10e5549]:
+              - button [ref=f10e5550]
+              - generic [ref=f10e5558]: จอดดับเครื่อง
+              - generic "บว-4335 กรุงเทพมหานคร" [ref=f10e5559]
+              - generic [ref=f10e5560]: 0km/h
+            - generic [ref=f10e5561]:
+              - generic [ref=f10e5562]: บว-4335 กรุงเทพมหานคร
+              - generic [ref=f10e5563]: ยังไม่รูดบัตร
+            - generic [ref=f10e5568]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5573]: 26/08/2569 15:03:16
+          - button "ออฟไลน์ บว-6638 สระบุรี 0km/h บว-6638 สระบุรี ยังไม่รูดบัตร ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี 23/08/2569 06:45:08 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5579] [cursor=pointer]:
+            - generic [ref=f10e5581]:
+              - button [ref=f10e5582]
+              - generic [ref=f10e5590]: ออฟไลน์
+              - generic "บว-6638 สระบุรี" [ref=f10e5591]
+              - generic [ref=f10e5592]: 0km/h
+            - generic [ref=f10e5593]:
+              - generic [ref=f10e5594]: บว-6638 สระบุรี
+              - generic [ref=f10e5595]: ยังไม่รูดบัตร
+            - generic [ref=f10e5600]: ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี
+            - generic [ref=f10e5605]:
+              - generic [ref=f10e5609]: 23/08/2569 06:45:08
+              - generic [ref=f10e5610]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS บว-7094 กรุงเทพ 0km/h บว-7094 กรุงเทพ ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e5612] [cursor=pointer]:
+            - generic [ref=f10e5614]:
+              - button [ref=f10e5615]
+              - generic [ref=f10e5623]: ยังไม่เชื่อม GPS
+              - generic "บว-7094 กรุงเทพ" [ref=f10e5624]
+              - generic [ref=f10e5625]: 0km/h
+            - generic [ref=f10e5626]:
+              - generic [ref=f10e5627]: บว-7094 กรุงเทพ
+              - generic [ref=f10e5628]: ยังไม่รูดบัตร
+            - generic [ref=f10e5633]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e5638]: —
+          - button "ออฟไลน์ บว-9488 กรุงเทพมหานคร 0km/h บว-9488 กรุงเทพมหานคร ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:13:23 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5644] [cursor=pointer]:
+            - generic [ref=f10e5646]:
+              - button [ref=f10e5647]
+              - generic [ref=f10e5655]: ออฟไลน์
+              - generic "บว-9488 กรุงเทพมหานคร" [ref=f10e5656]
+              - generic [ref=f10e5657]: 0km/h
+            - generic [ref=f10e5658]:
+              - generic [ref=f10e5659]: บว-9488 กรุงเทพมหานคร
+              - generic [ref=f10e5660]: ยังไม่รูดบัตร
+            - generic [ref=f10e5665]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5670]:
+              - generic [ref=f10e5674]: 23/08/2569 08:13:23
+              - generic [ref=f10e5675]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "จอดดับเครื่อง บษ-1442 พระนครศรีอยุธยา 0km/h บษ-1442 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:06:11" [ref=f10e5677] [cursor=pointer]:
+            - generic [ref=f10e5679]:
+              - button [ref=f10e5680]
+              - generic [ref=f10e5688]: จอดดับเครื่อง
+              - generic "บษ-1442 พระนครศรีอยุธยา" [ref=f10e5689]
+              - generic [ref=f10e5690]: 0km/h
+            - generic [ref=f10e5691]:
+              - generic [ref=f10e5692]: บษ-1442 พระนครศรีอยุธยา
+              - generic [ref=f10e5693]: ยังไม่รูดบัตร
+            - generic [ref=f10e5698]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5703]: 26/08/2569 15:06:11
+          - button "จอดดับเครื่อง บษ-1443 พระนครศรีอยุธยา 0km/h บษ-1443 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.บางไทร อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:06:28" [ref=f10e5709] [cursor=pointer]:
+            - generic [ref=f10e5711]:
+              - button [ref=f10e5712]
+              - generic [ref=f10e5720]: จอดดับเครื่อง
+              - generic "บษ-1443 พระนครศรีอยุธยา" [ref=f10e5721]
+              - generic [ref=f10e5722]: 0km/h
+            - generic [ref=f10e5723]:
+              - generic [ref=f10e5724]: บษ-1443 พระนครศรีอยุธยา
+              - generic [ref=f10e5725]: ยังไม่รูดบัตร
+            - generic [ref=f10e5730]: ต.บางไทร อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5735]: 26/08/2569 15:06:28
+          - button "ยังไม่เชื่อม GPS บษ-1445 พระนครศรีอยุธยา 0km/h บษ-1445 พระนครศรีอยุธยา ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e5741] [cursor=pointer]:
+            - generic [ref=f10e5743]:
+              - button [ref=f10e5744]
+              - generic [ref=f10e5752]: ยังไม่เชื่อม GPS
+              - generic "บษ-1445 พระนครศรีอยุธยา" [ref=f10e5753]
+              - generic [ref=f10e5754]: 0km/h
+            - generic [ref=f10e5755]:
+              - generic [ref=f10e5756]: บษ-1445 พระนครศรีอยุธยา
+              - generic [ref=f10e5757]: ยังไม่รูดบัตร
+            - generic [ref=f10e5762]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e5767]: —
+          - button "เคลื่อนที่ บษ-2521 พระนครศรีอยุธยา 71km/h บษ-2521 พระนครศรีอยุธยา ยังไม่รูดบัตร แขวงแสมดำ เขตบางขุนเทียน กรุงเทพมหานคร 26/08/2569 15:07:18" [ref=f10e5773] [cursor=pointer]:
+            - generic [ref=f10e5775]:
+              - button [ref=f10e5776]
+              - generic [ref=f10e5784]: เคลื่อนที่
+              - generic "บษ-2521 พระนครศรีอยุธยา" [ref=f10e5785]
+              - generic [ref=f10e5786]: 71km/h
+            - generic [ref=f10e5787]:
+              - generic [ref=f10e5788]: บษ-2521 พระนครศรีอยุธยา
+              - generic [ref=f10e5789]: ยังไม่รูดบัตร
+            - generic [ref=f10e5794]: แขวงแสมดำ เขตบางขุนเทียน กรุงเทพมหานคร
+            - generic [ref=f10e5799]: 26/08/2569 15:07:18
+          - button "จอดดับเครื่อง บษ-2522 พระนครศรีอยุธยา 0km/h บษ-2522 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:06:50" [ref=f10e5805] [cursor=pointer]:
+            - generic [ref=f10e5807]:
+              - button [ref=f10e5808]
+              - generic [ref=f10e5816]: จอดดับเครื่อง
+              - generic "บษ-2522 พระนครศรีอยุธยา" [ref=f10e5817]
+              - generic [ref=f10e5818]: 0km/h
+            - generic [ref=f10e5819]:
+              - generic [ref=f10e5820]: บษ-2522 พระนครศรีอยุธยา
+              - generic [ref=f10e5821]: ยังไม่รูดบัตร
+            - generic [ref=f10e5826]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5831]: 26/08/2569 15:06:50
+          - button "ออฟไลน์ บษ-3850 พระนครศรีอยุธยา 0km/h บษ-3850 พระนครศรีอยุธยา ยังไม่รูดบัตร แขวงพญาไท เขตพญาไท กรุงเทพมหานคร 26/08/2569 09:49:01 ข้อมูลเก่า ประมาณ 5 ชั่วโมงที่ผ่านมา" [ref=f10e5837] [cursor=pointer]:
+            - generic [ref=f10e5839]:
+              - button [ref=f10e5840]
+              - generic [ref=f10e5848]: ออฟไลน์
+              - generic "บษ-3850 พระนครศรีอยุธยา" [ref=f10e5849]
+              - generic [ref=f10e5850]: 0km/h
+            - generic [ref=f10e5851]:
+              - generic [ref=f10e5852]: บษ-3850 พระนครศรีอยุธยา
+              - generic [ref=f10e5853]: ยังไม่รูดบัตร
+            - generic [ref=f10e5858]: แขวงพญาไท เขตพญาไท กรุงเทพมหานคร
+            - generic [ref=f10e5863]:
+              - generic [ref=f10e5867]: 26/08/2569 09:49:01
+              - generic [ref=f10e5868]: ข้อมูลเก่า ประมาณ 5 ชั่วโมงที่ผ่านมา
+          - button "จอดดับเครื่อง บษ-3851 พระนครศรีอยุธยา 0km/h บษ-3851 พระนครศรีอยุธยา ยังไม่รูดบัตร แขวงคลองกุ่ม เขตบึงกุ่ม กรุงเทพมหานคร 26/08/2569 15:05:09" [ref=f10e5870] [cursor=pointer]:
+            - generic [ref=f10e5872]:
+              - button [ref=f10e5873]
+              - generic [ref=f10e5881]: จอดดับเครื่อง
+              - generic "บษ-3851 พระนครศรีอยุธยา" [ref=f10e5882]
+              - generic [ref=f10e5883]: 0km/h
+            - generic [ref=f10e5884]:
+              - generic [ref=f10e5885]: บษ-3851 พระนครศรีอยุธยา
+              - generic [ref=f10e5886]: ยังไม่รูดบัตร
+            - generic [ref=f10e5891]: แขวงคลองกุ่ม เขตบึงกุ่ม กรุงเทพมหานคร
+            - generic [ref=f10e5896]: 26/08/2569 15:05:09
+          - button "ออฟไลน์ บษ-3852 พระนครศรีอยุธยา 0km/h บษ-3852 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:14:49 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e5902] [cursor=pointer]:
+            - generic [ref=f10e5904]:
+              - button [ref=f10e5905]
+              - generic [ref=f10e5913]: ออฟไลน์
+              - generic "บษ-3852 พระนครศรีอยุธยา" [ref=f10e5914]
+              - generic [ref=f10e5915]: 0km/h
+            - generic [ref=f10e5916]:
+              - generic [ref=f10e5917]: บษ-3852 พระนครศรีอยุธยา
+              - generic [ref=f10e5918]: ยังไม่รูดบัตร
+            - generic [ref=f10e5923]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e5928]:
+              - generic [ref=f10e5932]: 23/08/2569 08:14:49
+              - generic [ref=f10e5933]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ บห-3216 กรุงเทพมหานคร 0km/h บห-3216 กรุงเทพมหานคร ยังไม่รูดบัตร ต.ท่าเสา อ.กระทุ่มแบน จ.สมุทรสาคร 26/08/2569 13:55:15 ข้อมูลเก่า ประมาณ 1 ชั่วโมงที่ผ่านมา" [ref=f10e5935] [cursor=pointer]:
+            - generic [ref=f10e5937]:
+              - button [ref=f10e5938]
+              - generic [ref=f10e5946]: ออฟไลน์
+              - generic "บห-3216 กรุงเทพมหานคร" [ref=f10e5947]
+              - generic [ref=f10e5948]: 0km/h
+            - generic [ref=f10e5949]:
+              - generic [ref=f10e5950]: บห-3216 กรุงเทพมหานคร
+              - generic [ref=f10e5951]: ยังไม่รูดบัตร
+            - generic [ref=f10e5956]: ต.ท่าเสา อ.กระทุ่มแบน จ.สมุทรสาคร
+            - generic [ref=f10e5961]:
+              - generic [ref=f10e5965]: 26/08/2569 13:55:15
+              - generic [ref=f10e5966]: ข้อมูลเก่า ประมาณ 1 ชั่วโมงที่ผ่านมา
+          - button "เคลื่อนที่ บห-3218 กรุงเทพมหานคร 47km/h บห-3218 กรุงเทพมหานคร ยังไม่รูดบัตร แขวงอนุสาวรีย์ เขตบางเขน กรุงเทพมหานคร 26/08/2569 15:06:58" [ref=f10e5968] [cursor=pointer]:
+            - generic [ref=f10e5970]:
+              - button [ref=f10e5971]
+              - generic [ref=f10e5979]: เคลื่อนที่
+              - generic "บห-3218 กรุงเทพมหานคร" [ref=f10e5980]
+              - generic [ref=f10e5981]: 47km/h
+            - generic [ref=f10e5982]:
+              - generic [ref=f10e5983]: บห-3218 กรุงเทพมหานคร
+              - generic [ref=f10e5984]: ยังไม่รูดบัตร
+            - generic [ref=f10e5989]: แขวงอนุสาวรีย์ เขตบางเขน กรุงเทพมหานคร
+            - generic [ref=f10e5994]: 26/08/2569 15:06:58
+          - button "ออฟไลน์ บห-5050 สระบุรี 0km/h บห-5050 สระบุรี ยังไม่รูดบัตร ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี 26/08/2569 15:02:26 ข้อมูลเก่า 5 นาทีที่ผ่านมา" [ref=f10e6000] [cursor=pointer]:
+            - generic [ref=f10e6002]:
+              - button [ref=f10e6003]
+              - generic [ref=f10e6011]: ออฟไลน์
+              - generic "บห-5050 สระบุรี" [ref=f10e6012]
+              - generic [ref=f10e6013]: 0km/h
+            - generic [ref=f10e6014]:
+              - generic [ref=f10e6015]: บห-5050 สระบุรี
+              - generic [ref=f10e6016]: ยังไม่รูดบัตร
+            - generic [ref=f10e6021]: ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี
+            - generic [ref=f10e6026]:
+              - generic [ref=f10e6030]: 26/08/2569 15:02:26
+              - generic [ref=f10e6031]: ข้อมูลเก่า 5 นาทีที่ผ่านมา
+          - button "ออฟไลน์ บห-5125 พระนครศรีอยุธยา 0km/h บห-5125 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 07:33:08 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e6033] [cursor=pointer]:
+            - generic [ref=f10e6035]:
+              - button [ref=f10e6036]
+              - generic [ref=f10e6044]: ออฟไลน์
+              - generic "บห-5125 พระนครศรีอยุธยา" [ref=f10e6045]
+              - generic [ref=f10e6046]: 0km/h
+            - generic [ref=f10e6047]:
+              - generic [ref=f10e6048]: บห-5125 พระนครศรีอยุธยา
+              - generic [ref=f10e6049]: ยังไม่รูดบัตร
+            - generic [ref=f10e6054]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e6059]:
+              - generic [ref=f10e6063]: 23/08/2569 07:33:08
+              - generic [ref=f10e6064]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ บห-5126 พระนครศรีอยุธยา 0km/h บห-5126 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.ท้ายเกาะ อ.สามโคก จ.ปทุมธานี 30/05/2569 04:37:20 ข้อมูลเก่า 3 เดือนที่ผ่านมา" [ref=f10e6066] [cursor=pointer]:
+            - generic [ref=f10e6068]:
+              - button [ref=f10e6069]
+              - generic [ref=f10e6077]: ออฟไลน์
+              - generic "บห-5126 พระนครศรีอยุธยา" [ref=f10e6078]
+              - generic [ref=f10e6079]: 0km/h
+            - generic [ref=f10e6080]:
+              - generic [ref=f10e6081]: บห-5126 พระนครศรีอยุธยา
+              - generic [ref=f10e6082]: ยังไม่รูดบัตร
+            - generic [ref=f10e6087]: ต.ท้ายเกาะ อ.สามโคก จ.ปทุมธานี
+            - generic [ref=f10e6092]:
+              - generic [ref=f10e6096]: 30/05/2569 04:37:20
+              - generic [ref=f10e6097]: ข้อมูลเก่า 3 เดือนที่ผ่านมา
+          - button "จอดดับเครื่อง บห-9116 พระนครศรีอยุธยา 0km/h บห-9116 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.คลองสี่ อ.คลองหลวง จ.ปทุมธานี 26/08/2569 15:05:02" [ref=f10e6099] [cursor=pointer]:
+            - generic [ref=f10e6101]:
+              - button [ref=f10e6102]
+              - generic [ref=f10e6110]: จอดดับเครื่อง
+              - generic "บห-9116 พระนครศรีอยุธยา" [ref=f10e6111]
+              - generic [ref=f10e6112]: 0km/h
+            - generic [ref=f10e6113]:
+              - generic [ref=f10e6114]: บห-9116 พระนครศรีอยุธยา
+              - generic [ref=f10e6115]: ยังไม่รูดบัตร
+            - generic [ref=f10e6120]: ต.คลองสี่ อ.คลองหลวง จ.ปทุมธานี
+            - generic [ref=f10e6125]: 26/08/2569 15:05:02
+          - button "จอดดับเครื่อง บห-9117 พระนครศรีอยุธยา 0km/h บห-9117 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 15:04:51" [ref=f10e6131] [cursor=pointer]:
+            - generic [ref=f10e6133]:
+              - button [ref=f10e6134]
+              - generic [ref=f10e6142]: จอดดับเครื่อง
+              - generic "บห-9117 พระนครศรีอยุธยา" [ref=f10e6143]
+              - generic [ref=f10e6144]: 0km/h
+            - generic [ref=f10e6145]:
+              - generic [ref=f10e6146]: บห-9117 พระนครศรีอยุธยา
+              - generic [ref=f10e6147]: ยังไม่รูดบัตร
+            - generic [ref=f10e6152]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e6157]: 26/08/2569 15:04:51
+          - button "ออฟไลน์ บห-9466 พระนครศรีอยุธยา 0km/h บห-9466 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.คลองสาม อ.คลองหลวง จ.ปทุมธานี 26/08/2569 14:21:32 ข้อมูลเก่า ประมาณ 1 ชั่วโมงที่ผ่านมา" [ref=f10e6163] [cursor=pointer]:
+            - generic [ref=f10e6165]:
+              - button [ref=f10e6166]
+              - generic [ref=f10e6174]: ออฟไลน์
+              - generic "บห-9466 พระนครศรีอยุธยา" [ref=f10e6175]
+              - generic [ref=f10e6176]: 0km/h
+            - generic [ref=f10e6177]:
+              - generic [ref=f10e6178]: บห-9466 พระนครศรีอยุธยา
+              - generic [ref=f10e6179]: ยังไม่รูดบัตร
+            - generic [ref=f10e6184]: ต.คลองสาม อ.คลองหลวง จ.ปทุมธานี
+            - generic [ref=f10e6189]:
+              - generic [ref=f10e6193]: 26/08/2569 14:21:32
+              - generic [ref=f10e6194]: ข้อมูลเก่า ประมาณ 1 ชั่วโมงที่ผ่านมา
+          - button "เคลื่อนที่ บห-9467 พระนครศรีอยุธยา 64km/h บห-9467 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.ท่าอิฐ อ.ปากเกร็ด จ.นนทบุรี 26/08/2569 15:07:07" [ref=f10e6196] [cursor=pointer]:
+            - generic [ref=f10e6198]:
+              - button [ref=f10e6199]
+              - generic [ref=f10e6207]: เคลื่อนที่
+              - generic "บห-9467 พระนครศรีอยุธยา" [ref=f10e6208]
+              - generic [ref=f10e6209]: 64km/h
+            - generic [ref=f10e6210]:
+              - generic [ref=f10e6211]: บห-9467 พระนครศรีอยุธยา
+              - generic [ref=f10e6212]: ยังไม่รูดบัตร
+            - generic [ref=f10e6217]: ต.ท่าอิฐ อ.ปากเกร็ด จ.นนทบุรี
+            - generic [ref=f10e6222]: 26/08/2569 15:07:07
+          - button "จอดดับเครื่อง บห-9468 พระนครศรีอยุธยา 0km/h บห-9468 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.คลองพระอุดม อ.ปากเกร็ด จ.นนทบุรี 26/08/2569 15:04:12" [ref=f10e6228] [cursor=pointer]:
+            - generic [ref=f10e6230]:
+              - button [ref=f10e6231]
+              - generic [ref=f10e6239]: จอดดับเครื่อง
+              - generic "บห-9468 พระนครศรีอยุธยา" [ref=f10e6240]
+              - generic [ref=f10e6241]: 0km/h
+            - generic [ref=f10e6242]:
+              - generic [ref=f10e6243]: บห-9468 พระนครศรีอยุธยา
+              - generic [ref=f10e6244]: ยังไม่รูดบัตร
+            - generic [ref=f10e6249]: ต.คลองพระอุดม อ.ปากเกร็ด จ.นนทบุรี
+            - generic [ref=f10e6254]: 26/08/2569 15:04:12
+          - button "จอดดับเครื่อง บห-9469 พระนครศรีอยุธยา 0km/h บห-9469 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.คลองข่อย อ.ปากเกร็ด จ.นนทบุรี 26/08/2569 15:06:12" [ref=f10e6260] [cursor=pointer]:
+            - generic [ref=f10e6262]:
+              - button [ref=f10e6263]
+              - generic [ref=f10e6271]: จอดดับเครื่อง
+              - generic "บห-9469 พระนครศรีอยุธยา" [ref=f10e6272]
+              - generic [ref=f10e6273]: 0km/h
+            - generic [ref=f10e6274]:
+              - generic [ref=f10e6275]: บห-9469 พระนครศรีอยุธยา
+              - generic [ref=f10e6276]: ยังไม่รูดบัตร
+            - generic [ref=f10e6281]: ต.คลองข่อย อ.ปากเกร็ด จ.นนทบุรี
+            - generic [ref=f10e6286]: 26/08/2569 15:06:12
+          - button "ยังไม่เชื่อม GPS บห-9470 พระนครศรีอยุธยา 0km/h บห-9470 พระนครศรีอยุธยา ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e6292] [cursor=pointer]:
+            - generic [ref=f10e6294]:
+              - button [ref=f10e6295]
+              - generic [ref=f10e6303]: ยังไม่เชื่อม GPS
+              - generic "บห-9470 พระนครศรีอยุธยา" [ref=f10e6304]
+              - generic [ref=f10e6305]: 0km/h
+            - generic [ref=f10e6306]:
+              - generic [ref=f10e6307]: บห-9470 พระนครศรีอยุธยา
+              - generic [ref=f10e6308]: ยังไม่รูดบัตร
+            - generic [ref=f10e6313]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e6318]: —
+          - button "ออฟไลน์ ผก-5098 พระนครศรีอยุธยา 0km/h ผก-5098 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.คลองมะเดื่อ อ.กระทุ่มแบน จ.สมุทรสาคร 23/08/2569 00:37:05 ข้อมูลเก่า 4 วันที่ผ่านมา" [ref=f10e6324] [cursor=pointer]:
+            - generic [ref=f10e6326]:
+              - button [ref=f10e6327]
+              - generic [ref=f10e6335]: ออฟไลน์
+              - generic "ผก-5098 พระนครศรีอยุธยา" [ref=f10e6336]
+              - generic [ref=f10e6337]: 0km/h
+            - generic [ref=f10e6338]:
+              - generic [ref=f10e6339]: ผก-5098 พระนครศรีอยุธยา
+              - generic [ref=f10e6340]: ยังไม่รูดบัตร
+            - generic [ref=f10e6345]: ต.คลองมะเดื่อ อ.กระทุ่มแบน จ.สมุทรสาคร
+            - generic [ref=f10e6350]:
+              - generic [ref=f10e6354]: 23/08/2569 00:37:05
+              - generic [ref=f10e6355]: ข้อมูลเก่า 4 วันที่ผ่านมา
+          - button "ออฟไลน์ ผก-5099 พระนครศรีอยุธยา 0km/h ผก-5099 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.สัมปทวน อ.นครชัยศรี จ.นครปฐม 23/08/2569 17:04:06 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e6357] [cursor=pointer]:
+            - generic [ref=f10e6359]:
+              - button [ref=f10e6360]
+              - generic [ref=f10e6368]: ออฟไลน์
+              - generic "ผก-5099 พระนครศรีอยุธยา" [ref=f10e6369]
+              - generic [ref=f10e6370]: 0km/h
+            - generic [ref=f10e6371]:
+              - generic [ref=f10e6372]: ผก-5099 พระนครศรีอยุธยา
+              - generic [ref=f10e6373]: ยังไม่รูดบัตร
+            - generic [ref=f10e6378]: ต.สัมปทวน อ.นครชัยศรี จ.นครปฐม
+            - generic [ref=f10e6383]:
+              - generic [ref=f10e6387]: 23/08/2569 17:04:06
+              - generic [ref=f10e6388]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ ผก-5914 พระนครศรีอยุธยา 0km/h ผก-5914 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:06:41 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e6390] [cursor=pointer]:
+            - generic [ref=f10e6392]:
+              - button [ref=f10e6393]
+              - generic [ref=f10e6401]: ออฟไลน์
+              - generic "ผก-5914 พระนครศรีอยุธยา" [ref=f10e6402]
+              - generic [ref=f10e6403]: 0km/h
+            - generic [ref=f10e6404]:
+              - generic [ref=f10e6405]: ผก-5914 พระนครศรีอยุธยา
+              - generic [ref=f10e6406]: ยังไม่รูดบัตร
+            - generic [ref=f10e6411]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e6416]:
+              - generic [ref=f10e6420]: 23/08/2569 08:06:41
+              - generic [ref=f10e6421]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ ผก-5917 พระนครศรีอยุธยา 0km/h ผก-5917 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:03:02 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e6423] [cursor=pointer]:
+            - generic [ref=f10e6425]:
+              - button [ref=f10e6426]
+              - generic [ref=f10e6434]: ออฟไลน์
+              - generic "ผก-5917 พระนครศรีอยุธยา" [ref=f10e6435]
+              - generic [ref=f10e6436]: 0km/h
+            - generic [ref=f10e6437]:
+              - generic [ref=f10e6438]: ผก-5917 พระนครศรีอยุธยา
+              - generic [ref=f10e6439]: ยังไม่รูดบัตร
+            - generic [ref=f10e6444]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e6449]:
+              - generic [ref=f10e6453]: 23/08/2569 08:03:02
+              - generic [ref=f10e6454]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "เคลื่อนที่ ผก-7065 พระนครศรีอยุธยา 86km/h ผก-7065 พระนครศรีอยุธยา ยังไม่รูดบัตร แขวงคลองสามประเวศ เขตลาดกระบัง กรุงเทพมหานคร 26/08/2569 15:07:07" [ref=f10e6456] [cursor=pointer]:
+            - generic [ref=f10e6458]:
+              - button [ref=f10e6459]
+              - generic [ref=f10e6467]: เคลื่อนที่
+              - generic "ผก-7065 พระนครศรีอยุธยา" [ref=f10e6468]
+              - generic [ref=f10e6469]: 86km/h
+            - generic [ref=f10e6470]:
+              - generic [ref=f10e6471]: ผก-7065 พระนครศรีอยุธยา
+              - generic [ref=f10e6472]: ยังไม่รูดบัตร
+            - generic [ref=f10e6477]: แขวงคลองสามประเวศ เขตลาดกระบัง กรุงเทพมหานคร
+            - generic [ref=f10e6482]: 26/08/2569 15:07:07
+          - button "ออฟไลน์ ผก-801 พระนครศรีอยุธยา 0km/h ผก-801 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 07:51:18 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e6488] [cursor=pointer]:
+            - generic [ref=f10e6490]:
+              - button [ref=f10e6491]
+              - generic [ref=f10e6499]: ออฟไลน์
+              - generic "ผก-801 พระนครศรีอยุธยา" [ref=f10e6500]
+              - generic [ref=f10e6501]: 0km/h
+            - generic [ref=f10e6502]:
+              - generic [ref=f10e6503]: ผก-801 พระนครศรีอยุธยา
+              - generic [ref=f10e6504]: ยังไม่รูดบัตร
+            - generic [ref=f10e6509]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e6514]:
+              - generic [ref=f10e6518]: 23/08/2569 07:51:18
+              - generic [ref=f10e6519]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ ผก-8019 พระนครศรีอยุธยา 0km/h ผก-8019 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 23/08/2569 08:13:34 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e6521] [cursor=pointer]:
+            - generic [ref=f10e6523]:
+              - button [ref=f10e6524]
+              - generic [ref=f10e6532]: ออฟไลน์
+              - generic "ผก-8019 พระนครศรีอยุธยา" [ref=f10e6533]
+              - generic [ref=f10e6534]: 0km/h
+            - generic [ref=f10e6535]:
+              - generic [ref=f10e6536]: ผก-8019 พระนครศรีอยุธยา
+              - generic [ref=f10e6537]: ยังไม่รูดบัตร
+            - generic [ref=f10e6542]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e6547]:
+              - generic [ref=f10e6551]: 23/08/2569 08:13:34
+              - generic [ref=f10e6552]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS ผก-802 พระนครศรีอยุธยา 0km/h ผก-802 พระนครศรีอยุธยา ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e6554] [cursor=pointer]:
+            - generic [ref=f10e6556]:
+              - button [ref=f10e6557]
+              - generic [ref=f10e6565]: ยังไม่เชื่อม GPS
+              - generic "ผก-802 พระนครศรีอยุธยา" [ref=f10e6566]
+              - generic [ref=f10e6567]: 0km/h
+            - generic [ref=f10e6568]:
+              - generic [ref=f10e6569]: ผก-802 พระนครศรีอยุธยา
+              - generic [ref=f10e6570]: ยังไม่รูดบัตร
+            - generic [ref=f10e6575]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e6580]: —
+          - button "ออฟไลน์ ผก-8020 พระนครศรีอยุธยา 0km/h ผก-8020 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา 26/08/2569 05:38:15 ข้อมูลเก่า ประมาณ 9 ชั่วโมงที่ผ่านมา" [ref=f10e6586] [cursor=pointer]:
+            - generic [ref=f10e6588]:
+              - button [ref=f10e6589]
+              - generic [ref=f10e6597]: ออฟไลน์
+              - generic "ผก-8020 พระนครศรีอยุธยา" [ref=f10e6598]
+              - generic [ref=f10e6599]: 0km/h
+            - generic [ref=f10e6600]:
+              - generic [ref=f10e6601]: ผก-8020 พระนครศรีอยุธยา
+              - generic [ref=f10e6602]: ยังไม่รูดบัตร
+            - generic [ref=f10e6607]: ต.โคกช้าง อ.บางไทร จ.พระนครศรีอยุธยา
+            - generic [ref=f10e6612]:
+              - generic [ref=f10e6616]: 26/08/2569 05:38:15
+              - generic [ref=f10e6617]: ข้อมูลเก่า ประมาณ 9 ชั่วโมงที่ผ่านมา
+          - button "เคลื่อนที่ ผก-803 พระนครศรีอยุธยา 49km/h ผก-803 พระนครศรีอยุธยา ยังไม่รูดบัตร ต.หนองปากโลง อ.เมืองนครปฐม จ.นครปฐม 26/08/2569 15:07:16" [ref=f10e6619] [cursor=pointer]:
+            - generic [ref=f10e6621]:
+              - button [ref=f10e6622]
+              - generic [ref=f10e6630]: เคลื่อนที่
+              - generic "ผก-803 พระนครศรีอยุธยา" [ref=f10e6631]
+              - generic [ref=f10e6632]: 49km/h
+            - generic [ref=f10e6633]:
+              - generic [ref=f10e6634]: ผก-803 พระนครศรีอยุธยา
+              - generic [ref=f10e6635]: ยังไม่รูดบัตร
+            - generic [ref=f10e6640]: ต.หนองปากโลง อ.เมืองนครปฐม จ.นครปฐม
+            - generic [ref=f10e6645]: 26/08/2569 15:07:16
+          - button "ยังไม่เชื่อม GPS ผน-6360 ระยอง 0km/h ผน-6360 ระยอง ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e6651] [cursor=pointer]:
+            - generic [ref=f10e6653]:
+              - button [ref=f10e6654]
+              - generic [ref=f10e6662]: ยังไม่เชื่อม GPS
+              - generic "ผน-6360 ระยอง" [ref=f10e6663]
+              - generic [ref=f10e6664]: 0km/h
+            - generic [ref=f10e6665]:
+              - generic [ref=f10e6666]: ผน-6360 ระยอง
+              - generic [ref=f10e6667]: ยังไม่รูดบัตร
+            - generic [ref=f10e6672]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e6677]: —
+          - button "ออฟไลน์ ฮม-3905 สระบุรี 0km/h ฮม-3905 สระบุรี ยังไม่รูดบัตร ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี 23/08/2569 07:33:45 ข้อมูลเก่า 3 วันที่ผ่านมา" [ref=f10e6683] [cursor=pointer]:
+            - generic [ref=f10e6685]:
+              - button [ref=f10e6686]
+              - generic [ref=f10e6694]: ออฟไลน์
+              - generic "ฮม-3905 สระบุรี" [ref=f10e6695]
+              - generic [ref=f10e6696]: 0km/h
+            - generic [ref=f10e6697]:
+              - generic [ref=f10e6698]: ฮม-3905 สระบุรี
+              - generic [ref=f10e6699]: ยังไม่รูดบัตร
+            - generic [ref=f10e6704]: ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี
+            - generic [ref=f10e6709]:
+              - generic [ref=f10e6713]: 23/08/2569 07:33:45
+              - generic [ref=f10e6714]: ข้อมูลเก่า 3 วันที่ผ่านมา
+          - button "ออฟไลน์ เทส 359857080825722 0km/h เทส 359857080825722 ยังไม่รูดบัตร ต.ปากเพรียว อ.เมืองสระบุรี จ.สระบุรี 13/08/2569 00:09:15 ข้อมูลเก่า 14 วันที่ผ่านมา" [ref=f10e6716] [cursor=pointer]:
+            - generic [ref=f10e6718]:
+              - button [ref=f10e6719]
+              - generic [ref=f10e6727]: ออฟไลน์
+              - generic "เทส 359857080825722" [ref=f10e6728]
+              - generic [ref=f10e6729]: 0km/h
+            - generic [ref=f10e6730]:
+              - generic [ref=f10e6731]: เทส 359857080825722
+              - generic [ref=f10e6732]: ยังไม่รูดบัตร
+            - generic [ref=f10e6737]: ต.ปากเพรียว อ.เมืองสระบุรี จ.สระบุรี
+            - generic [ref=f10e6742]:
+              - generic [ref=f10e6746]: 13/08/2569 00:09:15
+              - generic [ref=f10e6747]: ข้อมูลเก่า 14 วันที่ผ่านมา
+          - button "ออฟไลน์ เทส 359857081515488 0km/h เทส 359857081515488 ยังไม่รูดบัตร ต.จอหอ อ.เมืองนครราชสีมา จ.นครราชสีมา 13/08/2569 16:20:03 ข้อมูลเก่า 13 วันที่ผ่านมา" [ref=f10e6749] [cursor=pointer]:
+            - generic [ref=f10e6751]:
+              - button [ref=f10e6752]
+              - generic [ref=f10e6760]: ออฟไลน์
+              - generic "เทส 359857081515488" [ref=f10e6761]
+              - generic [ref=f10e6762]: 0km/h
+            - generic [ref=f10e6763]:
+              - generic [ref=f10e6764]: เทส 359857081515488
+              - generic [ref=f10e6765]: ยังไม่รูดบัตร
+            - generic [ref=f10e6770]: ต.จอหอ อ.เมืองนครราชสีมา จ.นครราชสีมา
+            - generic [ref=f10e6775]:
+              - generic [ref=f10e6779]: 13/08/2569 16:20:03
+              - generic [ref=f10e6780]: ข้อมูลเก่า 13 วันที่ผ่านมา
+          - button "ออฟไลน์ เทส 359857081535791 0km/h เทส 359857081535791 ยังไม่รูดบัตร ต.คลองตำหรุ อ.เมืองชลบุรี จ.ชลบุรี 18/08/2569 21:40:57 ข้อมูลเก่า 8 วันที่ผ่านมา" [ref=f10e6782] [cursor=pointer]:
+            - generic [ref=f10e6784]:
+              - button [ref=f10e6785]
+              - generic [ref=f10e6793]: ออฟไลน์
+              - generic "เทส 359857081535791" [ref=f10e6794]
+              - generic [ref=f10e6795]: 0km/h
+            - generic [ref=f10e6796]:
+              - generic [ref=f10e6797]: เทส 359857081535791
+              - generic [ref=f10e6798]: ยังไม่รูดบัตร
+            - generic [ref=f10e6803]: ต.คลองตำหรุ อ.เมืองชลบุรี จ.ชลบุรี
+            - generic [ref=f10e6808]:
+              - generic [ref=f10e6812]: 18/08/2569 21:40:57
+              - generic [ref=f10e6813]: ข้อมูลเก่า 8 วันที่ผ่านมา
+          - button "ออฟไลน์ เทส 359857081851347 0km/h เทส 359857081851347 ยังไม่รูดบัตร 0.00000, 0.00000 06/01/2523 14:00:00 ข้อมูลเก่า มากกว่า 46 ปีที่ผ่านมา" [ref=f10e6815] [cursor=pointer]:
+            - generic [ref=f10e6817]:
+              - button [ref=f10e6818]
+              - generic [ref=f10e6826]: ออฟไลน์
+              - generic "เทส 359857081851347" [ref=f10e6827]
+              - generic [ref=f10e6828]: 0km/h
+            - generic [ref=f10e6829]:
+              - generic [ref=f10e6830]: เทส 359857081851347
+              - generic [ref=f10e6831]: ยังไม่รูดบัตร
+            - generic [ref=f10e6836]: 0.00000, 0.00000
+            - generic [ref=f10e6841]:
+              - generic [ref=f10e6845]: 06/01/2523 14:00:00
+              - generic [ref=f10e6846]: ข้อมูลเก่า มากกว่า 46 ปีที่ผ่านมา
+          - button "ออฟไลน์ 70-3743 เลย 0km/h เทส 359857082306689 70-3743 เลย ยังไม่รูดบัตร แขวงออเงิน เขตสายไหม กรุงเทพมหานคร 21/08/2569 02:01:36 ข้อมูลเก่า 6 วันที่ผ่านมา" [ref=f10e6848] [cursor=pointer]:
+            - generic [ref=f10e6850]:
+              - button [ref=f10e6851]
+              - generic [ref=f10e6859]: ออฟไลน์
+              - generic "70-3743 เลย" [ref=f10e6860]
+              - generic [ref=f10e6861]: 0km/h
+            - generic [ref=f10e6862]:
+              - generic [ref=f10e6863]: เทส 359857082306689 70-3743 เลย
+              - generic [ref=f10e6864]: ยังไม่รูดบัตร
+            - generic [ref=f10e6869]: แขวงออเงิน เขตสายไหม กรุงเทพมหานคร
+            - generic [ref=f10e6874]:
+              - generic [ref=f10e6878]: 21/08/2569 02:01:36
+              - generic [ref=f10e6879]: ข้อมูลเก่า 6 วันที่ผ่านมา
+          - button "ออฟไลน์ เทส 359857082431719 0km/h เทส 359857082431719 ยังไม่รูดบัตร ต.จระเข้หิน อ.ครบุรี จ.นครราชสีมา 15/08/2569 21:14:51 ข้อมูลเก่า 11 วันที่ผ่านมา" [ref=f10e6881] [cursor=pointer]:
+            - generic [ref=f10e6883]:
+              - button [ref=f10e6884]
+              - generic [ref=f10e6892]: ออฟไลน์
+              - generic "เทส 359857082431719" [ref=f10e6893]
+              - generic [ref=f10e6894]: 0km/h
+            - generic [ref=f10e6895]:
+              - generic [ref=f10e6896]: เทส 359857082431719
+              - generic [ref=f10e6897]: ยังไม่รูดบัตร
+            - generic [ref=f10e6902]: ต.จระเข้หิน อ.ครบุรี จ.นครราชสีมา
+            - generic [ref=f10e6907]:
+              - generic [ref=f10e6911]: 15/08/2569 21:14:51
+              - generic [ref=f10e6912]: ข้อมูลเก่า 11 วันที่ผ่านมา
+          - button "ยังไม่เชื่อม GPS 0km/h เทส 359857082904881 ยังไม่รูดบัตร ไม่มีพิกัดล่าสุด —" [ref=f10e6914] [cursor=pointer]:
+            - generic [ref=f10e6916]:
+              - button [ref=f10e6917]
+              - generic [ref=f10e6925]: ยังไม่เชื่อม GPS
+              - generic [ref=f10e6926]: 0km/h
+            - generic [ref=f10e6927]:
+              - generic [ref=f10e6928]: เทส 359857082904881
+              - generic [ref=f10e6929]: ยังไม่รูดบัตร
+            - generic [ref=f10e6934]: ไม่มีพิกัดล่าสุด
+            - generic [ref=f10e6939]: —
+          - status [ref=f10e6944]
+        - generic [ref=f10e6945]:
+          - generic [ref=f10e6946]: แสดง 206 / 206 คัน
+          - generic [ref=f10e6947]: 16 กำลังวิ่ง
+      - textbox "ค้นหาสถานที่..." [ref=f10e6953]
+      - generic [ref=f10e6954]:
+        - button "ซูมเข้า" [ref=f10e6955] [cursor=pointer]
+        - button "ซูมออก" [ref=f10e6957] [cursor=pointer]
+        - button "Zoom to fleet" [ref=f10e6960] [cursor=pointer]
+        - button "ซ่อนชื่อรถ" [ref=f10e6963] [cursor=pointer]
+        - button "แสดงเส้นทาง" [ref=f10e6967] [cursor=pointer]
+        - button "เปิด Auto-Night Map" [ref=f10e6970] [cursor=pointer]
+        - button "ซ่อน Geofence" [ref=f10e6973] [cursor=pointer]
+        - button "Heatmap" [ref=f10e6976] [cursor=pointer]
+        - button "วางแผนเส้นทาง" [ref=f10e6979] [cursor=pointer]
+        - button "Fullscreen" [ref=f10e6984] [cursor=pointer]
+      - button "เลือก Layer แผนที่" [ref=f10e6991] [cursor=pointer]
+      - generic [ref=f10e6997]:
+        - generic:
+          - generic:
+            - button "70-3714 ราชบุรี" [ref=f10e6998] [cursor=pointer]
+            - button "2" [ref=f10e7016] [cursor=pointer]
+            - button "70-4791 หนองคาย" [ref=f10e7018] [cursor=pointer]
+            - button "2" [ref=f10e7036] [cursor=pointer]
+            - button "ขจ-6424 ขอนแก่น" [ref=f10e7038] [cursor=pointer]
+            - button "86-5853 ขอนแก่น" [ref=f10e7053] [cursor=pointer]
+            - button "82-5856" [ref=f10e7071] [cursor=pointer]
+            - button "86-3706 ขอนแก่น" [ref=f10e7086] [cursor=pointer]
+            - button "84-4344 อุดรธานี" [ref=f10e7101] [cursor=pointer]
+            - button "70-4449 หนองคาย" [ref=f10e7119] [cursor=pointer]
+            - button "3" [ref=f10e7137] [cursor=pointer]
+            - button "2" [ref=f10e7139] [cursor=pointer]
+            - button "11" [ref=f10e7141] [cursor=pointer]
+            - button "8" [ref=f10e7143] [cursor=pointer]
+            - button "3" [ref=f10e7145] [cursor=pointer]
+            - button "70-9571 สระบุรี" [ref=f10e7147] [cursor=pointer]
+            - button "70-3048 ราชบุรี" [ref=f10e7162] [cursor=pointer]
+            - button "ผก-803 พระนครศรีอยุธยา" [ref=f10e7177] [cursor=pointer]
+            - button "7" [ref=f10e7192] [cursor=pointer]
+            - button "3ฒย-5075 กรุงเทพ" [ref=f10e7194] [cursor=pointer]
+            - button "90-3254 นครราชสีมา" [ref=f10e7209] [cursor=pointer]
+            - button "89-7270 นครราชสีมา" [ref=f10e7227] [cursor=pointer]
+            - button "เทส 359857082431719" [ref=f10e7242] [cursor=pointer]
+            - button "5" [ref=f10e7257] [cursor=pointer]
+            - button "3" [ref=f10e7259] [cursor=pointer]
+            - button "VT200L 82-3665" [ref=f10e7261] [cursor=pointer]
+            - button "9กฬ-7860 กรุงเทพมหานคร" [ref=f10e7279] [cursor=pointer]
+            - button "84-8103 นครสวรรค์" [ref=f10e7294] [cursor=pointer]
+            - button "7" [ref=f10e7312] [cursor=pointer]
+            - button "2" [ref=f10e7314] [cursor=pointer]
+            - button "14" [ref=f10e7316] [cursor=pointer]
+            - button "52" [ref=f10e7318] [cursor=pointer]
+        - generic [ref=f10e7320]:
+          - link "Leaflet" [ref=f10e7321] [cursor=pointer]:
+            - /url: https://leafletjs.com
+          - text: "| ©"
+          - link "OpenStreetMap" [ref=f10e7326] [cursor=pointer]:
+            - /url: https://www.openstreetmap.org/copyright
+        - button "Map bookmarks (M16)" [ref=f10e7329] [cursor=pointer]

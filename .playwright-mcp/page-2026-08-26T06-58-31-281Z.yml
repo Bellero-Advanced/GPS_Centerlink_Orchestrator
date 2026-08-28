@@ -1,0 +1,145 @@
+- generic [ref=f2e44]:
+  - banner [ref=f2e45]:
+    - generic [ref=f2e47] [cursor=pointer]:
+      - img "GPS Thailand GPS" [ref=f2e48]
+      - generic [ref=f2e49]: GPS Thailand GPS
+    - button "ค้นหาทั่วทั้งระบบ... ⌘K" [ref=f2e51] [cursor=pointer]:
+      - generic [ref=f2e55]: ค้นหาทั่วทั้งระบบ...
+      - generic [ref=f2e56]: ⌘K
+    - generic [ref=f2e57]:
+      - generic [ref=f2e58]:
+        - generic [ref=f2e59]: "15"
+        - generic [ref=f2e63]: 105/206
+      - button "มืด" [ref=f2e67] [cursor=pointer]
+      - button "A" [ref=f2e71] [cursor=pointer]
+  - complementary [ref=f2e75]:
+    - navigation [ref=f2e76]:
+      - generic [ref=f2e77]: "13"
+      - generic [ref=f2e80]:
+        - link "แดชบอร์ด" [ref=f2e81] [cursor=pointer]:
+          - /url: /app/dashboard
+        - link "แผนที่ปัจจุบัน" [ref=f2e87] [cursor=pointer]:
+          - /url: /app/map
+        - link "ยานพาหนะ" [ref=f2e90] [cursor=pointer]:
+          - /url: /app/fleet
+      - generic [ref=f2e97]:
+        - link "รายงาน" [ref=f2e98] [cursor=pointer]:
+          - /url: /app/reports
+        - link "ความเร็ว" [ref=f2e102] [cursor=pointer]:
+          - /url: /app/speed
+        - link "ย้อนเส้นทาง" [ref=f2e105] [cursor=pointer]:
+          - /url: /app/replay
+        - link "Telematics" [ref=f2e109] [cursor=pointer]:
+          - /url: /app/telematics
+        - link "จุดสนใจ" [ref=f2e116] [cursor=pointer]:
+          - /url: /app/poi
+        - link "แจ้งเตือน" [ref=f2e120] [cursor=pointer]:
+          - /url: /app/alerts
+        - link "การแจ้งเตือน" [ref=f2e123] [cursor=pointer]:
+          - /url: /app/notifications
+      - generic [ref=f2e128]:
+        - link "Analytics" [ref=f2e129] [cursor=pointer]:
+          - /url: /app/analytics
+        - link "Dispatch" [ref=f2e131] [cursor=pointer]:
+          - /url: /app/dispatch
+        - link "บำรุงรักษา AI" [ref=f2e136] [cursor=pointer]:
+          - /url: /app/predictive
+        - link "กลุ่มยานพาหนะ" [ref=f2e140] [cursor=pointer]:
+          - /url: /app/groups
+        - link "คะแนนความปลอดภัย" [ref=f2e145] [cursor=pointer]:
+          - /url: /app/scoring
+        - link "คนขับรถ" [ref=f2e152] [cursor=pointer]:
+          - /url: /app/drivers
+        - link "บำรุงรักษา" [ref=f2e156] [cursor=pointer]:
+          - /url: /app/maintenance
+        - link "เชื้อเพลิง" [ref=f2e159] [cursor=pointer]:
+          - /url: /app/fuel
+        - link "หางลาก" [ref=f2e163] [cursor=pointer]:
+          - /url: /app/trailers
+        - link "ตรวจสภาพ" [ref=f2e169] [cursor=pointer]:
+          - /url: /app/inspection
+        - link "เอกสารสำคัญ" [ref=f2e174] [cursor=pointer]:
+          - /url: /app/compliance
+        - link "DLT GPS Web Service" [ref=f2e178] [cursor=pointer]:
+          - /url: /app/dlt
+        - link "Audit Log" [ref=f2e182] [cursor=pointer]:
+          - /url: /app/audit
+        - link "การเรียกเก็บเงิน" [ref=f2e187] [cursor=pointer]:
+          - /url: /app/billing
+      - generic [ref=f2e191]:
+        - link "กลุ่มความเร็ว" [ref=f2e192] [cursor=pointer]:
+          - /url: /app/speed-groups
+        - link "การแจ้งเตือน" [ref=f2e196] [cursor=pointer]:
+          - /url: /app/alert-settings
+        - link "รายงานอีเมล" [ref=f2e200] [cursor=pointer]:
+          - /url: /app/email-report-settings
+        - link "จัดการบัญชี" [ref=f2e204] [cursor=pointer]:
+          - /url: /app/team
+  - main [ref=f2e210]:
+    - generic [ref=f2e1016]:
+      - generic [ref=f2e1018]:
+        - generic [ref=f2e1019]:
+          - navigation [ref=f2e1020]:
+            - generic [ref=f2e1021]: ยานพาหนะ
+            - generic [ref=f2e1025]: 86-0605 ชลบุรี
+          - heading "86-0605 ชลบุรี" [level=1] [ref=f2e1028]
+          - paragraph [ref=f2e1029]: "359857082913757"
+        - button "กลับ" [ref=f2e1031] [cursor=pointer]
+      - generic [ref=f2e1034]:
+        - generic [ref=f2e1035]:
+          - generic [ref=f2e1036]: —
+          - generic [ref=f2e1038]:
+            - generic [ref=f2e1039]:
+              - heading "86-0605 ชลบุรี" [level=1] [ref=f2e1040]
+              - generic [ref=f2e1041]: ออฟไลน์
+            - paragraph [ref=f2e1042]: 359857082913757 · อัปเดต 13:53:15
+          - button "แผนที่สด" [ref=f2e1051] [cursor=pointer]
+        - generic [ref=f2e1055]:
+          - generic [ref=f2e1056]:
+            - paragraph [ref=f2e1061]: 0.0km
+            - paragraph [ref=f2e1062]: ระยะทางวันนี้
+          - generic [ref=f2e1063]:
+            - paragraph [ref=f2e1067]: —
+            - paragraph [ref=f2e1068]: เวลาขับขี่
+          - generic [ref=f2e1069]:
+            - paragraph [ref=f2e1073]: —km/h
+            - paragraph [ref=f2e1074]: ความเร็วสูงสุด
+          - generic [ref=f2e1075]:
+            - paragraph [ref=f2e1078]: —km/h
+            - paragraph [ref=f2e1079]: ความเร็วเฉลี่ย
+        - generic [ref=f2e1080]:
+          - generic [ref=f2e1081]:
+            - paragraph [ref=f2e1086]: —
+            - paragraph [ref=f2e1087]: การเดินทาง
+          - generic [ref=f2e1088]:
+            - paragraph [ref=f2e1092]: —
+            - paragraph [ref=f2e1093]: จุดจอด
+          - generic [ref=f2e1094]:
+            - paragraph [ref=f2e1098]: —
+            - paragraph [ref=f2e1099]: เวลาจอด
+          - generic [ref=f2e1100]:
+            - paragraph [ref=f2e1103]: —
+            - paragraph [ref=f2e1104]: ชม.เครื่องยนต์
+          - generic [ref=f2e1105]:
+            - paragraph [ref=f2e1109]: —
+            - paragraph [ref=f2e1110]: โอโดมิเตอร์
+          - generic [ref=f2e1111]:
+            - paragraph [ref=f2e1114]: —
+            - paragraph [ref=f2e1115]: แจ้งเตือน
+        - generic [ref=f2e1117]:
+          - generic [ref=f2e1118]:
+            - paragraph [ref=f2e1119]: Timeline วันนี้
+            - generic [ref=f2e1120]: 13:58
+          - generic [ref=f2e1123]:
+            - generic [ref=f2e1124]: 00:00
+            - generic [ref=f2e1125]: 06:00
+            - generic [ref=f2e1126]: 12:00
+            - generic [ref=f2e1127]: 18:00
+            - generic [ref=f2e1128]: 23:59
+        - generic [ref=f2e1129]:
+          - button "ภาพรวม" [ref=f2e1130] [cursor=pointer]
+          - button "การเดินทาง" [ref=f2e1131] [cursor=pointer]
+          - button "จุดจอด" [ref=f2e1132] [cursor=pointer]
+          - button "แจ้งเตือน" [ref=f2e1133] [cursor=pointer]
+          - button "ข้อมูลอุปกรณ์" [ref=f2e1134] [cursor=pointer]
+          - button "ส่งคำสั่ง" [ref=f2e1135] [cursor=pointer]

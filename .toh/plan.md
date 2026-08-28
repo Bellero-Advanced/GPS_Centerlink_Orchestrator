@@ -1,119 +1,146 @@
-# Plan: พิกัดต้องไม่หาย — แก้ position id ซ้ำข้าม partition
+# 🛠️ DLT Cross-Tab Rate Limit Fix (Restore 9f78faf)
 
-Status: completed 2026-08-25
-Created: 2026-08-25 by /toh
-Supersedes: plan-2026-08-25-vehicle-card-status-DONE.md (เสร็จ 7/7 · commit b50c6e8)
+**Status:** draft  
+**Created:** 2026-08-26  
+**Problem:** 429 Too Many Requests on DLT send when multiple admins open tabs
 
-## Goal
+---
 
-พี่โตชี้ว่าการ์ดบอก **"ไม่มีพิกัดล่าสุด"** ทั้งที่เวลาอัปเดตคือ 25/08 วันนี้ และตั้งกฎชัด:
+## 🎯 Goal
 
-> "fix time ที่ส่งมาล่าสุดทุกครั้ง มันก็คู่กับพิกัด ดังนั้นมันต้องโชว์พิกัดตลอด ไม่มีหาย
-> ต่อให้ออฟไลน์ หรือจอดดับเครื่องก็ต้องโชว์พิกัดล่าสุด"
+**ROOT CAUSE FOUND:** 3 admins × 3 tabs = 3 DLT requests/min from same IP → 429
 
-ถูกต้องทุกคำ — GPS ส่ง fix time มาพร้อมพิกัดเสมอ ถ้าเวลามีแต่พิกัดหาย นั่นคือบั๊กฝั่งเรา
+**Solution:** Restore commit `9f78faf` (22 AUG) — cross-tab rate limit guard via localStorage
 
-### ต้นตอ — `position id` ซ้ำข้าม partition (พิสูจน์แล้ว ไม่ใช่ทฤษฎี)
+Fix:
+1. **429 rate limit** → multi-tab sending from same IP (3 admins → 3 req/min)
+2. **Missing cross-tab guard** → was fixed in 9f78faf, lost in rollback
+3. **No 503/position issues** → that's Traccar infra, not touching
 
-```
-GET /api/positions?id=92932   → deviceId=36  fix 5 ส.ค.  lat 12.955   ← Traccar หยิบอันนี้
-history ของ device 122         → deviceId=122 fix 25 ส.ค. lat 14.132   ← อันที่ถูกจริง
-```
+## 🏗️ Stack
 
-`id=92932` มี **สองแถว คนละ device คนละ partition** · `device.positionId` ชี้ค่าที่ถูก
-แต่ `?id=` คืนแถวจาก partition ที่ id ชนกัน → `getPositionsByIds()` ได้ของรถคันอื่น
+- **Services:** `dltService.ts`
+- **Hooks:** `useDltAutoSend.ts`
+- **Tests:** `dltRateLimit.test.ts` (restore from 9f78faf)
 
-โค้ดปัจจุบันกรอง `p.deviceId !== d.id` ทิ้ง **ซึ่งถูกแล้ว** (ถ้าไม่ทิ้ง รถอยุธยาจะไปโผล่ชลบุรี
-ห่างกัน 300 กม.) แต่ผลลัพธ์คือ **พิกัดหายเงียบ ๆ** ทั้งที่ GPS ส่งมาจริงเมื่อ 3 นาทีก่อน
+## 📄 Pages Affected
 
-นี่คือผลพวงจาก partition ที่ทำ PK uniqueness หาย — ตระกูลเดียวกับ [[tc-positions-missing-id-index]]
+- No UI changes (infra fix only)
 
-### วัดจริงทั้งฝูง 206 คัน (user `admin_gpsthailand`)
+## ✅ Done When
 
-| ค่า | ผล |
-|---|---|
-| `GET /api/positions` (cache) | **29** |
-| cache ไม่มี | **177** |
-| `positionId` ชี้แถวของ**ตัวเอง** | 44 |
-| `positionId` ชี้แถวของ**รถคันอื่น** | **72** (ในนั้น 66 คันส่งข้อมูลมา < 5 นาที) |
+- [ ] `msUntilNextDltSend()` restored in dltService
+- [ ] `LS_DLT_LAST_SEND` localStorage key added
+- [ ] Cross-tab guard in `useDltAutoSend` doSend
+- [ ] Atomic claim in `sendDltBatch` before POST
+- [ ] Tests restored (7 test cases)
+- [ ] Build passes (`npm run build`)
+- [ ] Memory updated
 
-ไม่ใช่แค่ 4 คันที่พี่โตแคปมา — **72 คัน = 35% ของฝูง**
+---
 
-### ทางแก้ที่ทดสอบต้นทุนแล้ว
+## 📋 Phases
 
-`?deviceId=<id>` คืน**พิกัดของตัวเองถูกต้องเสมอ** (ไม่ชนกับ partition อื่น เพราะกรองด้วย deviceId)
+### Phase 1: Restore dltService Cross-Tab Guard
 
-| วิธี | ต้นทุนจริงที่วัดได้ | ครอบคลุม |
-|---|---|---|
-| `?deviceId=` ยิงขนาน chunk 25 | **2.4 s** / 177 คัน | +48 คัน |
-| history 7 วัน + กรอง deviceId | ~22 s / 65 คัน | +65 คัน |
-| ~~batch `?deviceId=a&deviceId=b`~~ | 144 ms แต่คืน **0 แถว** | ❌ ใช้ไม่ได้ |
+**Goal:** Add localStorage timestamp guard from 9f78faf
 
-### 206 คัน แยก 3 กลุ่ม
+- **T001** `dltService.ts` — Add `LS_DLT_LAST_SEND` constant
+  - Line ~42: `export const LS_DLT_LAST_SEND = 'bellerox_dlt_last_send';`
 
-| กลุ่ม | จำนวน | ต้องทำ |
-|---|---|---|
-| มีพิกัดแล้ว (cache) | 29 | ปกติ |
-| กู้ได้ (`positionId > 0`) | **113** | ทำให้พิกัดกลับมา |
-| `positionId=0` + `lastUpdate=null` | **64** | **"ยังไม่เชื่อม GPS"** (พี่โตสั่ง) |
+- **T002** `dltService.ts` — Add `msUntilNextDltSend()` function
+  - Check localStorage for last send timestamp
+  - Return ms to wait (0 if > 55s passed)
+  - Handle corrupt/missing timestamps
 
-64 คันนี้ไม่มีพิกัดในระบบจริง — device สร้างไว้แต่ยังไม่เคยติดตั้ง เรียก "ออฟไลน์" ผิดความหมาย
+- **T003** `dltService.ts` — Add atomic claim in `sendDltBatch`
+  - Before HTTP POST: check + claim slot in one operation
+  - If another tab claimed → log skip, don't send
+  - Store ISO timestamp after successful send
 
-### 🔴 ผลพลอยได้ที่ต้องแก้ด้วย — DLT
+**✓ Checkpoint 1:** `msUntilNextDltSend()` function compiles
 
-`getPositionsForDevices()` (ใช้โดย `useDltAutoSend`) push `fallback` เข้า `merged` โดยเช็คแค่
-`!cachedDeviceIds.has(p.deviceId)` → **แถวของรถคันอื่นหลุดเข้าไปได้** แล้ว DLT key ด้วย `p.deviceId`
-= ตำแหน่งไปผูกกับรถผิดคัน
+---
 
-**ยังไม่เกิดความเสียหาย** เพราะด่าน `FRESH_WINDOW_MS = 15 นาที` ใน `classifyFreshness()`
-ตัดแถวเก่า 20 วันทิ้งทั้งหมด → ไม่มีข้อมูลผิดส่งถึงกรมขนส่ง (ตรวจแล้ว)
-แต่เป็นระเบิดเวลา: ถ้าแถวที่ id ชนกันบังเอิญสดพอ จะส่งพิกัดผิดคันไปให้ราชการ **ต้องปิดช่องนี้**
+### Phase 2: Update useDltAutoSend Hook
 
-## Stack
+**Goal:** Call cross-tab guard before fetching positions
 
-ไม่มีของใหม่ — React Query + TypeScript strict ตาม `CLAUDE.md`
-(service → hook → component · ไม่มี `any` · **ไม่เพิ่ม/เปลี่ยนสี 4 สถานะเดิม**)
+- **T004** `useDltAutoSend.ts:40-100` — Import `msUntilNextDltSend`
+  - Add to imports from `dltService`
 
-## Done When
+- **T005** `useDltAutoSend.ts` — Add guard check in `doSend`
+  - Before fetching positions: `const waitMs = msUntilNextDltSend()`
+  - If `waitMs > 0` → log skip and return early
+  - Comment: "Cross-tab guard: another tab may have sent recently"
 
-1. รถทุกคันที่มี `positionId > 0` **แสดงพิกัด** — ไม่มี "ไม่มีพิกัดล่าสุด" ในกลุ่มนี้
-2. พิกัดที่แสดง **เป็นของรถคันนั้นจริง** (`p.deviceId === device.id` ทุกแถว ไม่มีข้อยกเว้น)
-3. เวลาที่แสดงคู่กับพิกัดเสมอ — fix time กับพิกัดมาจาก**แถวเดียวกัน** ห้ามคนละแถว
-4. 64 คันที่ไม่เคยส่งข้อมูล → ป้าย **"ยังไม่เชื่อม GPS"** ไม่ใช่ "ออฟไลน์"
-5. DLT: แถวที่ `deviceId` ไม่ตรง **ไม่หลุด**เข้า `merged` เลย
-6. โหลดหน้าแผนที่ไม่ช้าลงจนสังเกตได้ — fallback ชั้นแพงทำเบื้องหลัง ไม่บล็อก first paint
-7. `npm run test` · `npm run build` 0 error · `npm run lint` ไม่เพิ่ม warning · CI เขียว
+**✓ Checkpoint 2:** Run `npm run build` → 0 errors
 
-## Phase 1 — ปิดรูรั่วที่ service (ต้นน้ำ)
+---
 
-- [x] **T001** `src/services/traccarService.ts`: `getPositionsByIds()` รับ `Map<positionId, deviceId>`
-      แล้ว **กรอง `p.deviceId` ต้องตรงกับที่ขอ** คืนเฉพาะแถวที่เจ้าของถูก · เพิ่ม
-      `getPositionsByDeviceIds(ids)` ยิง `?deviceId=` ขนาน chunk 25 + กรอง `deviceId` (2.4 s/177 คัน)
-- [x] **T002** `getPositionsForDevices()`: ใช้ตัวใหม่ทั้งสองชั้น · ยืนยันว่า `merged` มีแต่แถว
-      ที่ `deviceId` ตรง (ปิดช่อง DLT ตาม Done When #5)
-- [x] **Checkpoint 1** — unit test ยืนยันแถวเจ้าของผิดถูกกรองทิ้ง 100% · quote ผลจริง
+### Phase 3: Restore Tests
 
-## Phase 2 — hook ต่อ fallback 3 ชั้น + สถานะใหม่
+**Goal:** Add 7 test cases from 9f78faf
 
-- [x] **T003** `src/hooks/useDevices.ts`: fallback เป็นชั้น — (1) cache (2) `?deviceId=`
-      (3) history 7 วัน สำหรับคันที่ยังไม่ได้ · ชั้น 3 แยก query แยก `enabled` ไม่บล็อก first paint
-- [x] **T004** `src/lib/vehicleStatus.ts`: เพิ่ม `hasEverReported` (จาก `positionId > 0`)
-      → `displayStatus: 'unlinked'` สำหรับคันที่ไม่เคยส่ง · **สีเทาอ่อนกว่า offline** ไม่แตะ 4 สีเดิม
-      · อัปเดต `STATUS_TH`/`STATUS_COLOR` ทั้ง 13 ไฟล์ที่ใช้ `displayStatus` (grep ให้ครบ)
-- [x] **Checkpoint 2** — เทสต์: partition sweep ต้องยังผ่านด้วย 5 สถานะ · build 0 error
+- **T006** Create `src/services/__tests__/dltRateLimit.test.ts`
+  - Test 1: First send (no timestamp) → 0ms wait
+  - Test 2: Sent 10s ago → 45s wait remaining
+  - Test 3: Sent 56s ago → 0ms wait (can send)
+  - Test 4: Sent 61s ago → 0ms wait
+  - Test 5: Future timestamp (clock backwards) → 0ms wait
+  - Test 6: Corrupt timestamp → 0ms wait
+  - Test 7: Missing localStorage → 0ms wait
 
-## Phase 3 — ยืนยันกับ production จริง
+**✓ Checkpoint 3:** Run `npm test` → 7 tests pass
 
-- [x] **T005** วัดซ้ำด้วย `admin_gpsthailand` — รถที่มี `positionId > 0` ต้องมีพิกัด **113/113**
-      · ทุกแถว `deviceId` ตรง · เทียบก่อน/หลังให้พี่โตเห็นตัวเลข
-- [x] **T006** render test: การ์ดของ `2ฒฌ-3550` (คันในภาพ) ต้องโชว์พิกัด + เวลาจากแถวเดียวกัน
-- [x] **Checkpoint 3** — Done When ครบ 7 ข้อ · commit + push + **รอ CI เขียว** · อัปเดต memory
+---
 
-## ที่ตรวจแล้วว่า *ไม่ใช่* ต้นตอ — อย่าเสียเวลาซ้ำ
+### Phase 4: Verify & Polish
 
-- ❌ **`?id=` คืนหลายแถว** — คืนแถวเดียวเสมอ (ตรวจ 3 id) ปัญหาคือคืน**ผิดคัน** ไม่ใช่คืนเกิน
-- ❌ **chunk 40 ยาวเกิน** — ขอ 116 ได้คืน 116 ครบ ไม่ได้หายจาก URL length
-- ❌ **สิทธิ์ผู้ใช้** — `admin_gpsthailand` เห็น 206 คันครบ
-- ❌ **timezone / `effectiveTime()`** — ถูกแล้ว ห้ามแตะ ดู [[timezone-7h-offset-root-cause]]
-- ❌ **batch `?deviceId=a&deviceId=b`** — HTTP 200 แต่คืน 0 แถว ต้องยิงทีละคันขนานกัน
-- ❌ **DLT ส่งข้อมูลผิดไปแล้ว** — ด่าน 15 นาทีกันไว้ทัน ยังไม่มีความเสียหาย แต่ต้องปิดช่อง
+- **T007** Build verification
+  - Run `npm run build` → 0 errors
+  - Run `npm run lint` → no new warnings
+  - Check TypeScript strict mode
+
+- **T008** Memory update
+  - Update `.claude/memory/active.md` with fix summary
+  - Update `changelog.md` with 9f78faf restoration note
+  - Add to `decisions.md`: "Multi-tab DLT guard via localStorage"
+
+**✓ Checkpoint 4:** All tasks complete, CI green
+
+---
+
+## 📝 Notes
+
+**Root Cause Found:**
+- **Problem:** 3 admins open web → 3 tabs × 60s interval = 3 DLT requests/min from same IP
+- **DLT Spec:** Max 3 requests/min per source IP (p.10 of DLT spec PDF)
+- **Result:** 429 Too Many Requests
+
+**Solution (9f78faf — 22 AUG):**
+- Cross-tab guard via `localStorage.bellerox_dlt_last_send`
+- Only 1 tab per browser sends (first tab to claim slot)
+- Other tabs see timestamp and skip
+- **Status:** Lost in rollback 8d62fa7 (24 AUG)
+
+**What to restore:**
+1. `msUntilNextDltSend()` — check localStorage for last send
+2. Guard in `useDltAutoSend` doSend — skip if another tab sent
+3. Atomic claim in `sendDltBatch` — store timestamp after POST
+4. 7 test cases — cover gap window, backwards clocks, corrupt data
+
+**Known Limitation:**
+- localStorage is per-browser, not per-IP
+- Multiple machines behind same IP can still exceed limit
+- But fixes the main case: multiple tabs on same machine
+
+**User Request:**
+- "ศึกษาเรื่อง infras ของ server ไปหา DLT"
+- "ไม่ต้องไปแตะ GPS เข้า Server"
+- ✅ This fix is pure DLT infra (localStorage coordination)
+
+---
+
+**Estimated Time:** 30-40 minutes (restore from known commit)  
+**Risk:** Very Low (exact code exists in 9f78faf, just restore it)

@@ -1,0 +1,115 @@
+- generic [ref=f12e16]:
+  - banner [ref=f12e17]:
+    - generic [ref=f12e19] [cursor=pointer]:
+      - img "GPS Thailand GPS" [ref=f12e20]
+      - generic [ref=f12e21]: GPS Thailand GPS
+    - button "ค้นหาทั่วทั้งระบบ... ⌘K" [ref=f12e23] [cursor=pointer]:
+      - generic [ref=f12e27]: ค้นหาทั่วทั้งระบบ...
+      - generic [ref=f12e28]: ⌘K
+    - generic [ref=f12e29]:
+      - generic [ref=f12e30]:
+        - generic [ref=f12e31]: "0"
+        - generic [ref=f12e35]: 0/0
+      - button "มืด" [ref=f12e39] [cursor=pointer]
+      - button "A" [ref=f12e43] [cursor=pointer]
+  - complementary [ref=f12e47]:
+    - navigation [ref=f12e48]:
+      - generic [ref=f12e49]: "15"
+      - generic [ref=f12e52]:
+        - link "แดชบอร์ด" [ref=f12e53] [cursor=pointer]:
+          - /url: /app/dashboard
+        - link "แผนที่ปัจจุบัน" [ref=f12e59] [cursor=pointer]:
+          - /url: /app/map
+        - link "ยานพาหนะ" [ref=f12e62] [cursor=pointer]:
+          - /url: /app/fleet
+      - generic [ref=f12e69]:
+        - link "รายงาน" [ref=f12e70] [cursor=pointer]:
+          - /url: /app/reports
+        - link "ความเร็ว" [ref=f12e74] [cursor=pointer]:
+          - /url: /app/speed
+        - link "ย้อนเส้นทาง" [ref=f12e77] [cursor=pointer]:
+          - /url: /app/replay
+        - link "Telematics" [ref=f12e81] [cursor=pointer]:
+          - /url: /app/telematics
+        - link "จุดสนใจ" [ref=f12e88] [cursor=pointer]:
+          - /url: /app/poi
+        - link "แจ้งเตือน" [ref=f12e92] [cursor=pointer]:
+          - /url: /app/alerts
+        - link "การแจ้งเตือน" [ref=f12e95] [cursor=pointer]:
+          - /url: /app/notifications
+      - generic [ref=f12e100]:
+        - link "Analytics" [ref=f12e101] [cursor=pointer]:
+          - /url: /app/analytics
+        - link "Dispatch" [ref=f12e103] [cursor=pointer]:
+          - /url: /app/dispatch
+        - link "บำรุงรักษา AI" [ref=f12e108] [cursor=pointer]:
+          - /url: /app/predictive
+        - link "กลุ่มยานพาหนะ" [ref=f12e112] [cursor=pointer]:
+          - /url: /app/groups
+        - link "คะแนนความปลอดภัย" [ref=f12e117] [cursor=pointer]:
+          - /url: /app/scoring
+        - link "คนขับรถ" [ref=f12e124] [cursor=pointer]:
+          - /url: /app/drivers
+        - link "บำรุงรักษา" [ref=f12e128] [cursor=pointer]:
+          - /url: /app/maintenance
+        - link "เชื้อเพลิง" [ref=f12e131] [cursor=pointer]:
+          - /url: /app/fuel
+        - link "หางลาก" [ref=f12e135] [cursor=pointer]:
+          - /url: /app/trailers
+        - link "ตรวจสภาพ" [ref=f12e141] [cursor=pointer]:
+          - /url: /app/inspection
+        - link "เอกสารสำคัญ" [ref=f12e146] [cursor=pointer]:
+          - /url: /app/compliance
+        - link "DLT GPS Web Service" [ref=f12e150] [cursor=pointer]:
+          - /url: /app/dlt
+        - link "Audit Log" [ref=f12e154] [cursor=pointer]:
+          - /url: /app/audit
+        - link "การเรียกเก็บเงิน" [ref=f12e159] [cursor=pointer]:
+          - /url: /app/billing
+      - generic [ref=f12e163]:
+        - link "กลุ่มความเร็ว" [ref=f12e164] [cursor=pointer]:
+          - /url: /app/speed-groups
+        - link "การแจ้งเตือน" [ref=f12e168] [cursor=pointer]:
+          - /url: /app/alert-settings
+        - link "รายงานอีเมล" [ref=f12e172] [cursor=pointer]:
+          - /url: /app/email-report-settings
+        - link "จัดการบัญชี" [ref=f12e176] [cursor=pointer]:
+          - /url: /app/team
+  - main [ref=f12e182]:
+    - generic [ref=f12e185]:
+      - generic [ref=f12e186]:
+        - generic [ref=f12e187]:
+          - button "ปิด" [ref=f12e189] [cursor=pointer]
+          - textbox "ค้นหาชื่อ, IMEI, ทะเบียน..." [ref=f12e197]
+          - combobox [ref=f12e199] [cursor=pointer]:
+            - option "สถานะทั้งหมด (0)" [selected]
+            - option "🟢 เคลื่อนที่ (0)"
+            - option "🟡 จอดติดเครื่อง (0)"
+            - option "🔴 จอดดับเครื่อง (0)"
+            - option "⚫ ออฟไลน์ (0)"
+            - option "⚪ ยังไม่เชื่อม GPS (0)"
+        - paragraph [ref=f12e207]: ไม่พบยานพาหนะ
+        - generic [ref=f12e208]:
+          - generic [ref=f12e209]: แสดง 0 / 0 คัน
+          - generic [ref=f12e210]: 0 กำลังวิ่ง
+      - textbox "ค้นหาสถานที่..." [ref=f12e216]
+      - generic [ref=f12e217]:
+        - button "ซูมเข้า" [ref=f12e218] [cursor=pointer]
+        - button "ซูมออก" [ref=f12e220] [cursor=pointer]
+        - button "Zoom to fleet" [ref=f12e223] [cursor=pointer]
+        - button "ซ่อนชื่อรถ" [ref=f12e226] [cursor=pointer]
+        - button "แสดงเส้นทาง" [ref=f12e230] [cursor=pointer]
+        - button "เปิด Auto-Night Map" [ref=f12e233] [cursor=pointer]
+        - button "ซ่อน Geofence" [ref=f12e236] [cursor=pointer]
+        - button "Heatmap" [ref=f12e239] [cursor=pointer]
+        - button "วางแผนเส้นทาง" [ref=f12e242] [cursor=pointer]
+        - button "Fullscreen" [ref=f12e247] [cursor=pointer]
+      - button "เลือก Layer แผนที่" [ref=f12e254] [cursor=pointer]
+      - generic [ref=f12e260]:
+        - generic [ref=f12e261]:
+          - link "Leaflet" [ref=f12e262] [cursor=pointer]:
+            - /url: https://leafletjs.com
+          - text: "| ©"
+          - link "OpenStreetMap" [ref=f12e267] [cursor=pointer]:
+            - /url: https://www.openstreetmap.org/copyright
+        - button "Map bookmarks (M16)" [ref=f12e270] [cursor=pointer]

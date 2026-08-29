@@ -2,7 +2,7 @@
 
 > **Bellerox GPS** — World-class GPS Fleet Management SaaS
 > Strategy: **Thai → APAC → Global** · Target: 100,000+ vehicles
-> Domain: `gps.bellerox.com` (Cloudflare Pages + GCP asia-southeast1)
+> Domain: `gps.centerlink.co.th` (Multi-tenant: `[customer].centerlink.co.th`)
 
 ---
 
@@ -37,8 +37,9 @@ world-class fleet management platform that starts in Thailand and grows globally
 
 **Bellerox GPS** — GPS Tracking & Fleet Management SaaS for Thailand + APAC
 
-- **Domain:** `gps.bellerox.com` (Cloudflare Pages) · `api.gps.bellerox.com` (CF Worker)
-- **Backend:** `traccar.gps.bellerox.com` (GCP asia-southeast1)
+- **Domain:** `gps.centerlink.co.th` (Cloudflare Pages) · `api.centerlink.co.th` (CF Worker)
+- **Multi-Tenant:** `gpsthailand.centerlink.co.th`, `[customer].centerlink.co.th`
+- **Backend:** `traccar.gps.bellerox.com` (GCP asia-southeast1) [Internal only]
 - **Market:** Thai fleet operators, 4,000 vehicles now → scale to 100,000+
 - **Languages:** Thai (primary UI) + English (admin/settings)
 - **Currency:** ฿ (Thai Baht) · **Timezone:** Asia/Bangkok (GMT+7)
@@ -151,9 +152,11 @@ GPS Device → Traccar Server (TCP port 5023/5093/5055/...)
 ### DNS / Routing
 | URL | Where |
 |-----|-------|
-| `gps.bellerox.com` | Cloudflare Pages (Web App) |
-| `api.gps.bellerox.com` | Cloudflare Worker → Traccar |
-| `traccar.gps.bellerox.com` | GCP VM (Traccar + Nginx) |
+| `gps.centerlink.co.th` | Cloudflare Pages (Main Web App) |
+| `gpsthailand.centerlink.co.th` | Cloudflare Pages (Customer Tenant) |
+| `[customer].centerlink.co.th` | Cloudflare Pages (Multi-tenant subdomains) |
+| `api.centerlink.co.th` | Cloudflare Worker → Traccar |
+| `traccar.gps.bellerox.com` | GCP VM (Traccar + Nginx) [Internal only] |
 
 ---
 

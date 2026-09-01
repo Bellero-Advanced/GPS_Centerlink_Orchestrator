@@ -3,6 +3,40 @@
 > ระบบติดตาม GPS และบริหารจัดการยานพาหนะสำหรับธุรกิจขนส่งไทย
 > Scale: 4,000 → 100,000 vehicles · Deploy: gps.bellerox.com
 
+## 🆕 **Payment System (Slot-based Decimal Tagging)**
+
+**NEW:** Automated payment processing with 99-slot pool system
+
+- ✅ **Auto-match payments** via decimal tagging (e.g., ฿210.47 → device #47)
+- ✅ **99 concurrent payments** without collision
+- ✅ **Queue system** when slots full (< 1% probability)
+- ✅ **FREE** — uses standard PromptPay (no QR30 fees)
+- 📖 **Docs:** See `docs/PAYMENT-SYSTEM.md` for full details
+
+**Setup:**
+```bash
+# 1. Run migrations
+supabase db push
+
+# 2. Set environment variables
+echo "VITE_PROMPTPAY_ID=0315562001168" >> bellerox-gps-web/.env.local
+
+# 3. Deploy webhook handler
+cd infrastructure/cloudflare/workers
+wrangler deploy promptpay-webhook.ts
+
+# 4. Deploy Edge Function
+supabase functions deploy payment-reconcile
+```
+
+**Company Account:**
+- Bank: Krungthai (กรุงไทย)
+- Account: 0170777294
+- Tax ID: 0315562001168
+- Branch: เซ็นทรัลลาดพร้าว (690)
+
+---
+
 ## Architecture
 
 ```

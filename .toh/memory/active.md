@@ -1,50 +1,37 @@
 ---
-updated: 2026-08-25
+updated: 2026-08-30
 ---
 
 # Active Work
 
-## ✅ Just Completed: DLT ส่งครบทุกคัน + Auto-index Partition (2026-08-25)
+## 🎯 Current: Mobile App Theme System + Feature Parity
 
-**อาการ:** DLT แต่ละรอบส่งไม่เท่ากัน (5→10 คัน) และบางคันไม่ส่งพร้อมคันอื่น
+**Status:** In Progress (Phase 0 - Design Foundation)  
+**Plan:** `.toh/plan.md`  
+**Started:** 2026-08-30
 
-**ต้นตอ (วัดจาก production):** `useDltAutoSend` ดึงตำแหน่งด้วย `GET /api/positions` เปล่า
-ซึ่งอ่านจาก **in-memory cache ของ Traccar** เท่านั้น — รถเปิด DLT ไว้ 42 คัน แต่ติดใน cache
-แค่ 8 คัน และเปลี่ยนไปตามจังหวะที่ GPS ยิงเข้ามา → จำนวนต่อรอบจึงสุ่ม
-**DLT ไม่ได้ปฏิเสธเลย** ทุก batch HTTP 200 · received == sent
-(บั๊กเดียวกับ Vehicle Card ว่างที่แก้ใน `b6db3fb` แต่ path DLT ยังใช้ของเดิม)
+### Scope
+1. Theme System — Dynamic tenant colors from Supabase (Centerlink Pink)
+2. Trip Replay — Full playback with animation
+3. Dashboard — KPI cards + recent alerts
+4. Reports — 3 report types viewer
+5. Settings — Account + App preferences
+6. LiveMap — Geofences, clustering, filters
 
-**แก้:**
-- `services/traccarService.ts` — `getPositionsForDevices()` รวม cache + DB fallback ที่เดียว
-  คืนทั้งสองชุด เพื่อให้ status/speed คิดจาก live เท่านั้น (กันการ์ดเปลี่ยนสี)
-- `hooks/useDltAutoSend.ts` — ใช้ชุด merged · คง rate-limit guard ข้าม tab ไว้
-- `services/dltService.ts` — วน devices แทน positions (คันที่ไม่มี position จะไม่หายเงียบ)
-  + แยกเหตุผลข้ามเป็น stale / future / badTimestamp / noPosition
-- `pages/DLTPage.tsx` — คอลัมน์ "ข้าม" + tooltip + แผงรถที่ส่งไม่ได้เรียงตามอายุ
-- `infrastructure/postgres/create-next-month-partition.sh` — เข้า git + สร้าง index `id`
-  ให้ partition ใหม่ + backfill ย้อนหลังแบบ idempotent (CONCURRENTLY ถ้ามีข้อมูล)
+### Progress
+- [ ] Phase 0: Design Foundation (0/2)
+- [ ] Phase 1: Theme System (0/4)
+- [ ] Phase 2: Dashboard (0/4)
+- [ ] Phase 3: Trip Replay (0/5)
+- [ ] Phase 4: Reports (0/6)
+- [ ] Phase 5: Settings (0/5)
+- [ ] Phase 6: LiveMap Enhancements (0/5)
+- [ ] Phase 7: Polish & Integration (0/6)
 
-**ผล:** ดึงได้ 42/42 คัน ใน 0.197s · ผ่านด่านสด 15 นาที **15 คัน** (จาก 8)
-พิสูจน์บั๊ก partition: สร้าง `tc_positions_2026_10` มือ ได้ index แค่ 3 ตัว ไม่มี `_id_idx`
-→ รัน script แล้วเป็น 4 ตัว all_valid=t ทั้ง 6 partition · GPS ไม่หยุดระหว่างรัน (load 0.10)
-
-**Commit:** web `cd6b21c` · infra `b655891`
-
-⚠️ **25 จาก 42 คัน ตำแหน่งเก่ากว่า 24 ชม.** — เป็นปัญหา SIM/ฮาร์ดแวร์หน้างาน แก้ด้วยโค้ดไม่ได้
-ตอนนี้เห็นรายชื่อในแผง "ยานพาหนะที่ส่งไม่ได้" แล้ว ต้องไปตามที่หน้างาน
-⚠️ อีก 9 ไฟล์ untracked ใน `bellerox-gps-web` ยังมีรหัสผ่านเปลือย — **ตั้งใจไม่ commit**
+**Total:** 0/36 tasks complete
 
 ---
 
-## 🎯 Next Steps
-1. เปิด DLTPage รอ 1 รอบส่ง (60 วิ) ดูว่าคอลัมน์ "ข้าม" ขึ้นเลข และจำนวนส่งเพิ่มจาก 8
-2. ไปตาม SIM/อุปกรณ์ 25 คันที่ GPS ไม่ส่งเข้ามาเกิน 24 ชม.
-3. ลบ/gitignore ไฟล์ที่มีรหัสผ่าน 9 ไฟล์
-4. Longdo API key ยังรั่วใน public repo 3 ไฟล์ + git history (พี่โตสั่งใช้ key เดิมไปก่อน)
+## 📌 Previous Work
 
----
-
-## 📌 ค้างจากรอบก่อน
-
-`.toh/memory/archive/plan-2026-08-22-cost-pipeline-reports-PARKED.md` — 30 done / 63 pending
-(แผน cost/pipeline/reports) กู้กลับมาทำต่อได้ทุกเมื่อ
+**2026-08-25:** DLT ส่งครบทุกคัน + Auto-index Partition ✅

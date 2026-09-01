@@ -43,3 +43,11 @@ traccar-other-*/data/
 !package-lock.json
 !tsconfig*.json
 !vitest.config.json
+
+# Environment files with secrets (never commit)
+.env
+.env.local
+.env.*.local
+.env.supabase
+.env.supabase.local
+.env.enrollment

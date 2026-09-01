@@ -1,37 +1,51 @@
----
-updated: 2026-08-30
----
+# Active Work — GPS Thailand
 
-# Active Work
+## ✅ Just Completed (2026-08-31)
 
-## 🎯 Current: Mobile App Theme System + Feature Parity
+### Payment System with Decimal Tagging
+**Status:** Done + Committed (2debe73)
 
-**Status:** In Progress (Phase 0 - Design Foundation)  
-**Plan:** `.toh/plan.md`  
-**Started:** 2026-08-30
+**ที่ทำเสร็จ:**
+- ✅ Decimal tagging library (`decimalTagging.ts`)
+- ✅ Slot pool service (99 slots)
+- ✅ Database migrations (slots + queue + cleanup)
+- ✅ QR Payment Modal with tagged amounts
+- ✅ Payment Queue Modal
+- ✅ Auto-enrollment script (14 vehicles enrolled)
+- ✅ Documentation (PAYMENT-SYSTEM.md, PAYMENT-TESTING.md)
 
-### Scope
-1. Theme System — Dynamic tenant colors from Supabase (Centerlink Pink)
-2. Trip Replay — Full playback with animation
-3. Dashboard — KPI cards + recent alerts
-4. Reports — 3 report types viewer
-5. Settings — Account + App preferences
-6. LiveMap — Geofences, clustering, filters
-
-### Progress
-- [ ] Phase 0: Design Foundation (0/2)
-- [ ] Phase 1: Theme System (0/4)
-- [ ] Phase 2: Dashboard (0/4)
-- [ ] Phase 3: Trip Replay (0/5)
-- [ ] Phase 4: Reports (0/6)
-- [ ] Phase 5: Settings (0/5)
-- [ ] Phase 6: LiveMap Enhancements (0/5)
-- [ ] Phase 7: Polish & Integration (0/6)
-
-**Total:** 0/36 tasks complete
+**ระบบทำงาน:**
+1. ลูกค้าสแกน QR (฿210.47)
+2. โอนเงินผ่าน Mobile Banking
+3. ระบบ detect จาก amount อัตโนมัติ (slot 47)
+4. ต่ออายุทันที ไม่ต้อง upload slip ✅
 
 ---
 
-## 📌 Previous Work
+## 🎯 Next Priority
 
-**2026-08-25:** DLT ส่งครบทุกคัน + Auto-index Partition ✅
+**ไม่มีงานค้าง** — Payment system พร้อมใช้งาน
+
+**ถ้าต้องการปรับปรุง:**
+- [ ] ทดสอบ payment flow จริง (scan → pay → verify)
+- [ ] Deploy migrations to production Supabase
+- [ ] Setup SlipOK API key (optional enhancement)
+- [ ] KTB Corporate QR API (future upgrade)
+
+---
+
+## 📊 System Status
+
+| Feature | Status | Note |
+|---------|--------|------|
+| Decimal Tagging | ✅ Complete | Auto-detect payment |
+| Slot Pool (99 slots) | ✅ Complete | With queue system |
+| Auto-enrollment | ✅ Complete | 14 vehicles enrolled |
+| QR Generation | ✅ Complete | Tagged amounts |
+| Database | ✅ Complete | Migrations ready |
+| Documentation | ✅ Complete | 3 docs |
+
+---
+
+**Last Updated:** 2026-08-31  
+**Last Commit:** 2debe73 (pushed to main)

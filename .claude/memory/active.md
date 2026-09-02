@@ -1,10 +1,34 @@
 # 🔥 Active Task
 
 ## Current Focus
-✅ GPS Position Stale Fix — **COMPLETED** (2026-08-28)
+✅ Geocoding Performance — **COMPLETED** (2026-09-02)
 
 ## In Progress
 - None
+
+## Just Completed (2026-09-02)
+- ✅ **Geocoding Performance Fix + GCP VM Recovery** (completed 2026-09-02)
+  - **Problem 1**: GCP VM ดับเพราะ billing หยุด → Traccar offline
+  - **Problem 2**: บางรถแสดงแค่ละติจูด/ลองติจูด (ไม่มีที่อยู่) → UI ช้า
+  - **Root Cause**: 
+    - VM: ปิดหลัง billing หยุด (แก้แล้ว: จ่าย billing + start VM)
+    - Geocoding: ไม่มี concurrency limit → 226 รถ = 226 API calls พร้อมกัน → browser queue ล้น → ช้า
+  - **Solution**: เพิ่ม concurrency queue ใน `useReverseGeocode.ts`
+    - จำกัด 8 requests พร้อมกัน (browser default ~6)
+    - ใช้ Promise queue + runQueue() pattern
+    - เก็บ in-flight dedup + IndexedDB cache เดิม
+  - **Performance**:
+    - Before: 226 requests พร้อมกัน → browser block → ช้า + timeout
+    - After: 8 concurrent → ลำดับชัด → เร็วขึ้น (0.14s/request average)
+  - **Verification**:
+    - GCP VM: ✅ 13 containers ขึ้นหมด (Traccar + PostgreSQL + Nginx + Redis + Grafana)
+    - Traccar API: ✅ ตอบสนองปกติ (226 รถ, 4.4M positions)
+    - GPS devices: ✅ ส่งข้อมูลปกติ (275 positions/ชั่วโมงที่แล้ว)
+    - Geocoding: ✅ 50 requests ใช้ 6.9s (เฉลี่ย 0.14s/request)
+  - **Files**: `src/hooks/useReverseGeocode.ts` — เพิ่ม QUEUE + MAX_CONCURRENT + runQueue()
+  - Build: ✅ 13.41s, TypeScript clean
+  - Deploy: ✅ Cloudflare Pages (bellerox-gps project)
+  - Result: ระบบกลับมาทำงานปกติ + geocoding เร็วขึ้นมาก
 
 ## Just Completed (2026-08-28)
 - ✅ **GPS Position Stale Fix — Critical Customer Bug** (completed 2026-08-28)

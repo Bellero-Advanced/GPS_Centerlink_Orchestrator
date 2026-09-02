@@ -19,24 +19,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run build
+          cache-dependency-path: 'bellerox-gps-web/package-lock.json'
+      - name: Build Frontend
+        working-directory: bellerox-gps-web
+        run: |
+          npm ci
+          npm run lint
+          npm run build
       - uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
-          path: dist/
+          path: bellerox-gps-web/dist/
 
   security-scan:
     name: Security Scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm audit --audit-level=moderate || true
+        with:
+          submodules: recursive
+      - name: Audit Frontend
+        working-directory: bellerox-gps-web
+        run: npm audit --audit-level=moderate || true
 
   deploy:
     name: Deploy

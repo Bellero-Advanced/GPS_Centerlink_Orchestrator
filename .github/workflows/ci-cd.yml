@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout Web Submodule
+        run: |
+          git submodule update --init --depth 1 bellerox-gps-web
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -43,9 +43,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout Web Submodule
+        run: |
+          git submodule update --init --depth 1 bellerox-gps-web
       - name: Audit Frontend
         working-directory: bellerox-gps-web
         run: npm audit --audit-level=moderate || true

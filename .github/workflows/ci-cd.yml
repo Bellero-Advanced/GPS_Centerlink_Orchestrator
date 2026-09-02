@@ -20,7 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Checkout Web Submodule
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
           git submodule update --init --depth 1 bellerox-gps-web
       - uses: actions/setup-node@v4
         with:

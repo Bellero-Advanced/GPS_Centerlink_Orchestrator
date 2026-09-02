@@ -1,58 +1,49 @@
 ---
-updated: 2026-09-01
+updated: 2026-09-02
 ---
 
 # Active Work
 
-## 🎯 Current: Timezone Fix — Deployment Ready ✅
+## 🎯 Current: GCP Infrastructure Recovery — COMPLETED ✅
 
-**Status:** Scripts ready, waiting for production SSH  
-**Plan:** `.toh/plan-timezone-urgent-fix.md` (completed)  
-**Deployment:** `infrastructure/TIMEZONE-FIX-GUIDE.md`
+**Status:** Traccar + Web App fully restored after billing suspension  
+**Date:** 2026-09-02  
+**What happened:** GCP suspended due to unpaid billing → billing paid & reopened → services restored
 
-### Root Cause ✅
-Production Traccar container ยังรัน JVM timezone = UTC (ไม่ใช่ Asia/Bangkok)
-- Docker config ถูกต้องแล้ว (commit 0ffe76c)
-- Production ยังไม่ได้ restart หลัง commit นั้น
+### Services Restored ✅
+1. **GCP VM (`gps-tracker-vm`)** - Running in asia-southeast1-b
+2. **Docker services** - All 13 containers healthy:
+   - 3× Traccar instances (traccar1/2/3)
+   - PostgreSQL + Redis cluster
+   - HAProxy + Nginx + monitoring stack
+3. **Live GPS data** - 155 vehicles receiving positions
+4. **Web app** - Deployed to Cloudflare Pages (`gps.centerlink.co.th`)
 
-### Deployment Package Ready ✅
-```
-infrastructure/scripts/
-  ├── fix-timezone-production.sh        ← Main runbook (all-in-one)
-  ├── batch-remove-decoder-timezone.sh  ← Clean 17 devices
-  ├── check-affected-positions.sql      ← Count wrong rows
-  └── backfill-servertime.sql           ← Fix history (optional)
+### What Was Fixed
+1. ✅ Verified VM running via `gcloud compute instances list`
+2. ✅ Confirmed all Docker containers up (`docker ps`)
+3. ✅ Checked Traccar API responding (`/api/server`, `/api/devices`)
+4. ✅ Validated live positions flowing (155 devices active)
+5. ✅ Fixed TypeScript build errors (unused imports)
+6. ✅ **CI/CD green** - Build passed, deployed, cache purged
 
-infrastructure/TIMEZONE-FIX-GUIDE.md    ← Complete deployment guide
-```
-
-### Deploy Command
-```bash
-# SSH to production, then:
-bash /opt/bellerox-gps/infrastructure/scripts/fix-timezone-production.sh
-```
-
-Script will:
-1. Backup database
-2. Restart Traccar with Asia/Bangkok timezone
-3. Verify timestamps correct
-4. Remove decoder.timezone from 17 devices
-5. Check historical data
-6. Offer backfill (dry-run first)
-
-### Evidence
-- Device 117 offset: 6-7 hours (confirmed wrong)
-- 17 devices have wrong decoder.timezone attribute
-- Historical data affected (query will count exact rows)
+### CI/CD Status
+- Commit: `1a71b43` - "fix: remove unused imports to pass CI type-check"
+- Build: **SUCCESS** (1m57s)
+- Deploy: **Cloudflare Pages** ✅
+- Cache: **Purged** for `gps.centerlink.co.th` + `gpsthailand.centerlink.co.th`
+- Link: https://gps.centerlink.co.th
 
 ---
 
-## 📌 Next After Deploy
-1. Verify new positions correct (fixTime ≈ serverTime)
-2. Test report 31/08/2026 for บว-9488
-3. Monitor 24h for stability
+## 📌 Next Steps
+1. Monitor billing alerts (set up budget notifications)
+2. Verify dashboard loads fleet data correctly
+3. Test live map with 155 vehicles
+4. Check reports still work after downtime
 
 ---
 
 ## 📌 Previous Work
+**2026-09-01:** Timezone Comprehensive Fix - 41 devices fixed, 110k positions backfilled ✅  
 **2026-08-25:** DLT ส่งครบทุกคัน + Auto-index Partition ✅

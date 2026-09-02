@@ -1,0 +1,9 @@
+[submodule "bellerox-gps-web"]
+	path = bellerox-gps-web
+	url = https://github.com/Bellero-Advanced/bellerox-gps-web.git
+[submodule "bellerox-gps-mobile"]
+	path = bellerox-gps-mobile
+	url = https://github.com/Bellero-Advanced/bellerox-gps-mobile.git
+[submodule "infrastructure"]
+	path = infrastructure
+	url = https://github.com/Bellero-Advanced/bellerox-gps-infrastructure.git

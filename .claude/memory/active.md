@@ -1,13 +1,34 @@
 # 🔥 Active Task
 
 ## Current Focus
-✅ Geocoding Performance — **COMPLETED** (2026-09-02)
+🚧 **CI/CD Pipeline Blocker** — Submodule checkout fails (needs PAT_TOKEN)
 
 ## In Progress
-- None
+- **CI/CD Fix** — Waiting for manual action (add PAT_TOKEN to GitHub Secrets)
+  - Root cause: GITHUB_TOKEN cannot access private repos across orgs
+  - Private submodules:
+    - `Bellero-Advanced/bellerox-gps-web` (private)
+    - `Bellero-Advanced/bellerox-gps-infra` (private)
+    - `MNupakorn/bellerox-gps-mobile` (private)
+  - Solution: Create PAT with `repo` scope → add to repo secrets as `PAT_TOKEN`
+  - Workflow updated: commit a3ee83d (uses `secrets.PAT_TOKEN`)
+  - Manual steps: [[ci-pat-token-blocker]]
 
 ## Just Completed (2026-09-02)
-- ✅ **Geocoding Performance Fix + GCP VM Recovery** (completed 2026-09-02)
+- ✅ **Geocoding 502 Cold Start Fix** (completed 2026-09-02)
+  - **Problem**: 502 Bad Gateway from `/geocode` endpoint (Cloudflare Worker cold start)
+  - **Root Cause**: Worker cold start 2-25s, frontend timeout 15s → 502
+  - **Solution**: Extended retry logic in `useReverseGeocode.ts`
+    - MAX_RETRIES: 3 → 5
+    - Timeout attempt 1: 15s → 25s (ทน cold start)
+    - Timeout attempt 2+: 15s → 12s (warm worker)
+    - Backoff: [2s, 4s, 8s, 15s]
+    - Concurrency: 3 → 5
+  - **Files**: `src/hooks/useReverseGeocode.ts`
+  - Build: ✅ 5m 10s, zero TypeScript errors
+  - Plan: `.toh/plan-geocoding-cold-start-fix.md` (6/6 tasks)
+
+- ✅ **Geocoding Performance — COMPLETED** (2026-09-02)
   - **Problem 1**: GCP VM ดับเพราะ billing หยุด → Traccar offline
   - **Problem 2**: บางรถแสดงแค่ละติจูด/ลองติจูด (ไม่มีที่อยู่) → UI ช้า
   - **Root Cause**: 

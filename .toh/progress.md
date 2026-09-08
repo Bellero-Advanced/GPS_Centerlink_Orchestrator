@@ -101,3 +101,5 @@ LEARNING: recovered last-known positions must be DISPLAY-ONLY — GPS_STALE_MS=5
   T014 commits: web cd6b21c · infra b655891
   NOTE: 25 of 42 have fixes older than 24h — SIM/hardware, not fixable in code
   NOTE: 9 untracked helper files in bellerox-gps-web still hold plaintext passwords, left out
+2026-09-01 19:50 PLAN APPROVED — Fix timezone +7h offset for บว-9488
+2026-09-01 19:50 T001 running — start dev server for API access

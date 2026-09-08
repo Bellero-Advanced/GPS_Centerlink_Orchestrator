@@ -1,6 +1,26 @@
-# 📝 Session Changelog
+# 📜 Changelog
 
-## 2026-08-20 — Multi-Tenant System Complete
+## 2026-09-02 — Reports Auto-Load + POI Color Fix
+
+**Changed:**
+- `bellerox-gps-web/src/pages/ReportsPage.tsx`
+  - Line 1094: `submitted` initial state `false` → `true`
+  - Effect: Reports load immediately after vehicle selection (no "ค้นหาข้อมูล" button click needed)
+
+- `bellerox-gps-web/src/components/poi/POILayer.tsx`
+  - Added `sanitizePOIColor()` helper function (converts white/light colors → `#1E40AF` dark blue)
+  - Line 59: Applied `sanitizePOIColor()` to POI color attribute
+  - Effect: All POI markers now visible (white POIs display as dark blue)
+
+**Impact:**
+- UX improvement: Faster access to reports (1 less click)
+- Bug fix: POI visibility on map (white markers now visible)
+
+**Build:** ✅ 34.18s, zero TypeScript errors
+
+---
+
+## 2026-09-02 — Timezone Comprehensive Fix
 
 **Feature: Multi-tenant architecture with white-label branding**
 

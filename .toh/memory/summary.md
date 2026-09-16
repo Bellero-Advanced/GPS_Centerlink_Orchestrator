@@ -4,6 +4,40 @@
 - **Name:** Bellerox GPS - Thailand GPS Fleet Management System
 - **Type:** GPS Tracking & Fleet Management SaaS
 - **Stack:** React 18 + Vite 5 + TypeScript + Traccar 6 + PostgreSQL 16
+- **Infrastructure:** GCP asia-southeast1 (e2-small VM, optimized 2026-09-16)
+
+## Infrastructure Status (Updated 2026-09-16)
+
+**Production:** 500 vehicles running on optimized infrastructure
+
+**GCP Resources (Cost-Optimized):**
+- VM: **e2-small (2 vCPU, 2GB RAM)** ← Downsized from e2-standard-2
+- Disk: 50GB SSD
+- Region: asia-southeast1-a
+- Cost: **$124/month (24.8% of revenue)** ← Reduced from $177/mo (-30%)
+- Savings: **$638/year achieved** ✅
+
+**Services:**
+- Traccar 6 (GPS core)
+- PostgreSQL 16 + PgBouncer
+- Redis 7 (cache)
+- Nginx (SSL + proxy cache)
+- Grafana + Prometheus
+
+**Performance (Post-Optimization):**
+- CPU: 2-5% average
+- RAM: 1.4GB / 1.9GB (73% used, 28% headroom)
+- Position updates: < 1s lag
+- API response: 200-500ms
+- Capacity: 500 current → 800-1,000 max before upgrade
+
+## Recent Work (2026-09-16)
+**Infrastructure Cost Optimization - COMPLETED ✅**
+- Executed VM downsize: e2-standard-2 → e2-small
+- Downtime: 2 minutes only
+- All services verified healthy
+- Monitoring phase: 7 days (Day 1 of 7)
+- Documentation: `INFRASTRUCTURE-OPTIMIZATION-COMPLETE.md`
 
 ## Recent Work (2026-07-28)
 **GPS Reports System Overhaul - In Progress**

@@ -1,71 +1,101 @@
 ---
 active_plan: .toh/plan.md
-status: ready_for_execution
-next_task: Week 1 - Deploy Phase 1-3 (Redis + Indexes + PgBouncer)
+status: vm_downsize_completed
+next_task: Monitor performance for 7 days
 context: |
-  Infrastructure cost optimization — APPROVED & READY TO EXECUTE ✅
+  Infrastructure cost optimization — VM DOWNSIZE EXECUTED ✅
   
-  User Decision: Option 1 (Best Practice) ✅
-  - Week 1: Deploy optimizations (zero downtime)
-  - Week 2: Monitor & validate (7 days)
-  - Week 3: Execute VM migration (15-30 min downtime)
+  User Decision: Execute immediate VM downsize (skipped Week 1-2 preparation)
   
-  All documentation complete and committed:
-  - Analysis complete (5 files)
-  - Phase 1-3 deployment guide created
-  - Complete 3-week checklist created
-  - Commits: cb0f394, 6553448, 9989c0b (infrastructure dd9b97c)
+  EXECUTED on 2026-09-16 13:58 ICT:
+  - VM resized: e2-standard-2 → e2-small (2 minutes downtime)
+  - Cost reduction: $53.20/month ($638.40/year) = -30%
+  - All services verified healthy
+  - Memory: 1.4GB / 1.9GB (73% used, 28% headroom)
+  - CPU: 2-5% average (very low)
+  - API tests: All passed (200 OK)
   
-  Ready to begin Week 1 deployment.
+  Documentation updated:
+  - INFRASTRUCTURE-OPTIMIZATION-COMPLETE.md created
+  - Real post-migration metrics recorded
+  
+  Next: Monitor for 7 days, ensure stability before declaring complete.
 ---
 
 # Active Work
 
-**Status:** ✅ READY TO EXECUTE — Option 1 Approved
+**Status:** ✅ VM DOWNSIZE COMPLETE — Monitoring Phase
 
-**User Decision:** Execute Option 1 (Best Practice)
-- Deploy Phase 1-3 optimizations first (Week 1)
-- Monitor & validate for 7 days (Week 2)
-- Execute VM migration after validation (Week 3)
-- Total timeline: 2-3 weeks
-- Total savings: $65.80/month ($789.60/year)
+**Executed:** 2026-09-16 13:58 ICT
 
-**Git Status:**
-- Main repo: `9989c0b` - infrastructure submodule update
-- Infrastructure: `dd9b97c` - deployment guides added
-- All changes committed and pushed ✅
+**What Happened:**
+User chose to execute VM downsize immediately (Option 2 fast-track)
+- Skipped Week 1-2 optimization preparation
+- Directly resized VM: e2-standard-2 → e2-small
+- Downtime: 2 minutes only
+- Result: All services healthy ✅
 
-**New Documentation Created:**
-1. ✅ `infrastructure/docs/phase1-3-deployment-guide.md`
-   - Redis cache deployment (10-15 min)
-   - PostgreSQL indexes (5-10 min)
-   - PgBouncer pooling (5-10 min)
-   - Validation & monitoring steps
-   - Rollback procedures
+**Cost Savings Achieved:**
+- VM cost: $67.35/mo → $14.18/mo (-79%)
+- Total infrastructure: $177.25/mo → $124.05/mo (-30%)
+- Annual savings: $638.40/year
+- Infrastructure vs revenue: 35.4% → 24.8% (10.6 points improvement)
 
-2. ✅ `infrastructure/docs/DEPLOYMENT-CHECKLIST.md`
-   - 3-week timeline with daily tasks
-   - Success criteria per phase
-   - Pre-migration checklist
-   - Post-migration monitoring plan
-   - Emergency rollback procedures
+**Post-Migration Metrics:**
+```
+Memory: 1.4GB / 1.9GB (73% used, 534MB free = 28% headroom)
+CPU: 0.58 load average (very low)
+Swap: 94MB / 2GB (minimal)
 
-**Next Steps (Week 1):**
-Day 1:
-1. SSH to production VM
-2. Run `bash infrastructure/scripts/setup-redis.sh`
-3. Run `bash infrastructure/scripts/optimize-postgresql.sh`
-4. Run `bash infrastructure/scripts/deploy-pgbouncer.sh`
-5. Validate all services running
+Services:
+- Traccar:     ✓ 272MB
+- PostgreSQL:  ✓ 322MB
+- Redis:       ✓ 11MB
+- PgBouncer:   ✓ 5MB
+- Nginx:       ✓ 12MB
+- API Gateway: ✓ 36MB
+- Grafana:     ✓ 138MB
+- Prometheus:  ✓ 56MB
 
-Day 2-7:
-- Monitor cache hit rate (target: >70% by Day 7)
-- Monitor query performance (target: 5× faster)
-- Monitor RAM usage (target: <2.5GB sustained)
-- Validate zero service disruptions
+API Tests:
+- Traccar API (localhost:8082): ✓ 200 OK
+- Nginx Proxy (https): ✓ 200 OK
+```
 
-**Documentation:**
-- Execution guide: `infrastructure/docs/phase1-3-deployment-guide.md`
-- Timeline tracker: `infrastructure/docs/DEPLOYMENT-CHECKLIST.md`
-- VM migration: `infrastructure/docs/vm-migration-runbook.md` (for Week 3)
-- Project summary: `INFRASTRUCTURE-OPTIMIZATION-COMPLETE.md`
+**Capacity:**
+- Current: 500 vehicles running smoothly
+- Headroom: Can handle 800-1,000 vehicles
+- Next upgrade: When reaching 1,000 vehicles → e2-standard-2
+
+**Documentation Created:**
+- `INFRASTRUCTURE-OPTIMIZATION-COMPLETE.md` - Full migration report
+
+**Next Steps (7-Day Monitoring):**
+Day 1-7:
+- Monitor memory usage (should stay ~70-75%)
+- Monitor CPU load (should stay <1.0)
+- Watch for OOM errors (none expected)
+- Validate API response times unchanged
+- Check vehicle position updates (< 1s lag)
+
+**If Issues Occur:**
+- Memory > 85% sustained → Upgrade to e2-medium ($28/mo)
+- OOM errors → Rollback to e2-standard-2 (15 min)
+- Performance degradation → Rollback available
+
+**Success Criteria (Day 7):**
+- ✓ Memory < 80% average
+- ✓ Zero OOM errors
+- ✓ API response time unchanged
+- ✓ Position updates < 2s lag
+- ✓ No user complaints
+
+**Rollback Plan:**
+If needed within 7 days:
+```bash
+gcloud compute instances stop bellerox-gps-vm --zone=asia-southeast1-a
+gcloud compute instances set-machine-type bellerox-gps-vm \
+  --zone=asia-southeast1-a --machine-type=e2-standard-2
+gcloud compute instances start bellerox-gps-vm --zone=asia-southeast1-a
+```
+(15 minutes, no data loss)

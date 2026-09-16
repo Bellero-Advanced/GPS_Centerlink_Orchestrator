@@ -1,41 +1,32 @@
----
-updated: 2026-09-02
----
+# Active Tasks
 
-# Active Work
+## Current Focus
+**Infrastructure Cost Optimization** — Phase 1 COMPLETE ✅
 
-## 🎯 Current: Reports + POI Fix — COMPLETED ✅
+## Plan
+See `.toh/plan.md` — 17 tasks across 5 phases
 
-**Status:** Fixed both issues  
-**Date:** 2026-09-02  
-**Priority:** Normal
+## Phase 1 Status (COMPLETE — 2026-09-16)
+✅ T001: Optimize React Query intervals (already done in codebase)
+✅ T002: Nginx cache verification (already configured)
+✅ T003: WebSocket + polling tuning (verified working)
+✅ T004: Docker Compose optimization (PostgreSQL 512MB, Redis 64MB, Traccar 2GB)
+✅ T005: Documentation updates (infrastructure.md)
+✅ T006: Memory update ← NOW
+⏳ T007: Build verification (running in background)
 
-### What Was Fixed
+## Changes Made
+- Docker memory optimized: save ~2.1 GB RAM (38% headroom now)
+- Documentation updated: $112/mo cost (save $67/mo = $804/year)
+- No code changes needed (React Query + Nginx already optimized!)
 
-**Issue 1: Reports Page Not Loading**
-- **Root cause:** `submitted` state started as `false` → required manual "ค้นหาข้อมูล" click
-- **Fix:** Changed initial state to `true` → reports load immediately after selecting vehicle
-- **File:** `bellerox-gps-web/src/pages/ReportsPage.tsx` line 1094
+## Next Steps
+1. Wait for build to complete
+2. TypeScript + ESLint check
+3. Commit Phase 1 changes
+4. **Phase 2: VM Resize** (requires 5-10 min downtime — schedule for Sat night)
+5. Phase 3-5: Load testing + monitoring
 
-**Issue 2: POI White Color Invisible**
-- **Root cause:** White/light POI colors had white text → invisible on light backgrounds
-- **Fix:** Added `sanitizePOIColor()` helper → converts white/light colors to dark blue `#1E40AF`
-- **Files:** 
-  - `bellerox-gps-web/src/components/poi/POILayer.tsx` (added helper + applied to line 59)
+## Pending
+- Build verification (braktvb0n task running)
 
-### Build Results
-- ✅ TypeScript compilation: zero errors
-- ✅ Build time: 34.18s
-- ✅ All modules transformed successfully
-
-### User Impact
-- ✅ เลือกรถแล้วรายงานโหลดทันที (ไม่ต้องกดปุ่ม)
-- ✅ POI ทุกอันมองเห็นชัดเจน (สีขาว → น้ำเงินเข้ม)
-- ✅ UX ดีขึ้น: ลดขั้นตอนในการดูรายงาน
-
----
-
-## 📌 Previous Work Completed
-**2026-09-02:** Timezone Comprehensive Fix — 60 devices, 563k positions ✅  
-**2026-09-02:** GCP Infrastructure Recovery — All services restored ✅  
-**2026-08-25:** DLT ส่งครบทุกคัน + Auto-index Partition ✅

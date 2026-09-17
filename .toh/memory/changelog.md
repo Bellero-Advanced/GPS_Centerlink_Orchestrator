@@ -1,5 +1,24 @@
 # 📜 Changelog
 
+## 2026-09-17 — Incident: login/no data after container recreate (fixed)
+
+**Root cause:** frontend built with `VITE_TRACCAR_API_URL=https://traccar.gps.bellerox.com`
+(direct origin). nginx SEC-002 (Cloudflare-IP allow-list, on disk since 2026-08-23) became
+active when all containers were recreated on 2026-09-16 17:09 ICT → browsers got 403 + CORS
+on `/api/session`.
+
+**Changed (`bellerox-gps-web` 03f10bf, CI run 35178445208 ✅):**
+- `src/lib/traccarApiBase.ts` (new) — `resolveTraccarApiBase()` accepts only
+  `api.centerlink.co.th` / `api.gps.bellerox.com`, otherwise falls back to the Worker
+- `src/lib/traccarClient.ts`, `src/lib/adminTraccarClient.ts` — use the shared resolver
+- GitHub secrets `VITE_TRACCAR_API_URL` → `https://api.centerlink.co.th`,
+  `VITE_TRACCAR_WS_URL` → `wss://api.centerlink.co.th/api/socket`
+- `.env.local` aligned (not committed)
+
+**Verified:** login `admin_gpsthailand` → `/app/map` 221 vehicles (24 moving / 4 idle / 50 stopped / 95 offline).
+**Not touched:** VM, Traccar, nginx. Found but deferred: geocode Worker 502 (Longdo key invalid +
+fallback bug), `filter.future=true` misconfig in traccar.xml.
+
 ## 2026-09-02 — Reports Auto-Load + POI Color Fix
 
 **Changed:**

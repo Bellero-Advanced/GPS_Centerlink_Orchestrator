@@ -1,101 +1,56 @@
 ---
 active_plan: .toh/plan.md
-status: vm_downsize_completed
-next_task: Monitor performance for 7 days
+status: incident_resolved_2026-09-17
+next_task: Renew Longdo API key + fix geocode Worker fallback; decide on traccar.xml filter.future
 context: |
-  Infrastructure cost optimization — VM DOWNSIZE EXECUTED ✅
-  
-  User Decision: Execute immediate VM downsize (skipped Week 1-2 preparation)
-  
-  EXECUTED on 2026-09-16 13:58 ICT:
-  - VM resized: e2-standard-2 → e2-small (2 minutes downtime)
-  - Cost reduction: $53.20/month ($638.40/year) = -30%
-  - All services verified healthy
-  - Memory: 1.4GB / 1.9GB (73% used, 28% headroom)
-  - CPU: 2-5% average (very low)
-  - API tests: All passed (200 OK)
-  
-  Documentation updated:
-  - INFRASTRUCTURE-OPTIMIZATION-COMPLETE.md created
-  - Real post-migration metrics recorded
-  
-  Next: Monitor for 7 days, ensure stability before declaring complete.
+  2026-09-17 09:50 ICT incident: "app ไม่มีข้อมูล / Traccar เข้าไม่ได้"
+
+  ROOT CAUSE (frontend + nginx):
+  - Frontend bundle was built with VITE_TRACCAR_API_URL=https://traccar.gps.bellerox.com
+    (GitHub secret set 2026-07-13) → browser called the origin VM directly.
+  - nginx.conf has SEC-002 (allow Cloudflare IPs only, deny all) since 2026-08-23 on disk,
+    but the running container kept the old config until `docker compose up -d`
+    recreated every container on 2026-09-16 17:09 ICT (part of the e2-small downsize).
+  - After recreate: every /api/session from browsers → 403 + CORS error → login failed,
+    tabs opened before the recreate still worked (old bundle in memory) → looked intermittent.
+
+  FIX (deployed, verified):
+  - GH secrets VITE_TRACCAR_API_URL=https://api.centerlink.co.th,
+    VITE_TRACCAR_WS_URL=wss://api.centerlink.co.th/api/socket
+  - src/lib/traccarApiBase.ts: resolveTraccarApiBase() accepts only Cloudflare-fronted
+    hosts, else falls back to api.centerlink.co.th (traccarClient + adminTraccarClient)
+  - bellerox-gps-web commit 03f10bf → CI run 35178445208 green → bundle index-5HKFKT4h
+  - Verified in browser: login admin_gpsthailand → /app/map shows 221 vehicles.
+
+  NOT CHANGED (VM/Traccar/nginx untouched): e2-small is healthy — no OOM, GPS ingest
+  steady 7k positions/h, 88 devices/day (same as previous week).
 ---
 
 # Active Work
 
-**Status:** ✅ VM DOWNSIZE COMPLETE — Monitoring Phase
+**Status:** ✅ Incident resolved 2026-09-17 10:35 ICT — app + login back to normal
 
-**Executed:** 2026-09-16 13:58 ICT
+**Open follow-ups (in priority order):**
 
-**What Happened:**
-User chose to execute VM downsize immediately (Option 2 fast-track)
-- Skipped Week 1-2 optimization preparation
-- Directly resized VM: e2-standard-2 → e2-small
-- Downtime: 2 minutes only
-- Result: All services healthy ✅
+1. **Geocode 502** (`/geocode` via Worker) — Longdo key `b5cd…9dcb` is invalid
+   (`Geo Service API Key Error`, returned as text with HTTP 200). Worker
+   `geocodeHandler` wraps Longdo + Nominatim in ONE try/catch → Longdo's
+   `res.json()` throw skips the Nominatim fallback → 502 for every address.
+   Fix: renew Longdo key (`wrangler secret put LONGDO_API_KEY`) AND give the
+   Longdo call its own try/catch. ⚠️ Deployed Worker does not emit
+   `X-Worker-Version` although repo source does → deployed source ≠ git;
+   diff/download before deploying from repo.
 
-**Cost Savings Achieved:**
-- VM cost: $67.35/mo → $14.18/mo (-79%)
-- Total infrastructure: $177.25/mo → $124.05/mo (-30%)
-- Annual savings: $638.40/year
-- Infrastructure vs revenue: 35.4% → 24.8% (10.6 points improvement)
+2. **traccar.xml `filter.future=true`** (should be seconds) → NumberFormatException
+   on ~every position (~190k WARN/day, FilterHandler:77). Traccar keeps saving the
+   position but the whole FilterHandler is bypassed → invalid (17k/24h) and
+   future-dated positions (28.8k/24h, some year 2080) reach the DB and the live
+   map. Fix = set a numeric value (e.g. 86400) in
+   `/opt/bellerox-gps/infrastructure/docker/traccar/traccar.xml` + restart
+   Traccar (~30–60 s ingest gap). Decide first: devices with clock drift will then
+   show stale instead of fake-future times.
 
-**Post-Migration Metrics:**
-```
-Memory: 1.4GB / 1.9GB (73% used, 534MB free = 28% headroom)
-CPU: 0.58 load average (very low)
-Swap: 94MB / 2GB (minimal)
+3. Direct Traccar UI (`traccar.gps.bellerox.com`) is blocked by design (SEC-002).
+   Access via IAP tunnel `-L 8082:localhost:8082` or add office IP to nginx allow list.
 
-Services:
-- Traccar:     ✓ 272MB
-- PostgreSQL:  ✓ 322MB
-- Redis:       ✓ 11MB
-- PgBouncer:   ✓ 5MB
-- Nginx:       ✓ 12MB
-- API Gateway: ✓ 36MB
-- Grafana:     ✓ 138MB
-- Prometheus:  ✓ 56MB
-
-API Tests:
-- Traccar API (localhost:8082): ✓ 200 OK
-- Nginx Proxy (https): ✓ 200 OK
-```
-
-**Capacity:**
-- Current: 500 vehicles running smoothly
-- Headroom: Can handle 800-1,000 vehicles
-- Next upgrade: When reaching 1,000 vehicles → e2-standard-2
-
-**Documentation Created:**
-- `INFRASTRUCTURE-OPTIMIZATION-COMPLETE.md` - Full migration report
-
-**Next Steps (7-Day Monitoring):**
-Day 1-7:
-- Monitor memory usage (should stay ~70-75%)
-- Monitor CPU load (should stay <1.0)
-- Watch for OOM errors (none expected)
-- Validate API response times unchanged
-- Check vehicle position updates (< 1s lag)
-
-**If Issues Occur:**
-- Memory > 85% sustained → Upgrade to e2-medium ($28/mo)
-- OOM errors → Rollback to e2-standard-2 (15 min)
-- Performance degradation → Rollback available
-
-**Success Criteria (Day 7):**
-- ✓ Memory < 80% average
-- ✓ Zero OOM errors
-- ✓ API response time unchanged
-- ✓ Position updates < 2s lag
-- ✓ No user complaints
-
-**Rollback Plan:**
-If needed within 7 days:
-```bash
-gcloud compute instances stop bellerox-gps-vm --zone=asia-southeast1-a
-gcloud compute instances set-machine-type bellerox-gps-vm \
-  --zone=asia-southeast1-a --machine-type=e2-standard-2
-gcloud compute instances start bellerox-gps-vm --zone=asia-southeast1-a
-```
-(15 minutes, no data loss)
+4. Continue 7-day e2-small monitoring (memory 1.5 GB used / swap 459 MB — tight).

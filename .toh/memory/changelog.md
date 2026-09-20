@@ -811,3 +811,22 @@ bellerox-gps-web/package.json
   + เพิ่มลง `infrastructure/postgres/indexes.sql` พร้อม DO block loop สำหรับ partition ใหม่
 - **ผล:** query 8-11s → **0.309ms** · Postgres CPU 389% → 1.05% · load 16 → 0.33
   · `/api/devices` 11.0s → 0.24s · fallback batch 40 ids → 0.21s
+
+## 2026-09-20 — Follow-ups: geocode 502 + traccar filter.future (both fixed)
+
+**Geocode 502 (addresses showed as raw coords):**
+- Longdo key b5cd… invalid (`Geo Service API Key Error`, HTTP 200 text body). Rotated to b90b…
+  (Pages secret VITE_LONGDO_MAP_KEY + Worker secret LONGDO_API_KEY + web .env.local).
+- Worker `geocodeHandler`: split Longdo/Nominatim into independent try/catch + throw-text guard
+  so a Longdo failure no longer skips the fallback. infra fa1c204 → deployed v bcb498d5.
+- Frontend geocodingService: buildLongdoAddress() normalises จ./อ./ต. + เขต/แขวง (old code read
+  a `data` blob the API no longer returns). web 8533233.
+- Verified: fresh Thai coords → correct ต./อ./จ., no 502. ⚠️ deployed worker not emitting
+  X-Worker-Version header despite v bcb498d5 active 100% — cosmetic, deferred.
+
+**traccar.xml filter.future=true (NumberFormatException disabled ALL filters):**
+- `true` → `86400` (seconds). Live file + repo infra 8869fa3. VM uses docker-compose v1
+  (`docker restart centerlink-traccar`, NOT `docker compose`). Backup: traccar.xml.bak.20260920.
+- Was ~184k WARN/day; FilterHandler:77 abort disabled filter.invalid/zero/duplicate/accuracy/
+  maxSpeed → invalid + year-2080 future rows hit DB & map.
+- Verified after restart: 0 WARN, 405 positions/3min, 0 future-dated, 0 invalid.

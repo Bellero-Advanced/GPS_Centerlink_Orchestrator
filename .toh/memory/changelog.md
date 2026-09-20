@@ -830,3 +830,15 @@ bellerox-gps-web/package.json
 - Was ~184k WARN/day; FilterHandler:77 abort disabled filter.invalid/zero/duplicate/accuracy/
   maxSpeed → invalid + year-2080 future rows hit DB & map.
 - Verified after restart: 0 WARN, 405 positions/3min, 0 future-dated, 0 invalid.
+
+## 2026-09-20 (cont.) — Geocode retry-storm fix + correct worker identified
+
+- Discovered the /geocode handler that actually runs is in **centerlink-html-injector**
+  (wildcard *.centerlink.co.th route fires before bellerox-gps-proxy custom domain), NOT
+  bellerox-gps-proxy/traccar-proxy.ts. Earlier bellerox-gps-proxy edits were dead code.
+- Longdo free tier rejects Cloudflare egress IPs (`throw 'Geo Service API Key Error'` at HTTP
+  200, proven with a temp _dbg field then reverted) → Thailand served by Nominatim fallback.
+  Border coords w/o Nominatim province (2 Laos vehicles) → permanent null.
+- Worker (infra 445814b, deployed v19cf1fc1): permanent no-coverage → 404 (terminal),
+  transient → 502 (retry). Frontend (web 7ae6b33): FAILED negative-cache, 4xx not refetched.
+- Verified: console errors 12→2, 500 Thai addresses render. Parent bump 01f4ab1.

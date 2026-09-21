@@ -157,3 +157,18 @@ LEARNING: recovered last-known positions must be DISPLAY-ONLY — GPS_STALE_MS=5
 **Cumulative Cost Impact:**
 - Checkpoint 4: -$12.60/month (-$151/year) egress savings
 - Future phases: Additional VM + database optimization savings expected
+
+---
+
+## DLT Manual Override System — IN PROGRESS
+**Goal:** ระบบส่งข้อมูลพาหนะแบบ manual เมื่อกล่อง GPS เสีย
+**Started:** 2026-09-20
+**Current Phase:** 3 — Backend Integration (Supabase)
+
+### Phase 3: Backend Integration (Supabase) — IN PROGRESS
+
+- [x] **T010** `ui-builder` — Setup Supabase client + env vars
+  - Files: `src/lib/supabaseClient.ts`, `.env.local`
+  - ✅ Created supabaseClient.ts with proper initialization
+  - ✅ Added Supabase credentials to .env.local
+  - 🔄 Build verification running...

@@ -1,736 +1,95 @@
-# DESIGN.md — GPS Global Tracker Design System
-> Version 3.0 · Last updated: 2026-07-04
-> **Product Name**: GPS Global Tracker (กรุณาใช้ชื่อนี้สม่ำเสมอ — ไม่ใช่ "Bellerox GPS")
-> **Identity**: Signal · Precision · Command
-> **Stack**: Google palette · IBM Plex Sans Thai · JetBrains Mono
->
-> **AUDIT NOTE v3.0** — Updated from professional UX/UI audit (2026-07-04).
-> Score before: 74/100. Target after implementing guidelines: 88/100.
-> Key additions: Brand CI enforcement, Integration UX patterns, Error state specs,
-> Onboarding patterns, Mobile-first rules, Performance perception guidelines.
+# DESIGN.md — Bellerox GPS
 
----
+## 1. Identity & Atmosphere
 
-## 1. Brand Identity — "Signal"
+Night-shift fleet control — dispatch consoles, illuminated city maps, operator focus under low light. The world: radar screens, logistics hubs at 3am, monochrome vehicle manifests, GPS coordinates in backlit panels. Thesis: a professional operations center, not a consumer app — cool slate surfaces, data-dense tables, utilitarian grids, status colors that cut through darkness.
 
-### Concept
-Bellerox GPS is a **command center for fleets**, not a dashboard. Every screen should feel like the operator has the entire fleet's pulse in their hands. The design language is built around one metaphor: **a GPS signal — precise, reliable, always live.**
+**Signature element:** tabular-nums coordinate display — lat/lng pairs set huge in JetBrains Mono, the visual anchor of every vehicle card. Position data is the hero, not decoration.
 
-### The Three Brand Pillars
+## 2. Color Palette & Roles
 
-| Pillar | Meaning | How it Shows |
-|--------|---------|--------------|
-| **Signal** | Always connected, always live | Accent dots, pulse-free solid status colors, live WebSocket indicators |
-| **Precision** | Exact data, no rounding, no approximation | Monospace numbers everywhere, 6-decimal coordinates, exact timestamps |
-| **Command** | The operator is in control | Dense information layout, quick-action buttons, keyboard shortcuts |
+| Token | Light | Dark | Role |
+|---|---|---|---|
+| --surface-0 | #FFFFFF | #202124 | card/panel background |
+| --surface-1 | #F8F9FA | #171717 | page background (cool slate-biased neutral) |
+| --surface-2 | #F1F3F4 | #292A2D | input fills, muted sections |
+| --surface-3 | #E8EAED | #3C4043 | hover states, table headers |
+| --ink-1 | #202124 | #E8EAED | primary text |
+| --ink-2 | #3C4043 | #BDC1C6 | secondary text |
+| --ink-3 | #5F6368 | #9AA0A6 | muted labels |
+| --brand | #FF788B | #FFAAB8 | brand accent — CTAs, active nav (tenant-configurable, default shown) |
+| --border | #DADCE0 | #3C4043 | dividers, card edges |
 
-### Brand Voice (UI copy)
-- Thai-first, direct, no filler words
-- Numbers without approximation: "67 km/h" not "about 70"
-- Status with certainty: "ออนไลน์" not "ดูเหมือนจะออนไลน์"
-- Actions as commands: "ส่งคำสั่ง" "ดูเส้นทาง" not "Click here to view route"
+**Status colors (IMMUTABLE — users internalize these):**  
+`--moving: #34A853` (green) · `--idle: #FBBC04` (amber) · `--stopped: #EA4335` (red) · `--offline: #5F6368` (grey)
 
-### Signature Visual Elements
+Semantic (separate from brand): `--critical: #EA4335` · `--warning: #FBBC04` · `--success: #34A853`
 
-**1. The Accent Bar** — The defining element of the Bellerox GPS brand.
-Every navigation group, every section card, every status block gets a 3px left border strip in its semantic color. This is not decoration — it communicates hierarchy and category instantly.
-
-```
-┃ Core (Blue #1A73E8)  — Tracking, Map, Live
-┃ Ops (Green #34A853)  — Fleet, Drivers, Dispatch
-┃ Manage (Gray #9AA0A6) — Reports, Settings, Admin
-```
-
-**2. The Signal Dot** — A filled circle used for all vehicle/connection status.
-- Size 8px in tables, 10px in cards, 12px in hero contexts
-- Never animated (animation wastes rendering budget and implies uncertainty)
-- Always paired with a text label (color alone never conveys meaning)
-
-**3. Monospace Data** — Any number that changes is monospace.
-Speed, distance, coordinates, timestamps, counts. This prevents layout shift when real-time data updates.
-
-**4. Section Labels** — Caps, 11px, 0.08em tracking, ink-3.
-Used above every group of related inputs/fields. Creates visual rhythm and scanability.
-
----
-
-## 2. Color System — Google Palette
-
-### Primary Palette
-Derived from Google Maps' visual language — trusted, clear, globally recognizable.
-Applied with the Bellerox GPS "Signal" identity: higher contrast, denser use.
-
-```css
-/* ── Brand (Google Blue) ─────────────────────────── */
---brand:         #1A73E8;   /* primary actions, active nav, focus rings */
---brand-700:     #1557B0;   /* hover/pressed state */
---brand-light:   #E8F0FE;   /* selected bg, brand tints */
---brand-ring:    rgba(26,115,232,0.20);  /* focus ring */
-
-/* ── Surface ─────────────────────────────────────── */
---surface-0:     #FFFFFF;   /* cards, modals, panels */
---surface-1:     #F8F9FA;   /* page background */
---surface-2:     #F1F3F4;   /* sidebar, table headers, subtle areas */
---surface-3:     #E8EAED;   /* dividers, pressed states */
-
-/* ── Text ────────────────────────────────────────── */
---ink-1:         #202124;   /* primary text */
---ink-2:         #3C4043;   /* secondary text */
---ink-3:         #5F6368;   /* labels, captions, section headers */
---ink-4:         #9AA0A6;   /* placeholders, disabled, muted */
-
-/* ── Border ──────────────────────────────────────── */
---border:        #DADCE0;   /* standard dividers, card borders */
---border-dark:   #BDC1C6;   /* emphasized borders, active frames */
-
-/* ── Dark Mode ────────────────────────────────────── */
-.dark {
-  --brand:         #8AB4F8;
-  --brand-700:     #669DF6;
-  --brand-light:   #1A2746;
-  --brand-ring:    rgba(138,180,248,0.20);
-
-  --surface-0:     #202124;
-  --surface-1:     #171717;
-  --surface-2:     #292A2D;
-  --surface-3:     #3C4043;
-
-  --ink-1:         #E8EAED;
-  --ink-2:         #BDC1C6;
-  --ink-3:         #9AA0A6;
-  --ink-4:         #5F6368;
-
-  --border:        #3C4043;
-  --border-dark:   #5F6368;
-}
-```
-
-### Semantic / Status Colors — IMMUTABLE
-These are fixed. Users internalize them. Changing them breaks operator trust.
-
-```css
-/* Vehicle Status */
---moving:   #34A853;   /* Google Green — vehicle in motion */
---idle:     #FBBC04;   /* Google Yellow — engine on, parked */
---stopped:  #9AA0A6;   /* Neutral Gray — engine off */
---offline:  #EA4335;   /* Google Red — signal lost */
---towing:   #FA7B17;   /* Google Orange — moving without ignition */
-
-/* Alert Severity */
---critical: #EA4335;
---warning:  #FBBC04;
---info:     #1A73E8;
---success:  #34A853;
-```
-
-### Section Accent Colors
-Each navigation group uses a fixed accent color for its sidebar bar and section borders.
-```css
---accent-core:    #1A73E8;  /* Brand Blue — Live Map, Dashboard, Trip Replay */
---accent-ops:     #34A853;  /* Brand Green — Fleet, Drivers, Geofences */
---accent-report:  #FA7B17;  /* Brand Orange — Reports, Analytics, Scoring */
---accent-manage:  #9AA0A6;  /* Neutral — Settings, Team, Admin */
-```
-
-### Map Colors
-```css
---map-route:             #1A73E8;       /* Route line */
---map-route-history:     #9AA0A6;       /* Historical route (muted) */
---map-geofence-fill:     rgba(234,67,53,0.08);
---map-geofence-border:   #EA4335;
---map-selected-ring:     #1A73E8;
-```
-
----
+Palette source: night-shift logistics operations — radar displays, backlit control panels, monochrome manifests with status indicators.
 
 ## 3. Typography
 
-### Font Stack
-```
-Primary (UI + Thai text): "IBM Plex Sans Thai", system-ui, sans-serif
-Data / Coordinates / IDs: "JetBrains Mono", monospace
+**Display/Body:** IBM Plex Sans Thai 300/400/500/600/700 (Thai + English, weights 300-700)  
+**Utility/mono:** JetBrains Mono 400/500/600 — coordinates, speeds, device IDs, vehicle codes (tabular-nums always)
 
-NOTE: Inter, Sarabun, Calistoga are REMOVED — do not re-add them.
-IBM Plex Sans Thai covers both Latin and Thai scripts in one weight.
-```
+Scale ratio: 1.2 · Hero: 2xl-3xl (30-36px) · Body: sm-base (13-14px) · Measure: 70ch  
+Numbers in tables/stats: `font-mono tabular-nums` — GPS data updates every 10s, layout must not reflow.
 
-### Type Scale (4px baseline)
-```
-11px / 1.4lh  — Section labels (UPPERCASE, 600, +0.08em tracking)
-12px / 1.4lh  — Badges, captions, table footnotes
-13px / 1.5lh  — Table cells, secondary body, compact list items
-14px / 1.5lh  — Default body text, form labels
-16px / 1.4lh  — Card titles, modal headings
-18px / 1.3lh  — Section headings
-22px / 1.2lh  — Page titles
-```
+## 4. Component Styling
 
-### Rules
-- **Page title**: 22px, weight 700, IBM Plex Sans Thai, letter-spacing -0.01em
-- **Section label**: 11px, weight 600, UPPERCASE, letter-spacing +0.08em, ink-3
-- **Data numbers** (speed, distance, coordinates): JetBrains Mono, tabular-nums — prevents layout shift on live updates
-- **Thai text**: IBM Plex Sans Thai, minimum 13px, never truncate mid-syllable
-- **Currency**: ฿ prefix, comma separators: `฿1,234.50`
+**Buttons:** squared, radius 4px, solid brand primary, 1px border outline secondary, danger uses `rgba(234,67,53,0.08)` fill  
+**Cards:** flat border + subtle shadow (no glassmorphism), radius 6px, hover lifts shadow to `--shadow-md`  
+**Inputs:** color-fill (no border) — `--surface-2` fill, focus = `--surface-3` + brand ring, radius 4px  
+**Tables:** dense 13px rows, `--surface-2` header band, hover row = `--surface-1`, right-aligned actions  
+**Radius cap:** 12px (cards/dialogs only) — buttons/inputs stay at 4-6px
 
----
+## 5. Layout & Navigation
 
-## 4. Spacing & Layout
+**Nav pattern:** Dashboard/app — left sidebar (240px) with labeled icons, grouped by function (Core / Operations / Management / Settings), collapsible on tablet  
+**Spacing rhythm:** 4px base, 16px element gap, 24px card padding, 48px major sections  
+**Logo expression:** top-left, clickable-to-home; wordmark "Bellerox GPS" in IBM Plex Sans Thai 600 with a 3px accent line below in brand color, sits above the nav groups.
 
-### Spacing Scale (4px base)
-```
-2px  → icon-to-text gaps within a single element
-4px  → between tightly coupled inline elements
-8px  → between related items in a group
-12px → compact padding (badges, chips, table cells)
-16px → standard padding — form rows, list items, card sections
-20px → between card sections
-24px → card padding (horizontal)
-28px → between cards
-32px → page horizontal padding
-40px → between major page sections
-```
+## 6. Depth & Elevation
 
-### Layout Dimensions
-```
-Sidebar expanded:  224px
-Sidebar collapsed: 52px (icon + tooltip flyout)
-Content max-width: 1024px (form/table/settings pages)
-Map page:          sidebar 288px + full-height map fill
-Modal max-width:   480px (standard), 640px (complex forms)
-```
+Border-first. Shadows only on cards (sm) and modals (lg). Hover state = shadow lift from sm → md (120ms linear transition). No glassmorphism, no gradient borders, no dramatic depth — operational clarity over decoration.
 
-### Border Radius — Sharp Modern Style
-```
-1px  → Status dots, tiny badges
-2px  → Compact chips, table-internal elements
-4px  → Inputs, dropdowns, small buttons
-6px  → Cards, panels, standard buttons
-8px  → Modals, large panels
-12px → Feature cards, full-section containers
-999px → Pills (unchanged)
-50%   → Circles (unchanged)
-```
+## 7. Iconography
 
-**Design Philosophy:** Sharp edges convey precision and professionalism. Modern GPS tracking
-is a technical product — rounded corners softened to 4-6px (not 8-12px) creates a more
-contemporary, command-center aesthetic without harsh 90° angles.
+**Library:** Lucide (regular weight) · **Stroke:** 1.5px · **Sizes:** 16px (inline) / 20px (nav) / 24px (headers)  
+Labels required on all nav items and icon-only buttons (`aria-label`). No emoji as icons. True universals (search, close ×, chevron) can omit visible labels.
 
-**Color-fill First Rule:**
-All pages MUST use `fill-block-elevated` or `fill-block` classes. White cards with borders
-(`bg-white border border-gray-200`) are legacy patterns — do not use them in new code.
+## 8. Motion & Copy Voice
 
-**Floating Overlay Pattern:**
-For sidebars on fullscreen maps (LiveMapPage), use floating overlay cards instead of fixed
-sidebars that push content:
-- Position: `absolute; top: 16px; left: 16px; zIndex: 1000`
-- Background: `rgba(var(--surface-0-rgb), 0.95)` with `backdrop-filter: blur(8px)`
-- Width: 320px, max-height: 85vh
-- Border-radius: 6px (sharp modern)
-- Shadow: `var(--shadow-lg)`
+**Motion:** 100-150ms ease-out; hover = background darkens or shadow lifts; no scale, no bounce, no width/height animation (GPS data updates are frequent, motion must not lag). Status changes = instant (no animation — safety info appears immediately). Respect `prefers-reduced-motion` always.
 
----
+**Case system:** Sentence case (Thai + English) — buttons state exact outcomes: "บันทึกข้อมูล" / "Save vehicle", never vague "Submit" / "Continue".
 
-## 5. Component Specifications
+**Button verbs (Thai):** บันทึก (save) · ยกเลิก (cancel) · ลบ (delete) · แก้ไข (edit) · ดูรายละเอียด (view details) · ติดตาม (track)
 
-### 5.1 Sidebar Navigation
-```
-Width: 224px expanded, 52px collapsed
-Background: var(--surface-2)
-Border-right: 1px solid var(--border)
+**Errors:** state what failed + the fix, no apology — "เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ — ตรวจสอบอินเทอร์เน็ต" (Connection failed — check internet), not "โอ๊ะ! มีบางอย่างผิดพลาด 😢".
 
-Nav item:
-  Padding: 6px 8px
-  Border-radius: 6px
-  Icon: 16px, ink-3
-  Label: 13px, weight 400, ink-2
-  Active: background brand-light, icon+label color brand
-  Hover: background surface-3, no transition delay
+## 9. Do's & Don'ts + Agent Prompt Guide
 
-Accent bar (per nav group):
-  .nav-group::before { width: 3px; height: 12px; border-radius: 999px; }
-  Core group → #1A73E8
-  Ops group → #34A853
-  Manage group → #9AA0A6
+**Do:**  
+- Lead vehicle cards with coordinate display (lat/lng in mono, large)  
+- Keep tables dense — fleet managers scan 50-200 vehicles at once  
+- Show status with semantic tokens (moving/idle/stopped/offline colors are fixed)  
+- Use color-fill inputs (no borders) per the existing codebase pattern  
+- Dark mode is mandatory (night-shift operators)
 
-Collapsed mode:
-  Show only 16px icon, centered
-  Hover → tooltip flyout: white card, shadow-md, zIndex 1000
-```
+**Don't:**  
+- Warm cream/terracotta palettes (this is operations, not lifestyle)  
+- Purple/indigo gradients or glow effects (no "futuristic AI dashboard" look)  
+- Icon tiles above headings (the #1 AI tell)  
+- Rounded-3xl cards or glassmorphism  
+- Change status colors (green/amber/red/grey are internalized by users)  
+- Everything in design-craft/AVOID-LIST.md
 
-### 5.2 Vehicle Status Dot
-```css
-.status-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-}
-/* Sizes: 8px (table), 10px (card), 12px (hero) */
-/* Never animate — solid color only */
-```
+**Agents:** re-read this file before EVERY UI task; every color/typeface/radius/motion value must trace to sections 2-8. Never work from memory of this file.
 
-### 5.3 Status Badge (pill)
-```
-Padding: 2px 8px
-Border-radius: 999px
-Font: 11px, weight 600
-Background: status color at 10% opacity
-Text color: status color at 100%
-Border: none
-```
+## Distinctiveness check (REQUIRED)
 
-### 5.4 KPI Card
-```
-Layout: 3 or 4 columns, equal width
-Padding: 20px 24px
-Header: icon (20px, colored) + label (11px section-label)
-Value: 28px, JetBrains Mono, weight 700, ink-1
-Subtitle: 12px, ink-3 (optional delta or context)
-Border: 1px solid border
-Border-radius: 8px
-Left accent: 3px solid corresponding section accent color
-```
-
-### 5.5 Cards
-```css
-.card {
-  background: var(--surface-0);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.09); }
-/* Transition: box-shadow 120ms ease — ONLY this property */
-```
-
-### 5.6 Buttons
-```css
-/* Primary */
-.btn-primary {
-  background: var(--brand);
-  color: #fff;
-  padding: 7px 14px;
-  border-radius: 6px;
-  font-size: 13px; font-weight: 500;
-  border: none;
-}
-.btn-primary:hover { background: var(--brand-700); }
-
-/* Secondary */
-.btn-secondary {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  color: var(--ink-2);
-  /* same padding/radius as primary */
-}
-
-/* Destructive */
-.btn-danger {
-  background: rgba(234,67,53,0.08);
-  border: 1px solid rgba(234,67,53,0.30);
-  color: var(--critical);
-}
-
-/* NO box-shadow on buttons, NO transform on click */
-```
-
-### 5.7 Inputs
-```css
-.input {
-  background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 14px;
-  color: var(--ink-1);
-}
-.input:focus {
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px var(--brand-ring);
-  outline: none;
-}
-.input.error { border-color: var(--critical); }
-```
-
-### 5.8 Tables
-```
-Header: background surface-2, text 11px UPPERCASE ink-3 weight 600
-Row border: 1px solid border between rows only (no outer table border)
-Row hover: background surface-1
-Cell padding: 10px 16px
-Numeric cells: JetBrains Mono, text-right
-First column: font-medium ink-1 (vehicle name, user name)
-Action cell: right-aligned icon buttons, visible on row hover only
-```
-
-### 5.9 Modal
-```
-Overlay: rgba(0,0,0,0.40) — instant, no fade
-Panel: surface-0, border-radius 12px, box-shadow 0 8px 32px rgba(0,0,0,0.18)
-Header: title 16px weight 600 + close button (top-right)
-Body: px-6 py-5
-Footer: flex justify-end gap-2, pt-4 border-top
-Max-width: 480px centered
-NO slide/fade animation — instant open/close
-```
-
-### 5.10 Map Markers (Leaflet divIcon)
-```
-Shape: Filled circle (not pin — circles don't obscure the coordinate)
-Normal: 26px, status color fill, 2px white border
-Selected: 34px, status color fill, 3px white border + 2px brand ring
-Hover: scale 1.1 (ONLY allowed transform — brief feedback)
-Direction arrow: thin triangle indicator at top edge, rotates with course
-Font: JetBrains Mono for speed overlay if shown
-
-HTML template:
-<div style="
-  width:26px; height:26px; border-radius:50%;
-  background: {statusColor};
-  border: 2.5px solid white;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-">
-  <div class="course-arrow" style="transform: rotate({course}deg);">▲</div>
-</div>
-```
-
-### 5.11 Map Popup
-```
-Width: 220px
-Padding: 12px 14px
-Border-radius: 8px
-Shadow: 0 4px 16px rgba(0,0,0,0.15)
-
-Layout:
-  Row 1: Vehicle name (14px, weight 600) + status badge
-  Divider
-  Row 2: speed (mono) + course icon
-  Row 3: address (13px, truncated, 2 lines max)
-  Row 4: "Updated X seconds ago" (11px, ink-4)
-  Divider
-  Footer: "ดูรายละเอียด" + "ประวัติเส้นทาง" (compact ghost buttons)
-```
-
----
-
-## 6. Page Design Specifications
-
-### 6.1 Login Page
-```
-Layout: Fullscreen, centered single card on dark map-like background
-Card: max-width 380px, surface-0, border-radius 16px, strong shadow
-Logo: top-center of card, height 32px
-Title: 18px, weight 600 (Thai: "เข้าสู่ระบบ")
-Fields: email + password, color-fill (surface-1 bg, no border) style
-CTA: Full-width brand-color button
-Footer: Forgot password link, Register link (if server.registration = true)
-Background: dark gradient or static map image — reinforces GPS context
-```
-
-### 6.2 Dashboard
-```
-Above fold (no scroll required on 1080p):
-  Row 1: 4 KPI cards — Total, Online, Moving, Offline
-  Row 2: 50-row vehicle status table (most critical fleet view)
-
-KPI cards use section accent colors (core = blue, moving = green)
-Table: sortable by status, name, last update
-"Live" indicator: solid green dot + "Live" text, top-right of table header
-No charts on first load — charts are below the fold (analytics page)
-```
-
-### 6.3 Live Map (most used page)
-```
-Layout: Left panel 288px + right map fills remaining viewport (full height)
-Left panel:
-  Search input (full width, with clear button)
-  Status filter row: All / Moving / Idle / Stopped / Offline chips
-  Vehicle list (virtualized, 44px row height)
-    Row: status dot + name + speed + "Xm ago"
-  Footer: vehicle count + filter result count
-
-Map right:
-  No decorative elements
-  Markers only (clustered at > 200 vehicles)
-  Layer switcher top-right: Map | Satellite | Traffic
-  "ดูทั้งหมด" (fit bounds) button
-  
-Selected vehicle: bottom-center floating card (240px wide)
-  Name + status + speed + address + action buttons
-```
-
-### 6.4 Fleet Management
-```
-Header: title + device count badge + "เพิ่มยานพาหนะ" button
-Search + group filter
-Table: Name | IMEI | Protocol | Status | Last Seen | Actions
-Row hover → shows Edit / Commands / Delete icon buttons
-Bulk select: checkbox column, bulk delete/group assign
-Empty state: centered illustration + CTA
-```
-
-### 6.5 Settings Page
-```
-Layout: Single scrollable column, max-width 720px, centered
-Sections (in order):
-  1. Theme — light/dark/system toggle cards
-  2. Server Settings (admin only) — Traccar /api/server config
-  3. LINE Notify — global + per-group tokens
-  4. DLT GPS Web Service — Thai government compliance
-  5. Alert Rules — toggle individual alert types
-  6. Danger Zone (admin only) — reset, wipe data
-
-Each section is a card with:
-  - 3px left accent bar matching section type
-  - Section header (icon + title + optional badge)
-  - Content
-```
-
-### 6.6 Team (User Management)
-```
-Admin only — show 403 empty state for non-admins
-Header: "ทีมและสมาชิก" + "เชิญสมาชิก" button
-Table: Avatar | Name | Email | Role | Device Limit | Expiry | Actions
-Actions: Edit (role/limits) + Delete (with confirm)
-Invite modal: name + email + password + admin toggle
-Edit modal: name + email + role + deviceLimit + expirationTime
-```
-
----
-
-## 7. Motion & Animation Rules
-
-### Allowed
-```
-Duration: 100-150ms max for state changes
-Properties: opacity, background-color, border-color, box-shadow, color
-Timing: ease-out or linear only
-Exception: map flyTo is 300ms (Leaflet built-in, can't shorten)
-```
-
-### Prohibited
-```
-transform: translate/scale/rotate on transitions (layout recalc)
-height/width transitions (causes reflow)
-Page-level slide-in effects
-Pulse/ping on status dots
-Skeleton shimmer longer than 300ms
-CSS @keyframes on live data elements
-```
-
-### Loading States
-```
-Initial page load: opacity 0→1 fade 150ms, once only
-Data refresh: update in-place, no transition
-Error: instant
-Skeleton: static (no shimmer), surface-2 blocks, 150ms fade out when data arrives
-```
-
----
-
-## 8. Performance Rules
-
-### React Query intervals (match engineering-standards.md)
-```typescript
-positions: { refetchInterval: 10_000, staleTime: 5_000 }
-devices:   { refetchInterval: 30_000, staleTime: 20_000 }
-reports:   { refetchInterval: false,  staleTime: 300_000 }
-events:    { refetchInterval: 30_000 }
-```
-
-### Map Rendering Thresholds
-```
-< 100 vehicles:  standard Leaflet divIcon markers
-100–500:         react-leaflet-cluster
-> 500:           canvas rendering or viewport filter
-Rule: never render > 200 visible markers simultaneously
-```
-
-### Bundle Rules
-```
-No new UI libraries beyond: React, Tailwind, Lucide, Leaflet, Recharts
-Lazy-load all pages (React.lazy + Suspense already in place)
-Images: WebP, max 200KB for any decorative asset
-Icons: Lucide only — no icon fonts, no SVG sprites
-```
-
----
-
-## 9. Accessibility
-
-- Touch targets: minimum 44×44px for all interactive elements
-- Color alone never conveys status — always paired with label or icon
-- Form inputs: always have associated `<label>` elements
-- Focus rings: styled to brand color, never removed (`outline: none` only when custom ring applied)
-- WCAG AA contrast for all text/background combinations
-- `prefers-reduced-motion`: skip all transitions when enabled
-
----
-
-## 10. Thai Language Rules
-
-- **Font**: IBM Plex Sans Thai — minimum 13px (Thai script needs size to be legible)
-- **Truncation**: Use `overflow: hidden` only on containers — never cut Thai mid-syllable with `…`
-- **Date/time**: Thai locale (`th-TH`), 24h format, Buddhist Era optional in settings
-- **Currency**: ฿ prefix, comma separators: `฿1,234.50`
-- **Numbers in UI**: Always Arabic numerals — never Thai numerals (ก, ข, ค) in data displays
-
----
-
-## 11. Dark Mode Guidelines
-
-Dark mode is **equal priority** — fleet managers work 24/7, truck dispatch is often at night.
-Dark mode is not "inverted light mode" — it has its own logic.
-
-```
-Background hierarchy in dark:
-  Page bg:     #171717  (deepest)
-  Card/panel:  #202124  (lifted)
-  Input/subtle: #292A2D (elevated)
-  Border:      #3C4043  (subtle separator)
-
-Status colors stay the same (green/amber/red — must pop on dark)
-Brand blue shifts to #8AB4F8 (lighter for dark backgrounds)
-```
-
----
-
-## 12. Component Variants by Usage Frequency
-
-**High-frequency (live map, dashboard) — performance critical:**
-- Minimize re-renders: memo markers, patch-only position updates
-- No console.log in production paths
-- Batch React Query updates from WebSocket
-
-**Medium-frequency (fleet list, alerts, reports):**
-- Standard React Query staleTime
-- Virtualize lists > 100 items (react-window or @tanstack/virtual)
-
-**Low-frequency (settings, team, admin):**
-- Full skeleton loading acceptable
-- No need to optimize re-renders
-
----
-
-## 13. Brand CI — Enforcement Rules (v3.0)
-
-### 13.1 Product Name
-```
-Correct:   "GPS Global Tracker"
-Incorrect: "Bellerox GPS", "GPS TMS", "Tracker App"
-
-Use in:
-  - Page titles: "GPS Global Tracker — แผนที่สด"
-  - Login card header
-  - Email report subjects: "รายงาน GPS Global Tracker"
-  - Error pages
-  - Browser tab: "GPS Global Tracker"
-```
-
-### 13.2 Logo Usage Rules
-```
-Available variants:
-  <Logo variant="dark" />   → black logo on white/light bg (login card, reports)
-  <Logo variant="light" />  → white logo on dark bg (sidebar, dark map overlay)
-  <Logo markOnly />         → icon only for collapsed sidebar (must be ≥ 24px)
-
-Minimum size: 24px height (icon), 80px height (full wordmark)
-Clear space: minimum 8px on all sides
-Never: stretch, recolor, add shadow, place on busy background without overlay
-```
-
-### 13.3 Voice & Tone — Extended
-```
-Context       Thai copy                          NOT this
-──────────────────────────────────────────────────────────
-Status        "ออนไลน์"                          "กำลังเชื่อมต่อ..."
-Error         "เชื่อมต่อไม่ได้ — ลองอีกครั้ง"      "เกิดข้อผิดพลาด"
-Success       "บันทึกแล้ว"                        "การดำเนินการเสร็จสมบูรณ์"
-CTA           "ดูแผนที่"                          "คลิกที่นี่เพื่อดูแผนที่"
-Delete        "ลบยานพาหนะ"                        "คุณแน่ใจหรือไม่?"
-Empty state   "ยังไม่มียานพาหนะ — เพิ่มตัวแรก"   "ไม่พบข้อมูล"
-```
-
-### 13.4 Favicon & App Icon
-```
-Use the "mark only" version of the logo at:
-  16×16: favicon
-  32×32: favicon HD
-  192×192: PWA icon (add to manifest.json)
-  512×512: PWA splash icon
-  
-Background: --brand (#1A73E8) filled square, icon white
-Border-radius for app icon: 22% of size (iOS-style)
-```
-
----
-
-## 14. Empty State Design System (v3.0)
-
-Every page that can have zero data MUST implement this pattern.
-
-### 14.1 Structure
-```
-[Icon — 48px, ink-4]
-[Title — 16px, weight 600, ink-2]
-[Subtitle — 14px, ink-3, max 2 lines]
-[CTA button — brand primary, optional]
-```
-
-### 14.2 Copy Templates
-```typescript
-const EMPTY_STATES = {
-  vehicles:    { title: 'ยังไม่มียานพาหนะ',     cta: 'เพิ่มยานพาหนะ' },
-  alerts:      { title: 'ไม่มีการแจ้งเตือน',     cta: undefined },
-  drivers:     { title: 'ยังไม่มีคนขับ',          cta: 'เพิ่มคนขับ' },
-  geofences:   { title: 'ยังไม่มีโซน',            cta: 'วาดโซนใหม่' },
-  reports:     { title: 'เลือกช่วงเวลาและกดค้นหา', cta: undefined },
-  maintenance: { title: 'ไม่มีงานที่กำหนด',        cta: 'เพิ่มรายการ' },
-  fuel:        { title: 'ยังไม่มีบันทึกเชื้อเพลิง', cta: 'เพิ่มบันทึก' },
-  notifications: { title: 'อ่านหมดแล้ว ✓',       cta: undefined },
-}
-```
-
----
-
-## 15. Error State Design System (v3.0)
-
-### 15.1 Error Levels
-```
-Level 1 — Inline field error:
-  Below input, 12px, --critical color, ← icon 12px
-  Appear on blur (not on keystroke)
-
-Level 2 — Toast notification:
-  Top-right, max-width 320px, 4s auto-dismiss
-  Error: red bg, Success: green bg, Warning: amber
-  Always include: what happened + what to do
-
-Level 3 — Section error (data fetch failed):
-  Replace skeleton/data area with:
-  [AlertTriangle icon, 32px, --warning]
-  "โหลดข้อมูลไม่ได้" (14px)
-  [ลองอีกครั้ง button]
-  Never show raw API error messages to users
-
-Level 4 — Full page error (auth/network):
-  Centered card, icon 64px, title, description, action button
-  Always offer a path back (Go to dashboard / Try again / Contact support)
-```
-
-### 15.2 Network Error Handling
-```typescript
-// Standard error message map — use these EXACT Thai strings
-const ERROR_MESSAGES = {
-  'ERR_NETWORK':      'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
-  '401':              'เซสชั่นหมดอายุ — กรุณาเข้าสู่ระบบใหม่',
-  '403':              'คุณไม่มีสิทธิ์เข้าถึงส่วนนี้',
-  '404':              'ไม่พบข้อมูลที่ร้องขอ',
-  '429':              'ส่งคำขอบ่อยเกินไป — รอสักครู่แล้วลองใหม่',
-  '500':              'เซิร์ฟเวอร์มีปัญหา — ทีมงานได้รับแจ้งแล้ว',
-  'timeout':          'การเชื่อมต่อใช้เวลานานเกินไป — ลองอีกครั้ง',
-}
-```
+The category default is a bright white dashboard with purple gradients, rounded cards, Inter as display, and "welcoming" empty states. **Rejected:** this is a 24/7 night-shift fleet operations tool — cool slate neutrals (not warm), squared industrial components (not rounded consumer UI), JetBrains Mono coordinate numerals as the hero (not decoration), dark mode mandatory (not optional), and status colors that survive low-light glare. No other GPS tracking brief would produce IBM Plex Sans Thai + tabular coordinate display + borderless color-fill inputs + operations-grade density. This design reads "professional logistics control center", never "consumer location app".
 
 ---
 

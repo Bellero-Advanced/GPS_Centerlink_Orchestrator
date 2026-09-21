@@ -78,27 +78,31 @@ CREATE INDEX idx_dlt_transmission_log_success_sent_at ON dlt_transmission_log(su
 
 -- ============================================================================
 -- RLS Policies
--- Following existing pattern from 001_cl_tenants.sql
+-- ============================================================================
+-- IMPORTANT: This app authenticates against TRACCAR (Basic auth), NOT Supabase
+-- Auth. The browser talks to Supabase with the ANON key only — there is no
+-- 'authenticated' Supabase session. Policies therefore must grant the `anon`
+-- role, matching the existing cl_tenants / cl_payments pattern.
+-- (An earlier version used `authenticated` only → every request returned 401.)
 -- ============================================================================
 
 -- Enable RLS
 ALTER TABLE dlt_manual_overrides ENABLE ROW LEVEL SECURITY;
 ALTER TABLE dlt_transmission_log ENABLE ROW LEVEL SECURITY;
 
--- Policy 1: authenticated users can read
-CREATE POLICY authenticated_read_overrides ON dlt_manual_overrides
-  FOR SELECT TO authenticated USING (true);
+-- Policy 1: anon + authenticated can read
+CREATE POLICY public_read_overrides ON dlt_manual_overrides
+  FOR SELECT TO anon, authenticated USING (true);
 
-CREATE POLICY authenticated_read_log ON dlt_transmission_log
-  FOR SELECT TO authenticated USING (true);
+CREATE POLICY public_read_log ON dlt_transmission_log
+  FOR SELECT TO anon, authenticated USING (true);
 
--- Policy 1b: authenticated users can create + update overrides
--- (the frontend writes overrides directly with the authenticated client)
-CREATE POLICY authenticated_insert_overrides ON dlt_manual_overrides
-  FOR INSERT TO authenticated WITH CHECK (true);
+-- Policy 1b: anon + authenticated can create + update overrides
+CREATE POLICY public_insert_overrides ON dlt_manual_overrides
+  FOR INSERT TO anon, authenticated WITH CHECK (true);
 
-CREATE POLICY authenticated_update_overrides ON dlt_manual_overrides
-  FOR UPDATE TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY public_update_overrides ON dlt_manual_overrides
+  FOR UPDATE TO anon, authenticated USING (true) WITH CHECK (true);
 
 -- Policy 2: service_role can do everything (Edge Function writes)
 CREATE POLICY service_role_all_overrides ON dlt_manual_overrides

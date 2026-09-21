@@ -1,5 +1,30 @@
 # 📜 Changelog
 
+## 2026-09-21 — DLT batch 400 (stale) + Supabase 401 (RLS) — FIXED
+
+**Bug #1 — DLT 400 "utc_ts not real-time", received_records: 0**
+- Root cause: client freshness gate WIDER than DLT's hard limit. DLT rejects
+  any record >10min old and fails the WHOLE batch. `classifyFreshness` used
+  `FRESH_WINDOW_MS = 15min` → a 10–15min record (the `indx: 6` in the error)
+  slipped through and 400'd everything.
+- Fix: `dltService.ts` FRESH_WINDOW_MS 15→9min, FUTURE_CAP_MS 10→5min.
+- Proven: 12min record now → 'stale'; no DLT-rejected age passes the gate.
+
+**Bug #2 — Supabase 401 on /rest/v1/dlt_manual_overrides**
+- Root cause: app auths via **Traccar Basic auth, NOT Supabase Auth** — there
+  is no Supabase session. RLS policies deployed 2026-09-20 granted only
+  `authenticated`, so anon-key requests → 401. Create hook also called
+  `supabase.auth.getUser()` (no session).
+- Fix: `created_by` now from Traccar `authStore` (currentActor()); DB RLS
+  policies → `anon, authenticated` (matches cl_tenants/cl_payments); migration
+  file synced.
+- Proven via anon-key REST: SELECT 200, INSERT 201, UPDATE 200, generated
+  `is_active` flips correctly, test rows cleaned.
+- Commits: web d3f0d32 · parent 8b801b9 · CI green ✅
+
+**LESSON:** When wiring Supabase into this app, RLS must grant `anon` — the
+frontend never holds a Supabase JWT. Don't copy `authenticated`-only policies.
+
 ## 2026-09-17 — Incident: login/no data after container recreate (fixed)
 
 **Root cause:** frontend built with `VITE_TRACCAR_API_URL=https://traccar.gps.bellerox.com`

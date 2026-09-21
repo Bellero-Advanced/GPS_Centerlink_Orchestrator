@@ -106,7 +106,11 @@ function buildManualLocation(
   seq: number,
 ): DltLocation {
   const unitId = buildDltUnitId(device, venderId);
-  const license = unitId.padEnd(80, "0");
+
+  // Use licensePlate from device attributes (must contain A-Z for DLT validation)
+  const licensePlate = device.attributes?.licensePlate?.trim() || "";
+  const license = licensePlate.padEnd(80, " ");
+
   const now = new Date().toISOString();
 
   // Map status to engine_status
@@ -168,6 +172,50 @@ function validateLocation(loc: DltLocation): string | null {
 
 Deno.serve(async (req: Request) => {
   const startTime = Date.now();
+
+  // Debug endpoint - list all devices
+  const url = new URL(req.url);
+  if (url.searchParams.get('debug') === 'devices') {
+    const WORKER_URL = Deno.env.get("WORKER_URL");
+    const TRACCAR_EMAIL = Deno.env.get("TRACCAR_EMAIL");
+    const TRACCAR_PASSWORD = Deno.env.get("TRACCAR_PASSWORD");
+
+    if (!WORKER_URL || !TRACCAR_EMAIL || !TRACCAR_PASSWORD) {
+      return new Response(JSON.stringify({ error: "Missing env vars" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const traccarAuth = btoa(`${TRACCAR_EMAIL}:${TRACCAR_PASSWORD}`);
+    const devicesRes = await fetch(`${WORKER_URL}/api/devices`, {
+      headers: { Authorization: `Basic ${traccarAuth}` },
+    });
+
+    if (!devicesRes.ok) {
+      return new Response(JSON.stringify({
+        error: "Devices fetch failed",
+        status: devicesRes.status,
+        text: await devicesRes.text(),
+      }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const devices: TraccarDevice[] = await devicesRes.json();
+    return new Response(JSON.stringify({
+      total: devices.length,
+      devices: devices.map((d) => ({
+        id: d.id,
+        uniqueId: d.uniqueId,
+        name: (d as any).name || "N/A",
+      })),
+    }), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   console.log("=== send-dlt-batch: START ===");
 
   try {
@@ -194,6 +242,15 @@ Deno.serve(async (req: Request) => {
     if (overridesError) throw overridesError;
 
     console.log(`Found ${overrides?.length || 0} active manual overrides`);
+    if (overrides && overrides.length > 0) {
+      console.log("Override details:", overrides.map(o => ({
+        id: o.id,
+        device_id: o.device_id,
+        status: o.status,
+        latitude: o.latitude,
+        longitude: o.longitude,
+      })));
+    }
 
     if (!overrides || overrides.length === 0) {
       console.log("No active overrides, skipping batch");
@@ -203,21 +260,36 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    // Step 2: Read DLT config from Traccar user (id=1)
+    // Step 2: Read DLT config from authenticated Traccar user
+    // NOTE: Edge Function must use WORKER_URL (not TRACCAR_API_URL) because:
+    // - Edge Function runs on Supabase (not Cloudflare IP)
+    // - Nginx only accepts Cloudflare IPs (SEC-002)
+    // - Worker proxies requests with valid CF headers
+
     const traccarAuth = btoa(`${TRACCAR_EMAIL}:${TRACCAR_PASSWORD}`);
-    const userRes = await fetch(`${TRACCAR_API_URL}/api/users/1`, {
+
+    // Get all users and find the one matching TRACCAR_EMAIL
+    const usersRes = await fetch(`${WORKER_URL}/api/users`, {
       headers: { Authorization: `Basic ${traccarAuth}` },
     });
 
-    if (!userRes.ok) {
-      throw new Error(`Traccar user fetch failed: ${userRes.status}`);
+    if (!usersRes.ok) {
+      throw new Error(`Traccar users fetch failed: ${usersRes.status}`);
     }
 
-    const user = await userRes.json();
-    const dltConfigStr = user.attributes?.dltConfig;
+    const allUsers = await usersRes.json();
+    const currentUser = allUsers.find((u: any) => u.email === TRACCAR_EMAIL);
+
+    if (!currentUser) {
+      throw new Error(`User ${TRACCAR_EMAIL} not found in Traccar`);
+    }
+
+    console.log(`Using DLT config from: ${currentUser.email} (ID: ${currentUser.id})`);
+
+    const dltConfigStr = currentUser.attributes?.dltConfig;
 
     if (!dltConfigStr) {
-      throw new Error("DLT config not found in user attributes");
+      throw new Error(`DLT config not found in user ${currentUser.email} attributes`);
     }
 
     const dltConfig: DltConfig = JSON.parse(dltConfigStr);
@@ -225,7 +297,7 @@ Deno.serve(async (req: Request) => {
 
     // Step 3: Fetch device details for all override devices
     const deviceIds = overrides.map((o) => o.device_id);
-    const devicesRes = await fetch(`${TRACCAR_API_URL}/api/devices`, {
+    const devicesRes = await fetch(`${WORKER_URL}/api/devices`, {
       headers: { Authorization: `Basic ${traccarAuth}` },
     });
 
@@ -236,9 +308,26 @@ Deno.serve(async (req: Request) => {
     const allDevices: TraccarDevice[] = await devicesRes.json();
     const deviceMap = new Map(allDevices.map((d) => [d.id, d]));
 
+    console.log(`Fetched ${allDevices.length} devices from Traccar`);
+    console.log(`DeviceMap has ${deviceMap.size} entries`);
+
+    // Check if our override device exists
+    const overrideDeviceIds = overrides.map(o => o.device_id);
+    console.log(`Looking for devices: ${overrideDeviceIds.join(', ')}`);
+
+    overrideDeviceIds.forEach(id => {
+      const device = deviceMap.get(id);
+      if (device) {
+        console.log(`✅ Device ${id} found: ${device.name}`);
+      } else {
+        console.log(`❌ Device ${id} NOT FOUND in deviceMap`);
+      }
+    });
+
     // Step 4: Build manual locations
     const locations: DltLocation[] = [];
     const manualDeviceIds: number[] = [];
+    const validationErrors: Array<{ deviceId: number; deviceName: string; error: string }> = [];
     let seq = Math.floor(Math.random() * 1000);
 
     for (const override of overrides) {
@@ -249,23 +338,65 @@ Deno.serve(async (req: Request) => {
       }
 
       const location = buildManualLocation(override, device, dltConfig.venderId, seq++);
+
+      console.log(`Built location for device ${device.id} (${device.name}):`, {
+        unit_id: location.unit_id,
+        license: location.license.substring(0, 20) + '...',
+        lat: location.lat,
+        lon: location.lon,
+      });
+
       const validationError = validateLocation(location);
 
       if (validationError) {
-        console.warn(`Invalid location for device ${override.device_id}: ${validationError}`);
+        const errorDetail = {
+          deviceId: override.device_id,
+          deviceName: device.name,
+          error: validationError,
+        };
+        validationErrors.push(errorDetail);
+        console.warn(`❌ Invalid location for device ${override.device_id} (${device.name}): ${validationError}`);
         continue;
       }
 
+      console.log(`✅ Valid location for device ${device.id}`);
       locations.push(location);
       manualDeviceIds.push(override.device_id);
     }
 
     if (locations.length === 0) {
       console.log("No valid locations to send");
-      return new Response(JSON.stringify({ message: "No valid locations" }), {
-        headers: { "Content-Type": "application/json" },
-        status: 200,
-      });
+
+      // Debug info for troubleshooting
+      const debugInfo = {
+        totalOverrides: overrides.length,
+        overrides: overrides.map(o => ({
+          id: o.id,
+          device_id: o.device_id,
+          status: o.status,
+          lat: o.latitude,
+          lon: o.longitude,
+        })),
+        totalDevices: allDevices.length,
+        deviceMapSize: deviceMap.size,
+        deviceCheckResults: overrides.map(o => ({
+          device_id: o.device_id,
+          found: deviceMap.has(o.device_id),
+          deviceName: deviceMap.get(o.device_id)?.name || 'N/A',
+        })),
+        validationErrors,
+      };
+
+      return new Response(
+        JSON.stringify({
+          message: "No valid locations",
+          debug: debugInfo,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+          status: 400,
+        }
+      );
     }
 
     // Step 5: Build DLT payload

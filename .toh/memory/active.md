@@ -30,4 +30,11 @@
 - `cron.job_run_details` → succeeded every minute
 - `net._http_response` → status 200
 
-**Next Work:** (ไม่มีงานค้าง — ระบบ DLT Manual พร้อมใช้งานแล้ว รอคำสั่งใหม่)
+**Just Completed:** 2026-09-21 16:45 ICT — DLT Manual page design polish ✅
+- Full-screen layout (เอา container padding ออก)
+- Color-fill UI (ใช้ fill-block pattern + surface tokens แทน border cards)
+- rounded-sm ทุก component (tabs, inputs, buttons, tables)
+- SearchSelect สำหรับ dropdown รถ (ค้นหาได้ + แสดง IMEI)
+- Commit: `08fcbcd` · CI: green ✅ · Deploy: Cloudflare Pages success
+
+**Next Work:** (ไม่มีงานค้าง — รอคำสั่งใหม่)

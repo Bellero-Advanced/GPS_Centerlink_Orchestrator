@@ -16,24 +16,40 @@ CREATE TABLE IF NOT EXISTS dlt_manual_overrides (
   speed_kmh int NOT NULL DEFAULT 0 CHECK (speed_kmh BETWEEN 0 AND 200),
   course int NOT NULL DEFAULT 0 CHECK (course BETWEEN 0 AND 359),
   reason text NOT NULL,
-  created_by text NOT NULL,
+  created_by text NOT NULL DEFAULT 'system',
   created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now(),
   stopped_at timestamptz,
   is_active boolean GENERATED ALWAYS AS (stopped_at IS NULL) STORED
 );
 
--- Foreign key to tc_devices (no cascade - device deletion is rare, manual check safer)
-ALTER TABLE dlt_manual_overrides
-  ADD CONSTRAINT fk_device
-  FOREIGN KEY (device_id) REFERENCES tc_devices(id);
+-- NOTE: device_id intentionally has NO foreign key.
+-- Traccar devices live in a separate PostgreSQL database (tc_devices),
+-- not in Supabase. Integrity is enforced at the application/Edge Function
+-- layer, which resolves device_id → IMEI via the Traccar API.
 
 COMMENT ON TABLE dlt_manual_overrides IS 'Manual GPS position overrides for DLT submission when device is broken';
 COMMENT ON COLUMN dlt_manual_overrides.is_active IS 'Generated: true when stopped_at IS NULL';
 COMMENT ON COLUMN dlt_manual_overrides.reason IS 'Why override was created (e.g., "GPS box broken, waiting for service team")';
+COMMENT ON COLUMN dlt_manual_overrides.created_by IS 'User who created the override (defaults to system for service-role writes)';
 
 -- Indexes for common queries
-CREATE INDEX idx_dlt_manual_overrides_device_active ON dlt_manual_overrides(device_id, is_active);
-CREATE INDEX idx_dlt_manual_overrides_created_at ON dlt_manual_overrides(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_dlt_manual_overrides_device_active ON dlt_manual_overrides(device_id, is_active);
+CREATE INDEX IF NOT EXISTS idx_dlt_manual_overrides_created_at ON dlt_manual_overrides(created_at DESC);
+
+-- Auto-update updated_at on row changes
+CREATE OR REPLACE FUNCTION set_dlt_override_updated_at()
+RETURNS trigger AS $$
+BEGIN
+  NEW.updated_at := now();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trg_dlt_override_updated_at ON dlt_manual_overrides;
+CREATE TRIGGER trg_dlt_override_updated_at
+  BEFORE UPDATE ON dlt_manual_overrides
+  FOR EACH ROW EXECUTE FUNCTION set_dlt_override_updated_at();
 
 -- ============================================================================
 -- Table 2: dlt_transmission_log
@@ -75,6 +91,14 @@ CREATE POLICY authenticated_read_overrides ON dlt_manual_overrides
 
 CREATE POLICY authenticated_read_log ON dlt_transmission_log
   FOR SELECT TO authenticated USING (true);
+
+-- Policy 1b: authenticated users can create + update overrides
+-- (the frontend writes overrides directly with the authenticated client)
+CREATE POLICY authenticated_insert_overrides ON dlt_manual_overrides
+  FOR INSERT TO authenticated WITH CHECK (true);
+
+CREATE POLICY authenticated_update_overrides ON dlt_manual_overrides
+  FOR UPDATE TO authenticated USING (true) WITH CHECK (true);
 
 -- Policy 2: service_role can do everything (Edge Function writes)
 CREATE POLICY service_role_all_overrides ON dlt_manual_overrides

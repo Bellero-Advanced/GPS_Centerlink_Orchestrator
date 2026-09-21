@@ -13,10 +13,17 @@
 -- The key is found in Supabase Dashboard → Settings → API → service_role key
 -- ============================================================================
 
--- Enable pg_cron extension
-CREATE EXTENSION IF NOT EXISTS pg_cron;
+-- Enable pg_cron + pg_net extensions
+-- (pg_net provides net.http_post used by the scheduled job)
+CREATE EXTENSION IF NOT EXISTS pg_cron WITH SCHEMA pg_catalog;
+CREATE EXTENSION IF NOT EXISTS pg_net WITH SCHEMA extensions;
 
 -- Schedule send-dlt-batch to run every 1 minute
+-- Idempotent: drop any prior job with the same name first
+SELECT cron.unschedule(jobid)
+  FROM cron.job
+  WHERE jobname = 'send-dlt-batch-60s';
+
 SELECT cron.schedule(
   'send-dlt-batch-60s',
   '*/1 * * * *',  -- Every 1 minute (cron format)

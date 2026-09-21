@@ -1,32 +1,33 @@
 # 🎯 Active Work
 
-**Status:** ✅ ALL CLEAR — CI GREEN
+**Status:** ✅ DLT Manual Override — DEPLOYED TO PRODUCTION
 
-**Last Completed:** 2026-09-21 14:10 ICT
+**Last Completed:** 2026-09-21 15:30 ICT
 
-**What Was Done:**
-- ✅ Fixed all TypeScript errors in DLT Manual Override system
-- ✅ Type definitions: Added CreateOverrideInput, UpdateOverrideInput exports
-- ✅ Null safety: Added Supabase client checks in hooks
-- ✅ TraccarDevice types: Fixed phone, model, contact, category to match strict types
-- ✅ Removed unused variables (REDIS_URL, DltManualOverride import)
-- ✅ CI/CD: Build passed, deployed to Cloudflare Pages
-- ✅ Commits:
-  - 8e08e14: Stage DLT files (functions, migrations, checklist)
-  - b0507ed: Fix TypeScript errors
-  - 108b09c: Bump web submodule to main repo
+**What Was Done (full deployment):**
+- ✅ Migrations applied to Supabase prod (zenfuxlykduaxrsnhmlq):
+  - `dlt_manual_overrides` + `dlt_transmission_log` tables created
+  - Fixed: dropped invalid FK to `tc_devices` (Traccar is a separate DB)
+  - Fixed: added `updated_at` column + trigger, `created_by` default, RLS write policies
+  - Fixed: `pg_net` extension added (was missing — cron's net.http_post needs it)
+- ✅ Cron job `send-dlt-batch-60s` active, fires every 60s → HTTP 200 confirmed
+- ✅ Edge Functions deployed (all ACTIVE):
+  - `send-dlt-batch` (--no-verify-jwt, called by cron)
+  - `overdue-checker`
+  - `payment-reconcile`
+- ✅ Frontend aligned with real schema (commit 4076dfb):
+  - useCreateOverride: removed non-existent `speed` col + GENERATED `is_active` write, added `created_by`
+  - useStopOverride: only sets `stopped_at` (is_active is generated)
+  - useTransmissionHistory: fixed col names `batch`/`response`
+- ✅ CI green: tsc + lint + build pass, deployed to Cloudflare Pages
 
-**Production Status:**
-- Web App: https://gps.centerlink.co.th (deployed ✅)
-- CI Status: All checks passing ✅
-- TypeScript: Zero errors ✅
-- ESLint: Warnings only (not blocking) ✅
+**Migration tracking note:** billing/payment migrations were applied out-of-band
+(no tracking table). Backfilled `supabase_migrations.schema_migrations` with those
+4 versions so `db push` only applies new ones.
 
-**Deployment Pending:**
-1. Run SQL schema in Supabase SQL Editor:
-   - `20260920000000_dlt_manual_override.sql`
-   - `20260920000001_dlt_cron_job.sql`
-2. Deploy Edge Function: `supabase functions deploy send-dlt-batch`
-3. Test workflow: สร้าง override → รอ 60 วิ → ดู history
+**Verified live:**
+- `curl POST send-dlt-batch` → `{"message":"No active overrides"}` HTTP 200
+- `cron.job_run_details` → succeeded every minute
+- `net._http_response` → status 200
 
-**Next Work:** (ไม่มีงานค้าง — รอคำสั่งใหม่)
+**Next Work:** (ไม่มีงานค้าง — ระบบ DLT Manual พร้อมใช้งานแล้ว รอคำสั่งใหม่)

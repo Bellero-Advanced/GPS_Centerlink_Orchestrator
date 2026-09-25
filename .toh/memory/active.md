@@ -37,4 +37,14 @@
 - SearchSelect สำหรับ dropdown รถ (ค้นหาได้ + แสดง IMEI)
 - Commit: `08fcbcd` · CI: green ✅ · Deploy: Cloudflare Pages success
 
-**Next Work:** (ไม่มีงานค้าง — รอคำสั่งใหม่)
+**Just Completed:** 2026-09-25 — Timezone +7h fix ✅ (Traccar per-device tz + 3.9M-row backfill + web d43004a)
+
+**In Progress:** 2026-09-25 — TimescaleDB reports plan (`.toh/plan.md`)
+- Done + live: geocoder.onRequest=false (trips 7d 96s→0.2s) · nginx reports rate-limit per real IP · Redis removed · TimescaleDB archive tc_positions_ts (3.5GB→314MB) + sync job · fleet schema + api-gateway /api/fleet live · log rotation
+- Running: `fleet.refresh` backfill on VM (/tmp/bf.log) ~75/213 devices
+- **Waiting to push:** web 0a89525 (reports→/api/fleet + mobile nav) — push ONLY after backfill done, else reports empty for unbackfilled vehicles
+- Remaining: T304 tc_events dup indexes · T603 CI/deploy/browser check
+
+**Next Work:** monitor `tz-audit.sql` weekly · 10 pre-existing failing web tests (vehicleStatus/FloatingVehiclePanel/positionOwnership)
+
+**Plan Status:** completed ✅ (`.toh/plan.md`) · แผนเก่า → `archive/plan-2026-09-24-delete-user.md`

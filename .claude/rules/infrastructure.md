@@ -1,53 +1,41 @@
 # Infrastructure & Deployment — Bellerox GPS
-# Current: 500 vehicles (optimized) → Scale path: 1,000 → 5,000 → 20,000+
+# Current: ~290 devices on e2-small → Scale path: 1,000 → 5,000 → 20,000+
 # Region: GCP asia-southeast1 (Singapore)
 
-## Current Production Architecture (500 vehicles — OPTIMIZED)
+## Current Production Architecture (verified on the VM 2026-09-25)
 
-### GCP Resources (Cost-Optimized)
-
-| Service | Purpose | Config | Cost/mo |
-|---------|---------|--------|---------|
-| Compute Engine | Traccar + PostgreSQL + Redis | e2-standard-2 (2 vCPU / 8 GB RAM) | **$50** |
-| Persistent Disk | Data + logs | 50 GB SSD | $2 |
-| Egress | API traffic | ~300 GB/mo (with cache) | $60 |
-| **Total** | | | **$112/mo** |
-
-**Previous config (over-provisioned):** e2-standard-4 ($97) + higher egress ($80) = **$179/mo**  
-**Savings: $67/month ($804/year) = 37% reduction** ✅
-
-### Single-Instance Architecture (Current: 500 vehicles)
+| Item | Real value |
+|---|---|
+| VM | `bellerox-gps-vm`, **e2-small (2 vCPU / 2 GB RAM)**, asia-southeast1-a, disk `bellerox-gps-vm-balanced` 50 GB |
+| Compose | `/opt/bellerox-gps/infrastructure/docker/docker-compose.yml` (docker-compose v1) — repo `infrastructure/docker/docker-compose.yml` mirrors it |
+| Containers | centerlink-postgres (**timescale/timescaledb:2.30.1-pg16**), centerlink-pgbouncer, centerlink-traccar 6.14.5, centerlink-nginx, api-gateway (`bellerox-gps-web/api-gateway`), monitoring (prometheus, grafana, node/postgres exporters) |
+| Redis | **none** — removed 2026-09-25 (nothing ever used it). No Memorystore in terraform |
+| Logs | json-file 20m × 3 per container (nginx log had grown to 1.8 GB) |
 
 ```
-GPS Devices (500)
-    ↓ TCP (ports 5001-5093)
-GCP VM e2-standard-2 (8 GB RAM)
-├─→ Traccar (2 GB heap)          ← GPS protocol decode + REST API
-├─→ PostgreSQL (512 MB shared)   ← Position storage + TimescaleDB
-├─→ Redis (64 MB cache)          ← Session + position cache
-├─→ PgBouncer                    ← Connection pooling
-└─→ Nginx (SSL + cache)          ← Reports cache (5 min) + API proxy
-    ↓ HTTPS
-Cloudflare Worker (CORS proxy)
-    ↓
-Web App (React + React Query 30s polling)
+GPS → Traccar → tc_positions (plain, monthly partitions — Traccar's working table)
+                   │ fleet.sync_archive job, every 1 min
+                   ▼
+      tc_positions_ts  TimescaleDB hypertable, compressed after 14 days, kept FOREVER
+                   │ fleet.refresh job, every 5 min (Traccar NewMotionProcessor port)
+                   ▼
+      fleet.segments (trips/stops per vehicle) · fleet.daily (cagg per Bangkok day)
+                   ▼
+      api-gateway /api/fleet/trips|stops|daily  (permission = caller's Traccar /api/devices)
+                   ▼
+      nginx `location ^~ /api/fleet/` → CF Worker api.centerlink.co.th → web Reports
 ```
 
-**Memory allocation (8 GB total):**
-- OS + Docker: 400 MB
-- PostgreSQL: 1,200 MB (512 MB shared_buffers + connections)
-- Traccar JVM: 2,500 MB (2 GB heap + 500 MB native)
-- Redis: 80 MB (64 MB data + overhead)
-- Nginx: 256 MB (reports cache enabled)
-- PgBouncer: 64 MB
-- **Headroom: 3,100 MB (38%)** ← Safe for traffic spikes!
-
-**Performance:**
-- API calls: ~200/min (reduced 33% via cache + polling tuning)
-- Dashboard load: 500ms (37% faster with cache hits)
-- Position lag: < 1 second (WebSocket primary + 30s fallback)
-- Memory usage: 60% avg (safe headroom)
-- CPU usage: 40-50% avg
+**Rules learned the hard way**
+- **Never point Traccar at the compressed hypertable.** Traccar reads positions by id with no
+  time bound (`tc_devices.positionid`, `?id=`) → every compressed chunk is opened → load 43,
+  ingestion stalled (tried + rolled back 2026-09-25).
+- `geocoder.onRequest` must stay **false**: with Photon it made every trip/stop cost ~1.2 s
+  (trips 7 days = 96 s). The web app geocodes via the Worker.
+- nginx is behind Cloudflare: key rate limits on `$http_cf_connecting_ip`, not `$binary_remote_addr`.
+- Retention cron is disabled — positions are kept forever. Do not re-enable `retention.sh`.
+- Postgres needs `shm_size: 256m`; large jobs: `PGOPTIONS=-cmax_parallel_workers_per_gather=0`,
+  run detached with nohup (IAP SSH drops on long output — write to a file, then scp it).
 
 ---
 
@@ -237,24 +225,9 @@ CREATE INDEX CONCURRENTLY idx_tc_events_device_time
   ON tc_events (deviceid, eventtime DESC);
 ```
 
-### Redis Cluster (Cache + Pub/Sub)
+### Redis
 
-**File:** `infrastructure/docker/docker-compose.scale.yml`
-
-**Architecture:**
-- 1 master (read/write)
-- 2 replicas (read-only, automatic failover)
-- 512 MB per instance (1.5 GB total)
-
-**Use Cases:**
-- **Position cache:** Latest position per device (< 10ms read)
-- **Pub/Sub:** Broadcast position updates to all Traccar instances (WebSocket coordination)
-
-**Implementation Status:**
-- ✅ Redis cluster deployed
-- 📋 Position cache: Strategy documented, requires Traccar plugin (optional)
-- 📋 Pub/Sub: Strategy documented, requires Traccar plugin (optional)
-- 🎯 **Recommendation:** Start with Nginx cache + HAProxy sticky sessions (no code changes)
+Not used. Removed 2026-09-25 (container, exporter, Memorystore terraform, report-processor worker). Precomputed tables in TimescaleDB replace caching.
 
 ### Connection Pool Configuration
 

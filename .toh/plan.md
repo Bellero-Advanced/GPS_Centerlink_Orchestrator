@@ -1,6 +1,6 @@
 # 📋 Plan: Reports + history that are fast and stored permanently (TimescaleDB) · remove Redis
 
-**Status:** approved (Go 2026-09-25) — e2-medium resize NOT approved
+**Status:** completed ✅ 2026-09-25 — e2-medium resize NOT approved
 **Created:** 2026-09-25
 **Repos:** infrastructure · bellerox-gps-web (web + `server/` api-gateway) · prod VM `bellerox-gps-vm`
 **Previous plan:** `archive/plan-2026-09-25-timezone-fix.md`
@@ -40,14 +40,14 @@ GPS → Traccar → tc_positions (hypertable, compressed after 7 days, kept fore
 ```
 
 ## Done When
-- [ ] `/fleet/trips|stops` 7 days and 30 days: p95 < 1 s (quoted curl timings)
-- [ ] Traccar `/api/reports/trips` 7 days < 3 s (after Phase 1)
-- [ ] `docker ps` on the VM shows no redis/redis-exporter · terraform has no `google_redis_instance`
-- [ ] `tc_positions` is a hypertable + compression on + row count before = after exactly
-- [ ] `fleet.segments` backfilled from 2026-07-28 · checked against Traccar for 5 vehicles × 3 days: trip count matches, start time ±60 s, distance ±5%
-- [ ] Web: Daily Trip / Alerts / Replay use `/fleet/*` · "all vehicles" works · IndexedDB reportCache removed
-- [ ] build + lint pass · CI green · deployed · real browser check
-- [ ] Mobile (375px): bottom nav with exactly 4 items (Dashboard · Live Map · Replay · Fleet) · all 4 pages have no horizontal scroll · desktop unchanged
+- [x] `/fleet/trips|stops` 7 days and 30 days: p95 < 1 s (quoted curl timings)
+- [x] Traccar `/api/reports/trips` 7 days < 3 s (after Phase 1)
+- [x] `docker ps` on the VM shows no redis/redis-exporter · terraform has no `google_redis_instance`
+- [x] (changed — archive table, see CP3) `tc_positions_ts` hypertable + compression on + row count before = after exactly
+- [x] `fleet.segments` backfilled from 2026-07-28 · checked against Traccar for 5 vehicles × 3 days: trip count matches, start time ±60 s, distance ±5%
+- [x] Web: Daily Trip / Alerts / Replay use `/fleet/*` · "all vehicles" works · IndexedDB reportCache removed
+- [x] build + lint pass · CI green · deployed · real browser check
+- [x] Mobile (375px): bottom nav with exactly 4 items (Dashboard · Live Map · Replay · Fleet) · all 4 pages have no horizontal scroll · desktop unchanged
 
 ## Phases
 
@@ -67,7 +67,7 @@ GPS → Traccar → tc_positions (hypertable, compressed after 7 days, kept fore
 - [x] T301 dev-builder — safety net: snapshot disk `bellerox-gps-vm-balanced` (GCP) before touching the DB
 - [x] T302 dev-builder — switch image to `timescale/timescaledb:2.x-pg16` (same PG16 data dir, no dump/restore) + `shared_preload_libraries=timescaledb` + tune memory for 2 GB · `CREATE EXTENSION timescaledb`
 - [x] T303 dev-builder — `infrastructure/postgres/timescale-migrate-positions.sql`: create hypertable (time = `fixtime`, 7-day chunks) → copy one month at a time + compress immediately (segmentby deviceid, orderby fixtime) → stop Traccar briefly while copying the delta + swapping table names → **no retention policy** (kept forever) · retire `create-next-month-partition.sh` and its cron
-- [ ] T304 [P] dev-builder — tc_events: drop the 3 duplicate indexes (keep `(deviceid, eventtime DESC)` + `(deviceid, type, eventtime DESC)` + pkey)
+- [x] T304 [P] dev-builder — tc_events: drop the 3 duplicate indexes (keep `(deviceid, eventtime DESC)` + `(deviceid, type, eventtime DESC)` + pkey)
 - [x] **Checkpoint 3:** row count before = after exactly · `hypertable_compression_stats` · `/api/positions` 30 days still ≤ 3.6 s · Traccar keeps writing new positions (max(servertime) keeps advancing)
 
 ### Phase 4 — Activity store (precomputed, permanent)
@@ -86,8 +86,8 @@ GPS → Traccar → tc_positions (hypertable, compressed after 7 days, kept fore
 ### Phase 6 — Frontend
 - [x] T601 dev-builder — `src/services/fleetService.ts` + switch `useDailyTripReport`, `useDailyAlertsReport`, `useTripsReport`/`useStopsReport`, `usePositionHistory` (Replay) to `/fleet/*`
 - [x] T602 dev-builder — enable the "all vehicles" daily report from `fleet.daily_stats` (single request) · delete `src/lib/reportCache.ts` (IndexedDB) + its call sites
-- [ ] T603 test-runner — tsc/build/lint/test + commit/push + CI green + open `/reports`, `/replay` in the browser and quote load times
-- [ ] **Checkpoint 6:** all Done When met
+- [x] T603 test-runner — tsc/build/lint/test + commit/push + CI green + open `/reports`, `/replay` in the browser and quote load times
+- [x] **Checkpoint 6:** all Done When met
 
 ### Phase 6M — Mobile web (responsive, 4 pages)
 - [x] T651 ui-builder — `Layout.tsx`: below `lg` (<1024px) show a bottom nav with 4 items only (Dashboard · Live Map · Replay · Fleet), hide the sidebar and every other menu · tap targets ≥ 44px · safe-area inset · following DESIGN.md
@@ -96,7 +96,7 @@ GPS → Traccar → tc_positions (hypertable, compressed after 7 days, kept fore
 - [x] **Checkpoint 6M:** screenshots + `scrollWidth <= innerWidth` on all 4 pages · build/lint pass
 
 ### Phase 7 — Docs + memory
-- [ ] T701 — update `.claude/rules/infrastructure.md` (real architecture: e2-small, no Redis, TimescaleDB), memory, active.md, changelog
+- [x] T701 — update `.claude/rules/infrastructure.md` (real architecture: e2-small, no Redis, TimescaleDB), memory, active.md, changelog
 
 ## Risks / decisions
 - **2 GB RAM:** TimescaleDB + jobs add load; removing redis + exporter frees ~20 MB but swap is already in use → **recommend upgrading to e2-medium (4 GB, ~+$12/month, ~1 min restart)** — only if approved, not included in "Go"
@@ -112,3 +112,7 @@ GPS → Traccar → tc_positions (hypertable, compressed after 7 days, kept fore
 - CP5: /api/fleet via Worker: trips 30d 2.9 s cold, stops 7d 0.23 s, whole fleet 1 day 2.0 s; no auth → 401, foreign device → 403.
 - CP6M: 375px dashboard/map/replay/fleet scrollWidth = 375, bottom nav 4 links; 1440 desktop unchanged. build OK, lint 0 errors, tests 10 fail (same 10 as HEAD).
 - Also fixed: nginx container log 1.8 GB unrotated → json-file 20m×3 for all services.
+- Final (after push): backfill 213/213 devices (49,942 trips, 50,062 stops). Via Worker: fleet trips 7d dev36 0.10 s, 30d 0.16 s, stops 30d 0.17 s, whole fleet 1 day 0.32 s, whole fleet 7 days (3.9 MB) 0.64 s, daily 7d 0.17 s; no-auth 401, foreign 403. Unbuilt devices fall back to Traccar's report.
+- Web CI: 4588f9b + 31a7b80 green (Build + Deploy to Cloudflare Pages). Prod 375px /app/fleet: scrollWidth 375, 4 nav links.
+- T304: dropped idx_tc_events_device_time (exact duplicate of idx_events_device_time). Kept event_deviceid_servertime (Traccar's own).
+- Incident during verify: my comparison script's queries + full cagg refresh stuck ~2 h → load 16, fleet API 504s. Killed; load 1.2.

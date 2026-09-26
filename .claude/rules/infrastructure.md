@@ -6,7 +6,7 @@
 
 | Item | Real value |
 |---|---|
-| VM | `bellerox-gps-vm`, **e2-small (2 vCPU / 2 GB RAM)**, asia-southeast1-a, disk `bellerox-gps-vm-balanced` 50 GB |
+| VM | `bellerox-gps-vm`, **e2-medium (2 vCPU / 4 GB RAM, since 2026-09-26)**, SA scope storage-rw (daily pg_dump → gs://bellerox-gps-backups/daily), asia-southeast1-a, disk `bellerox-gps-vm-balanced` 50 GB |
 | Compose | `/opt/bellerox-gps/infrastructure/docker/docker-compose.yml` (docker-compose v1) — repo `infrastructure/docker/docker-compose.yml` mirrors it |
 | Containers | centerlink-postgres (**timescale/timescaledb:2.30.1-pg16**), centerlink-pgbouncer, centerlink-traccar 6.14.5, centerlink-nginx, api-gateway (`bellerox-gps-web/api-gateway`), monitoring (prometheus, grafana, node/postgres exporters) |
 | Redis | **none** — removed 2026-09-25 (nothing ever used it). No Memorystore in terraform |

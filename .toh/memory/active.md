@@ -43,6 +43,6 @@
 - geocoder.onRequest=false (trips 7d 96s→0.2s) · nginx rate limit per real IP · Redis removed · tc_positions_ts archive (3.5GB→314MB, forever) · fleet.segments 213/213 · /api/fleet (fleet 7d 0.6s) · mobile nav 4 items · log rotation
 - web 31a7b80 (CI green, deployed) · infra fff40fa · VM live
 
-**Next Work:** consider e2-medium (RAM tight, swap ~1 GB) · monitor `tz-audit.sql` weekly · 10 pre-existing failing web tests (vehicleStatus/FloatingVehiclePanel/positionOwnership)
+**Next Work:** monitor `tz-audit.sql` weekly · 10 pre-existing failing web tests (vehicleStatus/FloatingVehiclePanel/positionOwnership)
 
 **Plan Status:** completed ✅ (`.toh/plan.md`) · แผนเก่า → `archive/plan-2026-09-24-delete-user.md`

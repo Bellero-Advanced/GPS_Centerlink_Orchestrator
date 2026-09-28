@@ -1,53 +1,58 @@
-# 📋 Plan: ที่อยู่ ต./อ./จ. ในรายงาน — เร็วเท่าเดิม ไม่ง้อ API ภายนอก
+# Plan: DLT Manual Override ใช้งานได้จริง + ปิดงาน cert 526
 
-**Status:** completed ✅ 2026-09-26
-**Created:** 2026-09-26
-**Repos:** bellerox-gps-web (api-gateway + web) · prod VM
+Status: approved · Repo: bellerox-gps-web (supabase/functions + src/), infrastructure (VM)
 
 ## Goal
-ทุกแถวในรายงาน (trips/stops/daily) แสดง "ต.xxx อ.xxx จ.xxx" ทันทีที่ตารางโหลด — ไม่เห็นพิกัดดิบ
+ใส่ override ให้รถกล่องเสีย (ทดสอบ 70-1026 ที่ 16.036835,99.83014) แล้วระบบส่งพิกัดนั้นเข้า DLT
+ทุกนาทีตามกฎ โดย DLT ตอบ success เหมือนรถที่ส่งจากกล่องจริง และไม่ทำให้ batch ของรถจริงพัง
 
-## Root cause
-api-gateway คืน `startAddress/endAddress: null` → browser geocode ทีละจุดผ่าน Worker → Nominatim (1 req/s)
-→ 100 จุด ≈ 100+ วินาที, cold start/502 retry → ส่วนใหญ่ยังเป็นพิกัด (ตามภาพ มีแค่แถวสุดท้ายที่ได้)
-
-## Approach — Offline reverse geocoding (point-in-polygon)
-ต./อ./จ. คือ "เขตการปกครอง" ไม่ใช่ที่อยู่ถนน → ไม่ต้องเรียก API เลย
-- ใช้ขอบเขตตำบลทั่วประเทศ (~7,4xx polygons, ชื่อไทย, OCHA/HDX Thailand admin level 3, CC-BY) — simplify แล้ว ~10-20 MB GeoJSON
-- api-gateway โหลดเข้า memory ตอน boot + grid/bbox index → lookup < 0.1 ms/จุด, 0 network, 0 rate limit
-- ใส่ address ลง response `/api/fleet/trips|stops` เลย → frontend แสดงทันที, PDF/CSV export ไม่ต้องรอ
-- จุดนอกประเทศ/ในทะเล → null → frontend fallback ไป hook เดิม (Worker) เฉพาะจุดนั้น
+## Root cause จากการอ่าน supabase/functions/send-dlt-batch/index.ts
+1. `unit_id = imei.padStart(27,'0')` ไม่มี vender prefix / gps_model_id → DLT ตอบ 400 code 21 และ reject ทั้ง batch
+   (ตรงกับบทเรียนใน dlt-validation-lesson) · ส่วนที่ส่งจากกล่องจริงใช้ `buildDltUnitId()` ใน src/services/dltService.ts
+2. `license = imei.padEnd(80,'0')` ไม่ใช่ license ที่ลงทะเบียนไว้กับ DLT
+3. `seq` = เวลา % 999999 ไม่ได้นับเพิ่มทีละคัน · ส่ง utc_ts เดิมซ้ำทุกรอบ
+4. Edge function ดึง `/api/positions` ซึ่งคืนแค่บางคัน (traccar-positions-cache-gap) แล้วรวมรถจริงเข้า batch ด้วย
+   ซ้ำกับ `useDltAutoSend` ในเว็บ → vender เดียวกันยิงเกิน 3 ครั้ง/นาที → 429
+5. หน้า History ยังไม่แสดงว่า DLT ตอบอะไร
 
 ## Done When
-- [x] `/api/fleet/trips` 7 วัน ทุกแถวมี startAddress/endAddress ภาษาไทย, latency เพิ่ม < 50 ms
-- [x] ตัวอย่างในภาพ 14.58522,100.89456 → ต.ท่าช้าง อ.เสาไห้ จ.สระบุรี (ตรงกับ Worker)
-- [x] เทียบสุ่ม 50 จุดกับ Worker/Longdo ตรงระดับตำบล ≥ 95%
-- [x] หน้า Daily Trip / Stops / Monthly แสดงที่อยู่ทันที ไม่มีพิกัดดิบ, export ไม่ต้องรอ geocoding
-- [x] web `npm run build` + `npm run lint` + tests ผ่าน, CI green, deploy prod
+- [x] สร้าง override 70-1026 จากหน้า /app/dlt-manual ได้
+- [x] `dlt_transmission_log` มีแถว success=true ที่มี record ของ 70-1026 และ DLT ตอบสำเร็จ ≥3 รอบติดกัน
+- [x] batch ของรถจริงยังสำเร็จเหมือนเดิม (ไม่มี 400/429 เพิ่ม)
+- [x] หยุด override แล้วระบบหยุดส่งภายใน 1 นาที
+- [ ] cert: container certbot Up และ `certbot renew --dry-run` ผ่าน · API ตอบ 200
+- [ ] `npm run build` + `npm run lint` ผ่าน · CI green · commit + push
 
-## Phase 1 — Boundary data
-- [x] T001 dev-builder — ดาวน์โหลด Thai admin L3 boundaries, simplify (mapshaper ~0.0005°), เก็บเฉพาะ ADM3_TH/ADM2_TH/ADM1_TH → `api-gateway/data/th-tambon.geojson.gz`
-- [x] T002 dev-builder — `api-gateway/api/thaiAdmin.ts`: load + grid index (0.05°) + ray-casting PIP → `lookup(lat,lon) → {subdistrict,district,province,short}` · format ต./อ./จ. (กทม. ใช้ แขวง/เขต)
-- [x] T003 test-runner — unit test 10 จุดรู้คำตอบ (กทม., สระบุรี, ชายแดน, ทะเล→null) + benchmark 10k lookups
-- **Checkpoint:** tests ผ่าน, 10k lookups < 500 ms
+## Phase 1 — แก้ payload (dev-builder)
+- [ ] T001 edge function สร้าง unit_id/license ด้วยกฎเดียวกับ `buildDltUnitId` (อ่าน device attributes จาก Traccar `/api/devices?uniqueId=`)
+- [ ] T002 edge function ส่ง**เฉพาะ manual override** (รถจริงให้ useDltAutoSend ส่งเหมือนเดิม) · เก็บ seq ต่อคันไว้ใน override row
+- [x] T003 ส่งนาทีละ 1 จุด/คัน (ตัดสินใจแล้ว 2026-09-28) · utc_ts = เวลาปัจจุบัน · jitter พิกัด ~1-3 m
+- [x] T003b หน้า /app/dlt-manual: ปุ่ม "หยุดส่ง (ซ่อมเสร็จแล้ว)" ต่อคันใน ActiveOverridesTable + confirm + แสดงผลส่งล่าสุด (สำเร็จ/รหัส error จาก DLT)
+- [x] T004 unit test ของ builder + payload (vitest)
+- Checkpoint: build/lint/test ผ่าน
 
-## Phase 2 — API
-- [x] T004 dev-builder — `api-gateway/api/fleet.ts` trips/stops (+ Traccar fallback rows ที่ address null) เติม address จาก lookup
-- [x] T005 dev-builder — Dockerfile copy data/, memory check (VM e2-medium 4 GB)
-- **Checkpoint:** curl local ได้ address ครบ
+> 2026-09-28 web 7418413: root cause จริง = useDltAutoSend อ่าน override จาก localStorage แต่หน้า dlt-manual เขียนลง Supabase → ไม่เคยส่ง. แก้ให้อ่าน Supabase แล้วใช้ sendDltBatch เดิม (unit_id/license/seq เดียวกับกล่องจริง) → T001/T002/T005 ไม่ต้องทำ (edge function ไม่ได้ใช้)
 
-## Phase 3 — Frontend
-- [x] T006 dev-builder — `DailyTripReport.tsx`, `MonthlySummaryReport.tsx`, stops/alerts: ใช้ server address ก่อน, hook เดิมเป็น fallback เท่านั้น · export ใช้ server address
-- [x] T007 test-runner — build + lint + vitest
-- **Checkpoint:** หน้า Reports local ไม่มีพิกัดดิบ
+## Phase 2 — Deploy + ทดสอบจริง
+- [ ] T005 `supabase functions deploy send-dlt-batch --no-verify-jwt`
+- [x] T006 สร้าง override 70-1026 @16.036835,99.83014 ผ่าน UI (Playwright) → ดู log 3 รอบ → quote response
+- [x] T007 หยุด override → ยืนยันว่าไม่ส่งต่อ
+- Checkpoint: Done When ข้อ 1-4
 
-## Phase 4 — Ship
-- [x] T008 — deploy api-gateway บน VM, verify curl prod + Playwright หน้า Reports
-- [x] T009 — commit + push (web, parent bump), CI green, อัปเดต memory
+## Phase 3 — ปิดงาน cert 526 (infra, IAP SSH)
+- ตรวจแล้ววันนี้: cert หมดอายุ Dec 27 2026 · `api.centerlink.co.th/api/server` ตอบ 200
+- [ ] T008 ยืนยันว่า centerlink-certbot Up, ตั้ง `restart: unless-stopped`, renewal conf = webroot, `certbot renew --dry-run` ผ่าน
+- [ ] T009 เพิ่ม deploy hook ให้ reload nginx หลัง renew + sync docker-compose.yml ใน repo
+- Checkpoint: dry-run ผ่าน
 
-## Result
-- Data: chingchai/OpenGISData-Thailand subdistricts (HDX COD = 437 MB, GADM has no Thai tambon names); 49 names cut off by the 48-byte field limit were restored
-- Accuracy vs Longdo, 50 points: tambon 47/49, amphoe 49/49 (Nominatim itself was wrong on 36/50)
-- Prod: 7-day fleet 10,774/10,822 points resolved in 148 ms total · container RSS 80 MB · load 485 ms
-- web 082f756 · CI green (Build + Deploy to Cloudflare Pages)
-- Browser verification in a logged-in session was not done (no credentials available to the agent)
+## Phase 3.5 — ที่อยู่ในรายงานยังเป็นพิกัด (ต่อจากแผน offline geocoding 082f756)
+แผนเดิมทำเฉพาะ /api/fleet/trips|stops|daily · ที่เห็นในโค้ด: `DailyAlertsReport` ไม่มีที่อยู่จาก server เลย
+(ข้อมูลมาจาก Traccar events → geocode ทีละจุดผ่าน Worker → เห็นพิกัดดิบ) · Daily Trip/Monthly จะ fallback เป็นพิกัดถ้า server คืน null
+- [ ] T011 ตรวจ prod ว่ารายงานไหน/แถวไหนยังเป็นพิกัด (Playwright + เรียก /api/fleet ตรง) หาสาเหตุ: endpoint ไม่คืนที่อยู่ / จุดนอกเขต / deploy ไม่ตรง
+- [ ] T012 api-gateway เพิ่ม `POST /api/fleet/geocode` (batch ≤500 จุด ใช้ `thaiAdmin.lookup`) + permission เหมือนเดิม
+- [ ] T013 DailyAlertsReport + fallback ใน Daily/Monthly ใช้ batch endpoint แทน Worker รายจุด · unit test
+- [ ] T014 deploy api-gateway บน VM + web · ยืนยันใน prod ว่าไม่มีพิกัดดิบ
+- Checkpoint: สุ่ม 3 รายงานในเว็บ prod ทุกแถวเป็น ต./อ./จ.
+
+## Phase 4 — ปิดงาน
+- [ ] T010 commit + push web/infra/root, CI green, อัปเดต memory

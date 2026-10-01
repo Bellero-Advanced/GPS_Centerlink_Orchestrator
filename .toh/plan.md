@@ -1,58 +1,67 @@
-# Plan: DLT Manual Override ใช้งานได้จริง + ปิดงาน cert 526
+# Plan — Mobile App UX/UI Modernization (align with web + TenantTheme)
 
-Status: approved · Repo: bellerox-gps-web (supabase/functions + src/), infrastructure (VM)
+Status: approved
+Repo: bellerox-gps-mobile (Expo 54 / RN 0.81 / expo-router 6) · + bellerox-gps-web (phone mockup only)
 
 ## Goal
-ใส่ override ให้รถกล่องเสีย (ทดสอบ 70-1026 ที่ 16.036835,99.83014) แล้วระบบส่งพิกัดนั้นเข้า DLT
-ทุกนาทีตามกฎ โดย DLT ตอบ success เหมือนรถที่ส่งจากกล่องจริง และไม่ทำให้ batch ของรถจริงพัง
+Modern, bug-free mobile app with the same look and data rules as web; all colors from `src/theme/tenantTheme.ts`.
+Core: Live Map · History/Replay · Settings. Plus: Alerts · Vehicle Detail · DLT Manual · quick wins.
 
-## Root cause จากการอ่าน supabase/functions/send-dlt-batch/index.ts
-1. `unit_id = imei.padStart(27,'0')` ไม่มี vender prefix / gps_model_id → DLT ตอบ 400 code 21 และ reject ทั้ง batch
-   (ตรงกับบทเรียนใน dlt-validation-lesson) · ส่วนที่ส่งจากกล่องจริงใช้ `buildDltUnitId()` ใน src/services/dltService.ts
-2. `license = imei.padEnd(80,'0')` ไม่ใช่ license ที่ลงทะเบียนไว้กับ DLT
-3. `seq` = เวลา % 999999 ไม่ได้นับเพิ่มทีละคัน · ส่ง utc_ts เดิมซ้ำทุกรอบ
-4. Edge function ดึง `/api/positions` ซึ่งคืนแค่บางคัน (traccar-positions-cache-gap) แล้วรวมรถจริงเข้า batch ด้วย
-   ซ้ำกับ `useDltAutoSend` ในเว็บ → vender เดียวกันยิงเกิน 3 ครั้ง/นาที → 429
-5. หน้า History ยังไม่แสดงว่า DLT ตอบอะไร
+## Backend rule (same as web)
+- One backend: Go api-gateway + Traccar at `api.centerlink.co.th` (allowlist `api.centerlink.co.th`, `api.gps.bellerox.com`, same as web `traccarApiBase.ts`)
+- Same users: Traccar Basic auth, same accounts as web login
+- Same tenants: Supabase `cl_tenants` (match by `domain`, then `slug`); brand from `data.theme`, API from `data.gps.traccarUrl`
+- Same endpoints as web `traccarService.ts`: `/api/fleet/trips|stops`, `/api/reports/events`, `/api/socket`
+- Remove legacy `services/api.ts` (`/auth/login` JWT), `services/websocket.ts`, `config/tenants.json` runtime use
 
 ## Done When
-- [x] สร้าง override 70-1026 จากหน้า /app/dlt-manual ได้
-- [x] `dlt_transmission_log` มีแถว success=true ที่มี record ของ 70-1026 และ DLT ตอบสำเร็จ ≥3 รอบติดกัน
-- [x] batch ของรถจริงยังสำเร็จเหมือนเดิม (ไม่มี 400/429 เพิ่ม)
-- [x] หยุด override แล้วระบบหยุดส่งภายใน 1 นาที
-- [ ] cert: container certbot Up และ `certbot renew --dry-run` ผ่าน · API ตอบ 200
-- [ ] `npm run build` + `npm run lint` ผ่าน · CI green · commit + push
+- `npx tsc --noEmit` = 0 errors (currently fails: notifications.ts NotificationBehavior, sync.ts/websocket.ts Timeout)
+- `npm run lint` = 0 warnings · `npm test` green
+- No hardcoded hex in screens (except fixed vehicle status colors); every screen uses useTheme()
+- Dark mode + 375px OK; Thai text Sarabun; loading/empty/error states on every screen
+- Vehicle status only via computeVehicleStatus() (same rule as web)
 
-## Phase 1 — แก้ payload (dev-builder)
-- [ ] T001 edge function สร้าง unit_id/license ด้วยกฎเดียวกับ `buildDltUnitId` (อ่าน device attributes จาก Traccar `/api/devices?uniqueId=`)
-- [ ] T002 edge function ส่ง**เฉพาะ manual override** (รถจริงให้ useDltAutoSend ส่งเหมือนเดิม) · เก็บ seq ต่อคันไว้ใน override row
-- [x] T003 ส่งนาทีละ 1 จุด/คัน (ตัดสินใจแล้ว 2026-09-28) · utc_ts = เวลาปัจจุบัน · jitter พิกัด ~1-3 m
-- [x] T003b หน้า /app/dlt-manual: ปุ่ม "หยุดส่ง (ซ่อมเสร็จแล้ว)" ต่อคันใน ActiveOverridesTable + confirm + แสดงผลส่งล่าสุด (สำเร็จ/รหัส error จาก DLT)
-- [x] T004 unit test ของ builder + payload (vitest)
-- Checkpoint: build/lint/test ผ่าน
+## Phases
 
-> 2026-09-28 web 7418413: root cause จริง = useDltAutoSend อ่าน override จาก localStorage แต่หน้า dlt-manual เขียนลง Supabase → ไม่เคยส่ง. แก้ให้อ่าน Supabase แล้วใช้ sendDltBatch เดิม (unit_id/license/seq เดียวกับกล่องจริง) → T001/T002/T005 ไม่ต้องทำ (edge function ไม่ได้ใช้)
+### Phase 0 — Foundation
+- [x] T000 design-reviewer — mobile section in root DESIGN.md (tokens from tenantTheme, radius, motion 150–250ms)
+- [x] T001 dev-builder — fix 3 tsc errors (`src/services/notifications.ts`, `sync.ts`, `websocket.ts`)
+- [x] T002 dev-builder — 5 tabs: แผนที่ · ย้อนหลัง · แจ้งเตือน · รถ · ตั้งค่า; merge/remove duplicate screens (map, vehicles, replay, trips, dashboard, profile)
+- [x] T003 [P] ui-builder — themed primitives in `src/components/ui/` (Card, Chip, Sheet, ListRow, Segmented, IconButton)
+- Checkpoint: tsc 0 errors, app boots
 
-## Phase 2 — Deploy + ทดสอบจริง
-- [ ] T005 `supabase functions deploy send-dlt-batch --no-verify-jwt`
-- [x] T006 สร้าง override 70-1026 @16.036835,99.83014 ผ่าน UI (Playwright) → ดู log 3 รอบ → quote response
-- [x] T007 หยุด override → ยืนยันว่าไม่ส่งต่อ
-- Checkpoint: Done When ข้อ 1-4
+### Phase 1 — Live Map (`app/(tabs)/index.tsx`)
+- [ ] T101 ui-builder — full-screen map, floating search, status chips with counts, bottom-sheet vehicle list
+- [x] T102 dev-builder — WebSocket + 10s fallback, clustering >100, fit-all / follow controls
+- [x] T103 ui-builder — marker tap → peek sheet (speed, address, updated ago; นำทาง / ย้อนหลัง / รายละเอียด)
+- Checkpoint
 
-## Phase 3 — ปิดงาน cert 526 (infra, IAP SSH)
-- ตรวจแล้ววันนี้: cert หมดอายุ Dec 27 2026 · `api.centerlink.co.th/api/server` ตอบ 200
-- [ ] T008 ยืนยันว่า centerlink-certbot Up, ตั้ง `restart: unless-stopped`, renewal conf = webroot, `certbot renew --dry-run` ผ่าน
-- [ ] T009 เพิ่ม deploy hook ให้ reload nginx หลัง renew + sync docker-compose.yml ใน repo
-- Checkpoint: dry-run ผ่าน
+### Phase 2 — History / Replay (`app/(tabs)/history.tsx`)
+- [x] T201 ui-builder — vehicle + date picker (วันนี้/เมื่อวาน/7 วัน), trips & stops timeline from `/api/fleet/trips|stops`
+- [x] T202 dev-builder — replay: polyline, play/pause, 1×/4×/16×, scrubber, speed-colored route
+- Checkpoint
 
-## Phase 3.5 — ที่อยู่ในรายงานยังเป็นพิกัด (ต่อจากแผน offline geocoding 082f756)
-แผนเดิมทำเฉพาะ /api/fleet/trips|stops|daily · ที่เห็นในโค้ด: `DailyAlertsReport` ไม่มีที่อยู่จาก server เลย
-(ข้อมูลมาจาก Traccar events → geocode ทีละจุดผ่าน Worker → เห็นพิกัดดิบ) · Daily Trip/Monthly จะ fallback เป็นพิกัดถ้า server คืน null
-- [ ] T011 ตรวจ prod ว่ารายงานไหน/แถวไหนยังเป็นพิกัด (Playwright + เรียก /api/fleet ตรง) หาสาเหตุ: endpoint ไม่คืนที่อยู่ / จุดนอกเขต / deploy ไม่ตรง
-- [ ] T012 api-gateway เพิ่ม `POST /api/fleet/geocode` (batch ≤500 จุด ใช้ `thaiAdmin.lookup`) + permission เหมือนเดิม
-- [ ] T013 DailyAlertsReport + fallback ใน Daily/Monthly ใช้ batch endpoint แทน Worker รายจุด · unit test
-- [ ] T014 deploy api-gateway บน VM + web · ยืนยันใน prod ว่าไม่มีพิกัดดิบ
-- Checkpoint: สุ่ม 3 รายงานในเว็บ prod ทุกแถวเป็น ต./อ./จ.
+### Phase 3 — Vehicle Detail · Alerts · Settings
+- [x] T301 ui-builder — `app/vehicle/[id].tsx`: ภาพรวม / วันนี้ (km, trips, idle) / อุปกรณ์ (IMEI, battery, GSM)
+- [x] T302 ui-builder+dev — Alerts grouped by day, severity filter, push (expo-notifications), tap → vehicle
+- [x] T303 ui-builder — Settings: theme light/dark/system, TH/EN, map type, notification toggles, account, logout, version
+- Checkpoint
 
-## Phase 4 — ปิดงาน
-- [ ] T010 commit + push web/infra/root, CI green, อัปเดต memory
+### Phase 4 — DLT Manual
+- [x] T401 dev-builder — mobile screen on Supabase `dlt_manual_overrides` (anon RLS, created_by from authStore): start/stop, active list, history — same shape as web DLTManualPage
+- Checkpoint
+
+### Phase 5 — Quick wins
+- [x] T501 Share vehicle location (expo-sharing)
+- [x] T502 Navigate to vehicle (open Google/Apple Maps)
+- [x] T503 Pinned/favorite vehicles on top
+- [x] T504 Pull-to-refresh + offline banner + last-known cache
+- [x] T505 Haptics + skeletons everywhere
+- Checkpoint
+
+### Phase 6 — Web: app showcase (phone mockup)
+- [x] T601 ui-builder — add `phone-mockups-1.tsx` + `phone-mockups-1-utils/phone-carousel.tsx` to web `src/components/ui/` (shadcn already there: button.tsx, card.tsx…); install `@radix-ui/react-slot` `class-variance-authority` pinned if missing; images = real screenshots of new mobile app in `public/mobile/`
+- Checkpoint: web build + lint pass
+
+### Phase 7 — Verify
+- [ ] T701 test-runner — tsc, lint, jest; unit tests for status + replay interpolation; iOS sim pass on every screen, light + dark

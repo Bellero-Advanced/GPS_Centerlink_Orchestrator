@@ -792,3 +792,12 @@ function TestConnectionButton({ storageKey }: { storageKey: string }) {
   );
 }
 ```
+
+## 23. Native Mobile App (bellerox-gps-mobile) — 2026-09-30
+
+- Tokens: every color comes from `useTheme()` (color mode tokens from `src/theme/index.ts` + tenant `primaryColor` as `brand`). No hex literals in screens; use `onBrand` for text on brand fills. Status colors stay `STATUS_COLOR` (Google palette, immutable).
+- Color mode: system / light / dark (Settings → ธีม), persisted, follows OS while on system.
+- Primitives: `src/components/ui` — Card, Chip, ListRow, IconButton, Segmented, Skeleton. Radius 8 (controls) / 12 (cards) / 20 (sheets); touch targets ≥ 44pt (chips ≥ 32 with hitSlop).
+- Motion: 150–250ms for UI transitions; sheets spring in, fade out 200ms; skeleton pulse 600ms.
+- Haptics: `selectionAsync` on toggles (pin, replay play/pause).
+- Live data: WebSocket `/api/socket` merges into `['positions','current']`; polling 30s while connected, 10s fallback when down. Devices/positions fall back to a last-known cache offline (cleared on logout).

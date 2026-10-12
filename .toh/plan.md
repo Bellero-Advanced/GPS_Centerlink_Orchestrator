@@ -1,67 +1,46 @@
-# Plan — Mobile App UX/UI Modernization (align with web + TenantTheme)
+# Plan — GT06 cars frozen on map (time.override + maxSpeed lockout)
 
 Status: approved
-Repo: bellerox-gps-mobile (Expo 54 / RN 0.81 / expo-router 6) · + bellerox-gps-web (phone mockup only)
+Repo: infrastructure (Traccar device attributes + scripts) · no web/mobile code change
 
 ## Goal
-Modern, bug-free mobile app with the same look and data rules as web; all colors from `src/theme/tenantTheme.ts`.
-Core: Live Map · History/Replay · Settings. Plus: Alerts · Vehicle Detail · DLT Manual · quick wins.
+Cars that report on time but stay at the same spot on the map start moving again, beginning with 70-9915.
 
-## Backend rule (same as web)
-- One backend: Go api-gateway + Traccar at `api.centerlink.co.th` (allowlist `api.centerlink.co.th`, `api.gps.bellerox.com`, same as web `traccarApiBase.ts`)
-- Same users: Traccar Basic auth, same accounts as web login
-- Same tenants: Supabase `cl_tenants` (match by `domain`, then `slug`); brand from `data.theme`, API from `data.gps.traccarUrl`
-- Same endpoints as web `traccarService.ts`: `/api/fleet/trips|stops`, `/api/reports/events`, `/api/socket`
-- Remove legacy `services/api.ts` (`/auth/login` JWT), `services/websocket.ts`, `config/tenants.json` runtime use
+## Root cause (proven 2026-10-12)
+- 70-9915 (id 371) froze at 15.91303,100.60860 showing **63 km/h** from 2026-10-08 14:45 to 2026-10-10 13:18 (~46 h). On 10-09 it had 0 GPS rows saved; only heartbeat/status rows that copy the old coordinate.
+- The Traccar log for that IMEI shows `filtered by MaxSpeed` 1,158 times on 10-09 and 765 on 10-10, so the real GPS fixes arrived but were dropped.
+- `FilterHandler.filterMaxSpeed` (decompiled 6.14.5) computes `distance / (fixTime − lastFixTime)`.
+- The device has `time.override=serverTime` (set 2026-09-24 for broken clocks). Under that setting, every GT06 heartbeat (packet 0x13) is saved with the old coordinate and a **fresh** fixTime.
+- The next real fix then comes a few km from the frozen point only seconds after a heartbeat, so the computed speed is above 250 km/h and the fix is filtered. The next heartbeat refreshes the frozen point again, so it locks itself until the car happens to come back near the frozen spot.
+- In the last 7 days, frozen hours while showing a speed above 9 km/h:
+  - override devices: 371 = 121 h · 294 = 149 h · 168 = 120 h · 262 = 99 h · 289 = 84 h · 221 = 63 h · 369 = 62 h · 48 = 51 h
+  - decoder.timezone devices (e.g. 70-9917, id 372): 0 h
+- 70-9917 has no freeze in 7 days (it moved every working day, totalDistance 337 → 2,142 km). It is just parked now.
+- Several override devices have a healthy clock that runs a constant +7.0 h. Their raw GT06 time is local time: 371, 369, 294, 370, 205, 181, 224, 225. They never needed override. `decoder.timezone=GMT+07:00` fixes them properly, the same as 70-9917.
 
 ## Done When
-- `npx tsc --noEmit` = 0 errors (currently fails: notifications.ts NotificationBehavior, sync.ts/websocket.ts Timeout)
-- `npm run lint` = 0 warnings · `npm test` green
-- No hardcoded hex in screens (except fixed vehicle status colors); every screen uses useTheme()
-- Dark mode + 375px OK; Thai text Sarabun; loading/empty/error states on every screen
-- Vehicle status only via computeVehicleStatus() (same rule as web)
+- No device with a stable +7 h clock has `time.override`; they all use `decoder.timezone=GMT+07:00`.
+- Truly broken-clock devices keep `time.override` but can no longer lock (per-device `filter.maxSpeed` neutralised).
+- The Traccar log has ~0 `MaxSpeed` filters for the affected IMEIs over 1 h after the change.
+- In daytime, 70-9915 shows multiple distinct coordinates while ignition is on.
 
-## Phases
+## Phase 1 — Classify (read-only)
+- [x] T101 dev-builder — run `infrastructure/scripts/tz-audit.sql` on VM (nohup → file → scp) and confirm, for every `time.override` device, whether its raw-clock offset is a constant +7 h or broken
+- [ ] Checkpoint: list A (stable +7 h) and list B (broken) written into `infrastructure/scripts/override-lockout-fix.sql` header
 
-### Phase 0 — Foundation
-- [x] T000 design-reviewer — mobile section in root DESIGN.md (tokens from tenantTheme, radius, motion 150–250ms)
-- [x] T001 dev-builder — fix 3 tsc errors (`src/services/notifications.ts`, `sync.ts`, `websocket.ts`)
-- [x] T002 dev-builder — 5 tabs: แผนที่ · ย้อนหลัง · แจ้งเตือน · รถ · ตั้งค่า; merge/remove duplicate screens (map, vehicles, replay, trips, dashboard, profile)
-- [x] T003 [P] ui-builder — themed primitives in `src/components/ui/` (Card, Chip, Sheet, ListRow, Segmented, IconButton)
-- Checkpoint: tsc 0 errors, app boots
+## Phase 2 — Fix (production device attributes, no Traccar restart)
+- [x] T201 dev-builder — `override-lockout-fix.sql`: list A → drop `time.override`, set `decoder.timezone=GMT+07:00`; list B → add `filter.maxSpeed=100000` (per-device DEVICE key, neutralises the lockout)
+- [x] T202 dev-builder — apply via Traccar API `PUT /api/devices/{id}` (cache refreshes live, no restart); keep before/after JSON in `/tmp` for rollback
+- [ ] Checkpoint: `GET /api/devices` shows the new attributes on every listed device
 
-### Phase 1 — Live Map (`app/(tabs)/index.tsx`)
-- [ ] T101 ui-builder — full-screen map, floating search, status chips with counts, bottom-sheet vehicle list
-- [x] T102 dev-builder — WebSocket + 10s fallback, clustering >100, fit-all / follow controls
-- [x] T103 ui-builder — marker tap → peek sheet (speed, address, updated ago; นำทาง / ย้อนหลัง / รายละเอียด)
-- Checkpoint
+## Phase 3 — Verify + record
+- [x] T301 test-runner — 1 h after apply: grep today's tracker-server.log; MaxSpeed count for list A+B IMEIs ≈ 0; new GT06 rows for 371 carry distinct lat/lon
+- [ ] T302 test-runner — daytime (after 07:00 ICT) re-run the frozen-hours script; 371/294/168/262 < 1 h
+- [x] T303 plan-orchestrator — update memory (clock-drift note + new lockout lesson), tz-audit.sql comment, commit + push
+- [ ] Checkpoint: all Done When met
 
-### Phase 2 — History / Replay (`app/(tabs)/history.tsx`)
-- [x] T201 ui-builder — vehicle + date picker (วันนี้/เมื่อวาน/7 วัน), trips & stops timeline from `/api/fleet/trips|stops`
-- [x] T202 dev-builder — replay: polyline, play/pause, 1×/4×/16×, scrubber, speed-colored route
-- Checkpoint
+## Rollback
+Re-PUT saved before-JSON per device (restores old attributes instantly).
 
-### Phase 3 — Vehicle Detail · Alerts · Settings
-- [x] T301 ui-builder — `app/vehicle/[id].tsx`: ภาพรวม / วันนี้ (km, trips, idle) / อุปกรณ์ (IMEI, battery, GSM)
-- [x] T302 ui-builder+dev — Alerts grouped by day, severity filter, push (expo-notifications), tap → vehicle
-- [x] T303 ui-builder — Settings: theme light/dark/system, TH/EN, map type, notification toggles, account, logout, version
-- Checkpoint
-
-### Phase 4 — DLT Manual
-- [x] T401 dev-builder — mobile screen on Supabase `dlt_manual_overrides` (anon RLS, created_by from authStore): start/stop, active list, history — same shape as web DLTManualPage
-- Checkpoint
-
-### Phase 5 — Quick wins
-- [x] T501 Share vehicle location (expo-sharing)
-- [x] T502 Navigate to vehicle (open Google/Apple Maps)
-- [x] T503 Pinned/favorite vehicles on top
-- [x] T504 Pull-to-refresh + offline banner + last-known cache
-- [x] T505 Haptics + skeletons everywhere
-- Checkpoint
-
-### Phase 6 — Web: app showcase (phone mockup)
-- [x] T601 ui-builder — add `phone-mockups-1.tsx` + `phone-mockups-1-utils/phone-carousel.tsx` to web `src/components/ui/` (shadcn already there: button.tsx, card.tsx…); install `@radix-ui/react-slot` `class-variance-authority` pinned if missing; images = real screenshots of new mobile app in `public/mobile/`
-- Checkpoint: web build + lint pass
-
-### Phase 7 — Verify
-- [ ] T701 test-runner — tsc, lint, jest; unit tests for status + replay interpolation; iOS sim pass on every screen, light + dark
+## Out of scope
+Positions already dropped by the filter on 10-04 to 10-11 are not stored. The log has them, but restoring them is a separate job.

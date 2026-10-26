@@ -1,46 +1,53 @@
-# Plan — GT06 cars frozen on map (time.override + maxSpeed lockout)
+# Plan — Mobile: map-first vehicle sheet + themed cube loader
 
-Status: approved
-Repo: infrastructure (Traccar device attributes + scripts) · no web/mobile code change
+Status: done
+Created: 2026-10-26 by /toh-plan
+Repo: bellerox-gps-mobile (Expo) — map tab `app/(tabs)/index.tsx` + `src/components/map/VehicleDetailSheet.tsx`
 
 ## Goal
-Cars that report on time but stay at the same spot on the map start moving again, beginning with 70-9915.
+Tapping a vehicle must keep the map visible. Today the sheet covers ~60% of the screen and shows
+rows nobody needs (lastUpdate, vehicleId, duplicate course). Redesign like Grab/Bolt/Uber:
+map ~3/4 top, compact peek card ~1/4 bottom, a button opens the full detail.
+Also: themed 3D cube loader, rounded-sm + colour-fill style.
 
-## Root cause (proven 2026-10-12)
-- 70-9915 (id 371) froze at 15.91303,100.60860 showing **63 km/h** from 2026-10-08 14:45 to 2026-10-10 13:18 (~46 h). On 10-09 it had 0 GPS rows saved; only heartbeat/status rows that copy the old coordinate.
-- The Traccar log for that IMEI shows `filtered by MaxSpeed` 1,158 times on 10-09 and 765 on 10-10, so the real GPS fixes arrived but were dropped.
-- `FilterHandler.filterMaxSpeed` (decompiled 6.14.5) computes `distance / (fixTime − lastFixTime)`.
-- The device has `time.override=serverTime` (set 2026-09-24 for broken clocks). Under that setting, every GT06 heartbeat (packet 0x13) is saved with the old coordinate and a **fresh** fixTime.
-- The next real fix then comes a few km from the frozen point only seconds after a heartbeat, so the computed speed is above 250 km/h and the fix is filtered. The next heartbeat refreshes the frozen point again, so it locks itself until the car happens to come back near the frozen spot.
-- In the last 7 days, frozen hours while showing a speed above 9 km/h:
-  - override devices: 371 = 121 h · 294 = 149 h · 168 = 120 h · 262 = 99 h · 289 = 84 h · 221 = 63 h · 369 = 62 h · 48 = 51 h
-  - decoder.timezone devices (e.g. 70-9917, id 372): 0 h
-- 70-9917 has no freeze in 7 days (it moved every working day, totalDistance 337 → 2,142 km). It is just parked now.
-- Several override devices have a healthy clock that runs a constant +7.0 h. Their raw GT06 time is local time: 371, 369, 294, 370, 205, 181, 224, 225. They never needed override. `decoder.timezone=GMT+07:00` fixes them properly, the same as 70-9917.
+## Findings
+- Map tab renders `VehicleDetailSheet` (242 lines), not `VehicleBottomSheet`.
+- Screenshot shows raw i18n keys (`searchVehicle`, `address`, `ignition`, `lastUpdate`) → translation lookup broken on device. Fix in same pass.
+- RADIUS.sm = 10 in `src/theme/index.ts` — "rounded-sm" = use RADIUS.xs/sm on new sheet only (don't change global tokens).
+
+## Design (ride-hailing pattern)
+Peek card (~25% height, max ~210px), fills with status colour tint, rounded-sm corners:
+```
+[● จอดดับเครื่อง]  86-0373 ชลบุรี                 [×]
+ 0 km/h  ·  ↖ 310°  ·  ต.หนองอิรุณ อ.บ้านบึง ชลบุรี
+[ นำทาง (filled brand) ] [ รายละเอียด ] [ แชร์ ]
+```
+- Map re-centres the selected car into the visible top 3/4 (offset camera by sheet height).
+- "รายละเอียด" → full-screen modal (slide up): speed, course, ignition, address, odometer, battery, history/replay link. lastUpdate + vehicleId removed everywhere in the sheet.
+- Status colours unchanged (moving/idle/stopped/offline/unlinked tokens).
 
 ## Done When
-- No device with a stable +7 h clock has `time.override`; they all use `decoder.timezone=GMT+07:00`.
-- Truly broken-clock devices keep `time.override` but can no longer lock (per-device `filter.maxSpeed` neutralised).
-- The Traccar log has ~0 `MaxSpeed` filters for the affected IMEIs over 1 h after the change.
-- In daytime, 70-9915 shows multiple distinct coordinates while ignition is on.
+- Selected car's marker visible above the sheet on 375px-wide phone
+- No lastUpdate / vehicleId rows; no raw i18n keys on map tab
+- Cube loader replaces main ActivityIndicator spinners, brand colours, respects reduce-motion
+- `npx tsc --noEmit` + lint + jest pass; dark mode OK
 
-## Phase 1 — Classify (read-only)
-- [x] T101 dev-builder — run `infrastructure/scripts/tz-audit.sql` on VM (nohup → file → scp) and confirm, for every `time.override` device, whether its raw-clock offset is a constant +7 h or broken
-- [ ] Checkpoint: list A (stable +7 h) and list B (broken) written into `infrastructure/scripts/override-lockout-fix.sql` header
+## Phase 1 — Peek sheet
+- [x] T101 ui-builder — rewrite `src/components/map/VehicleDetailSheet.tsx` as compact peek card (rounded-sm, status-tinted fill, 3 actions)
+- [x] T102 ui-builder — new `src/components/map/VehicleFullDetailModal.tsx` (full details, no lastUpdate/vehicleId)
+- [x] T103 dev-builder — `app/(tabs)/index.tsx`: camera padding/offset so selected car stays in top 3/4; wire modal
+- [x] T104 dev-builder — fix raw i18n keys (`src/i18n/th.ts`, `en.ts`, i18n init)
+- Checkpoint: tsc + jest pass, screenshot on 375×812
 
-## Phase 2 — Fix (production device attributes, no Traccar restart)
-- [x] T201 dev-builder — `override-lockout-fix.sql`: list A → drop `time.override`, set `decoder.timezone=GMT+07:00`; list B → add `filter.maxSpeed=100000` (per-device DEVICE key, neutralises the lockout)
-- [x] T202 dev-builder — apply via Traccar API `PUT /api/devices/{id}` (cache refreshes live, no restart); keep before/after JSON in `/tmp` for rollback
-- [ ] Checkpoint: `GET /api/devices` shows the new attributes on every listed device
+## Phase 2 — Cube loader
+- [x] T201 ui-builder — `src/components/ui/CubeLoader.tsx` (Reanimated 3D cube, brand/tenant colours, Thai "กำลังโหลด", reduce-motion fallback) — RN port, no styled-jsx
+- [x] T202 [P] dev-builder — replace full-screen spinners: map, vehicles, dashboard, history, alerts, vehicle/[id], login
+- Checkpoint: tsc + lint + jest pass
 
-## Phase 3 — Verify + record
-- [x] T301 test-runner — 1 h after apply: grep today's tracker-server.log; MaxSpeed count for list A+B IMEIs ≈ 0; new GT06 rows for 371 carry distinct lat/lon
-- [ ] T302 test-runner — daytime (after 07:00 ICT) re-run the frozen-hours script; 371/294/168/262 < 1 h
-- [x] T303 plan-orchestrator — update memory (clock-drift note + new lockout lesson), tz-audit.sql comment, commit + push
-- [ ] Checkpoint: all Done When met
+## Phase 3 — Verify + ship
+- [x] T301 test-runner — tsc, lint, jest; commit mobile + bump submodule; CI green
 
-## Rollback
-Re-PUT saved before-JSON per device (restores old attributes instantly).
-
-## Out of scope
-Positions already dropped by the filter on 10-04 to 10-11 are not stored. The log has them, but restoring them is a separate job.
+## Result (2026-10-26)
+mobile c7e3135b on feat/mobile-ux-modernization (pushed). tsc 0 errors · lint 0 warnings · jest 8 suites / 37 tests pass.
+Mobile repo has no CI workflow. Not verified on a device/simulator — needs a dev build check.
+Found: initI18n() was never called → every screen showed raw keys; now initialised at import.

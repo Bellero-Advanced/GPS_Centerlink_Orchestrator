@@ -1,4 +1,44 @@
-# DLT Masterfile Sync Fix — COMPLETE ✅
+# Progress Report — Bellerox GPS
+
+**Last Updated:** 2026-09-24
+
+---
+
+## ✅ Recently Completed (2026-09-24)
+
+### Delete User Feature (TeamPage)
+**Plan:** `.toh/plan.md`  
+**Status:** ✅ Complete  
+**Time:** ~5 minutes
+
+**What was built:**
+1. Added red "ลบ" button in each UserRow (only when `!isSelf`)
+2. Created `DeleteConfirmDialog` component:
+   - Shows user name/email to confirm identity
+   - Warning message: "⚠️ การกระทำนี้ไม่สามารถย้อนกลับได้"
+   - Disabled + spinner during delete operation
+3. Integrated `traccarService.deleteUser(id)` via useMutation
+4. Success: invalidates query + toast + closes dialog
+5. Error: toast fallback message
+
+**Files changed:** 1 (`src/pages/TeamPage.tsx`)  
+**Lines added:** ~70  
+**Build:** ✅ Pass (27.78s, zero errors)
+
+**All Done When criteria met:**
+- [x] Delete button appears in each user row
+- [x] Click opens confirm dialog
+- [x] Confirm calls API + invalidates query + removes user
+- [x] Success toast shown
+- [x] Cancel closes dialog without action
+- [x] Self-delete prevented (no button when isSelf)
+- [x] Build passes with zero errors
+
+---
+
+## Previous Work
+
+### DLT Masterfile Sync Fix — COMPLETE ✅
 
 **Started:** 2026-08-11 18:15
 **Completed:** 2026-08-11 18:35
@@ -172,3 +212,38 @@ LEARNING: recovered last-known positions must be DISPLAY-ONLY — GPS_STALE_MS=5
   - ✅ Created supabaseClient.ts with proper initialization
   - ✅ Added Supabase credentials to .env.local
   - 🔄 Build verification running...
+
+---
+
+## Plan — Mobile: status rule + place names + no domain + .aab (2026-10-23)
+2026-10-23 --:-- T000 running (design-reviewer) — DESIGN.md unlinked token + place line spec
+2026-10-23 --:-- T001 done — CHECK_OK: ported computeVehicleStatus()/effectiveTime()/isIgnitionOn() to mobile; npx tsc --noEmit exit 0
+2026-10-23 --:-- T002 done — CHECK_OK: theme tokens (stopped=#EA4335 red, offline=#5F6368 grey, unlinked=#BDC1C6) in both palettes
+2026-10-23 --:-- T003 done — CHECK_OK: npx jest → 7 suites / 35 tests passed
+2026-10-23 --:-- T004 done — CHECK_OK: map screen on useFleetVehicles + place rows; tsc 0
+2026-10-23 --:-- T005 done — CHECK_OK: fleet + vehicle/[id] rewired; tsc 0
+2026-10-23 --:-- T006 done — CHECK_OK: node scripts/status-parity.mjs → agree 353/353, disagree 0
+LEARNING: mobile had stopped/offline colours INVERTED vs shipped web (web cc155eb swapped them 2026-07-02; CLAUDE.md never updated). Parked SMC cars are `stopped` → red on web, were grey on mobile. That WAS the reported bug.
+LEARNING: Traccar `positionId` recovery is essential — /api/positions returned 51 of 353; ?deviceId= recovered 191 more.
+2026-10-23 --:-- T201 done — CHECK_OK: app/(domain) deleted; grep route refs → 0 hits; tsc 0; jest 35/35
+LEARNING: write ledger entries in the PARENT repo — the mobile submodule has its own .toh/ and appending there splits state.
+2026-10-23 --:-- T000 done — CHECK_OK: DESIGN.md +47 lines; vehicleUnlinked (#BDC1C6 / dark #9AA0A6, dark badge text #3C4043) + "Place Line (Vehicle Row, Line 2)" section with esc() requirement
+2026-10-23 --:-- T101 done — CHECK_OK: geocode client exercised live → Chonburi/Bangkok/Hat Yai all resolved; Bangkok แขวง/เขต form correct; (0,0) → null
+2026-10-23 --:-- T102/T104/T105 done — CHECK_OK: place wired in map list, detail sheet, fleet tab, vehicle detail
+2026-10-23 --:-- T103 done — CHECK_OK: marker label = "name · place", HTML-escaped in longdoMapHtml.ts; signature includes label so a late resolve repaints
+2026-10-23 --:-- T301 done — CHECK_OK: trigger-eas-build rewritten to GraphQL createAndroidBuild; verified build/byId mutation + Build.artifacts fields exist on api.expo.dev/graphql
+2026-10-23 --:-- T302 done — CHECK_OK: eas-build-status fn (status poll + ?download=1 streams .aab so the token stays server-side); tsc 0
+2026-10-23 --:-- T303 done — CHECK_OK: TenantMobileBuild type {easProjectId,easSlug,packageName,lastBuild*}; persisted via existing update() path
+2026-10-23 --:-- T304 done — CHECK_OK: MobileAppSection = EAS project fields + Build Android + 15s polling + Download .aab; web build exit 0
+2026-10-23 --:-- Phase 3 checkpoint PARTIAL — code + build verified; END-TO-END BUILD NOT RUN: no EXPO_TOKEN in this environment and no per-tenant easProjectId set. Marked for user.
+LEARNING: POST api.expo.dev/v2/builds returns 404 — the old /admin Build button never worked. Real API is GraphQL api.expo.dev/graphql: build.createAndroidBuild(appId, job, metadata) with job.builderEnvironment.env for per-tenant TENANT_SLUG.
+2026-10-23 --:-- T401-T405 done — CHECK_OK: tsc 0, jest 35/35, eslint 0; domain screen gone; SMC group 5 reads 4 RED + 2 GREY (was 6 grey); sprites + DESIGN.md colours corrected; status-parity.mjs --group option; CLAUDE.md + ui-design.md colour docs fixed; web CI green (e5e4a3b), mobile pushed (59216194, no CI workflow)
+2026-10-23 --:-- Phase 4 checkpoint — all Done When gates green; commits pushed
+2026-10-24 03:36 T501 done — CHECK_OK: scripts/build-tenant.sh (prepare + eas build wrapper)
+2026-10-24 03:36 T502 done — CHECK_OK: scripts/prepare-tenant.mjs (fetch TenantTheme → config/tenants/<slug>/)
+2026-10-24 03:36 T503 done — CHECK_OK: eas.json postInstall hook → prepare-tenant.mjs (remote builds auto-fetch theme)
+2026-10-24 03:36 T504 done — CHECK_OK: .env.example (TENANT_SLUG, SUPABASE_URL, EAS_PROJECT_ID, FCM optional)
+2026-10-24 03:36 T505 done — CHECK_OK: docs/WHITE_LABEL_BUILD.md (complete guide + troubleshooting)
+2026-10-24 03:36 T506 done — CHECK_OK: tsc 0, eslint 0
+2026-10-24 03:36 T507 done — CHECK_OK: mobile pushed (2800fee9), no CI workflow
+2026-10-24 03:36 ALL PHASES COMPLETE — 27/27 tasks done

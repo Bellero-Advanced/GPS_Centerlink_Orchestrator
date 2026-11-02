@@ -243,8 +243,10 @@ terraform output traccar_vm_ip   # Get server IP for DNS
 
 ### Thai/APAC UX
 - Sarabun font for Thai text — must be loaded before first render
-- Status colors are fixed and must NEVER change (users internalize them):
-  - Moving: `#22c55e` (green) · Idle: `#f59e0b` (amber) · Stopped: `#94a3b8` (slate) · Offline: `#ef4444` (red)
+- Status colors are fixed and must NEVER change (users internalize them). Roles were
+  deliberately swapped on 2026-07-02 (web `cc155eb` "ดับเครื่อง=แดง, ออฟไลน์=เทา") — a parked
+  car with the engine off is RED, a silent car is GREY:
+  - Moving: `#22c55e` (green) · Idle: `#f59e0b` (amber) · Stopped: `#ef4444` (red) · Offline: `#5F6368` (grey) · Unlinked: `#BDC1C6` (light grey)
 - LINE Notify for Thai alerts (not email) — see `lineNotifyService.ts`
 - Longdo Map API for Thai address geocoding
 

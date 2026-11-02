@@ -1,5 +1,33 @@
 # 📜 Changelog
 
+## 2026-09-24 — Timezone +7h fix (reports & replay)
+
+**Root cause:** `decoder.timezone` = "UTC+07:00"/"-07:00" (set 1 ก.ย.) ไม่ใช่ Java TimeZone ID → GMT เงียบๆ → ไม่มีผล
+GT06 ~47 คัน + Meitrack 6 คัน fixtime เพี้ยน +7h (2.79M แถว) · Meitrack ไม่อ่าน decoder.timezone เลย
+
+**Fix:**
+- Traccar per-device: GMT+07:00 ×43 · GMT ×1 · GMT+08:00 ×1 · time.override=serverTime ×41 → restart 09:35 UTC
+- DB backfill 3,897,607 positions + 47,882 events (backup `tc_tz_backfill_20260924`, `tc_tz_backfill_events_20260924`)
+- Web d43004a: Bangkok day/month helpers, sort by timestamp, PDF/export Bangkok time, ms durations, report cache v2
+- Infra 763238a: tz-audit/tz-fix-devices/tz-backfill(-stale).sql · compose TZ → UTC · ลบสคริปต์ tz เก่าที่ผิด
+- Root 915364a: bump submodules
+
+## 2026-09-24 — Delete User Feature (TeamPage)
+
+**Added:** Delete user functionality in `/app/team`
+- Created `DeleteConfirmDialog` component with warning message + user info
+- Added red "ลบ" button in each UserRow (hidden for self)
+- Integrated `traccarService.deleteUser()` via useMutation
+- React Query invalidation on success + toast feedback
+- Self-delete prevention (isSelf check)
+
+**Files:**
+- `bellerox-gps-web/src/pages/TeamPage.tsx` (+70 lines)
+
+**Build:** ✅ Pass (27.78s, zero errors)
+
+---
+
 ## 2026-09-21 — DLT batch 400 (stale) + Supabase 401 (RLS) — FIXED
 
 **Bug #1 — DLT 400 "utc_ts not real-time", received_records: 0**

@@ -20,8 +20,9 @@ Core principles:
 /* Vehicle Status Colors — NEVER change these, users internalize them */
 --color-moving: #22c55e;      /* green-500 — vehicle moving */
 --color-idle: #f59e0b;        /* amber-400 — engine on, stopped */
---color-stopped: #94a3b8;     /* slate-400 — engine off */
---color-offline: #ef4444;     /* red-400 — no signal */
+--color-stopped: #ef4444;     /* red-400 — engine off (RED, per 2026-07-02 swap) */
+--color-offline: #5F6368;     /* grey — no signal */
+--color-unlinked: #BDC1C6;    /* light grey — registered but never reported GPS */
 --color-towing: #8b5cf6;      /* violet-500 — moving without ignition (alert!) */
 
 /* Brand */

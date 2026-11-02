@@ -51,3 +51,7 @@ traccar-other-*/data/
 .env.supabase
 .env.supabase.local
 .env.enrollment
+
+# Local tool artifacts
+.playwright-mcp/
+.toh/screenshots/

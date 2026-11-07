@@ -1,6 +1,6 @@
 # GPS Global Tracker — Project Memory
 > **Strategy**: Thai → APAC → Global · GPS SaaS Fleet Management
-> **Last updated**: 2026-07-02 (Session 23 — Full Traccar integration + DESIGN.md v2 + Device Commands)
+> **Last updated**: 2026-11-06 — design system foundation (DataTable + DESIGN §10–§15)
 
 ## Topic Files
 - [GPS Domain Knowledge](.claude/rules/gps-domain-knowledge.md)
@@ -36,12 +36,12 @@
 ### GCP Infrastructure (Production-Ready ~$54/month)
 | Resource | Current Config | Notes |
 |----------|---------------|-------|
-| VM | `n2-standard-2` (2vCPU/8GB) | Upgraded 2026-08-01 |
+| VM | `n2-standard-2` (2vCPU/8GB) | upgraded 2026-08-01; current per `.claude/rules/infrastructure.md` |
 | Static IP | `34.142.244.40` (reserved) | Won't change on restart |
 | Disk | ~50GB HDD | |
 | PostgreSQL 16 | Docker on VM (shared_buffers 1GB) | 10 indexes + 2 materialized views |
 | PgBouncer | Docker on VM (transaction pool) | NEW: connection pooling |
-| Redis 7 | Docker on VM (128MB LRU) | |
+| Redis | **removed 2026-09-25** — precomputed TimescaleDB tables replace it | |
 | Nginx | HTTP/2 + API cache + rate limiting | |
 | Cost | ~$54/month (~฿1,940) | n2-standard-2 + storage + egress |
 

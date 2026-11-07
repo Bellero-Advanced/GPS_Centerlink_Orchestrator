@@ -34,8 +34,8 @@ skills:
        └── .toh/memory/agents-log.md   (agent activity)
 
 1. READ Skills
-   ├── ~/.toh/skills/dev-engineer/SKILL.md
-   └── ~/.toh/skills/security-engineer/SKILL.md
+   ├── ~/.claude/skills/dev-engineer/SKILL.md
+   └── ~/.claude/skills/security-engineer/SKILL.md
 
 2. 🔐 QUICK SECURITY CHECK (before coding)
    ├── Scan for hardcoded secrets

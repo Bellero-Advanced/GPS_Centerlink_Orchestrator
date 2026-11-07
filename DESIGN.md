@@ -85,11 +85,106 @@ Labels required on all nav items and icon-only buttons (`aria-label`). No emoji 
 - Change status colors (green/amber/red/grey are internalized by users)  
 - Everything in design-craft/AVOID-LIST.md
 
-**Agents:** re-read this file before EVERY UI task; every color/typeface/radius/motion value must trace to sections 2-8. Never work from memory of this file.
+**Agents:** re-read this file before EVERY UI task; every color/typeface/radius/motion value must
+trace to sections 2-8. Never work from memory of this file. Sections 10-15 are enforced by
+`npm run lint:ui`, not by good intentions.
+
+**Component registry:** `bellerox-gps-web/src/components/ui/index.ts` is the complete set of
+primitives. Check it (and `.toh/memory/components.md`) before building anything new.
 
 ## Distinctiveness check (REQUIRED)
 
 The category default is a bright white dashboard with purple gradients, rounded cards, Inter as display, and "welcoming" empty states. **Rejected:** this is a 24/7 night-shift fleet operations tool — cool slate neutrals (not warm), squared industrial components (not rounded consumer UI), JetBrains Mono coordinate numerals as the hero (not decoration), dark mode mandatory (not optional), and status colors that survive low-light glare. No other GPS tracking brief would produce IBM Plex Sans Thai + tabular coordinate display + borderless color-fill inputs + operations-grade density. This design reads "professional logistics control center", never "consumer location app".
+
+---
+
+## 10. Reuse Law (non-negotiable)
+
+Before writing any component:
+
+1. `grep` `bellerox-gps-web/src/components/ui/` — is the thing already there?
+2. Read the Component Registry in `.toh/memory/components.md`.
+3. If something similar exists, **extend its API with a prop** — do not fork it.
+
+Creating a second component that does an existing job requires **deleting the first in the
+same PR**. Every UI primitive is exported from `src/components/ui/index.ts`; if it is not
+there, it does not exist.
+
+**Why this exists:** the failure mode is not ugly UI — it is *inconsistent* UI. A table built
+in March and a table built in November must look and behave the same, because they are the
+same component. Consistency is a system property, not a matter of care.
+
+## 11. Data Table Standard
+
+Every record list uses `DataTable<T>` (`src/components/ui/data-table.tsx`) driven by a
+`ListController<T>` (`src/lib/table/ListController.ts`). No page renders a raw `<table>`.
+
+Required behaviour on **every** table:
+
+| Feature | Component | Rule |
+|---|---|---|
+| Search | `DataTableToolbar` | Matches all `searchable` columns; clears with ×; resets to page 1 |
+| Filters | `DataTableToolbar` | One control per filter, active filters shown as removable chips |
+| Sort | `DataTable` header | Click toggles asc/desc; `aria-sort` set; Thai collation (`localeCompare('th')`) |
+| Select row | row checkbox | Native checkbox, `aria-label` per row |
+| Select all / deselect | header checkbox | Indeterminate when partial; operates on the **filtered** set |
+| Bulk actions | `BulkActionBar` / `bulkActions` | Appears only when ≥1 selected; shows count; offers "ยกเลิกการเลือก" |
+| Overflow menu | `DropdownMenu` (⋯) | Beyond 2 row actions, use the menu; destructive item last, after a divider |
+| Pagination | `Pagination` | 15 / 25 / 50 rows; range text "แสดง x–y จาก n" |
+| States | `DataTable` | loading = `TableSkeleton`; empty = icon + Thai copy + action; error = message + retry |
+| Destructive confirm | `ConfirmDialog` | Never `window.confirm`; state the record name and the count |
+| Mobile | `renderCard` | Below `lg`, stacked cards with the same actions and selection |
+
+**Column definition is an object**, not JSX:
+
+```ts
+col<Vehicle>({
+  id: 'speed',
+  header: 'ความเร็ว',
+  accessor: (vehicle) => vehicle.speedKmh,
+  align: 'right',
+  cellClassName: 'font-mono tabular-nums',
+  cell: (vehicle) => `${vehicle.speedKmh.toFixed(1)} km/h`,
+});
+```
+
+## 12. List Page Archetype
+
+Every list page is assembled in this order — no page invents its own ordering:
+
+```
+PageHeader  →  StatStrip (optional)  →  DataTable(toolbar + body + pagination)  →  modals
+```
+
+Pages hold **no** list state. Search, sort, selection, pagination and filters live in
+`useListController`; the page only owns modal state and business actions.
+
+## 13. Density & Alignment
+
+- Row height 40px · header 34px · cell padding 8–16px
+- Numbers: right-aligned, `font-mono tabular-nums`, never reflow on update
+- Text: left-aligned, truncate with `title` tooltip beyond the column width
+- Actions: right-aligned; 1–2 visible, the rest in the overflow menu
+- Status: chip with the status token tint, never a bare coloured dot alone in a table cell
+
+## 14. Icon & Emoji Law
+
+- **Emoji: zero in the product UI** — no emoji in JSX, toasts, labels, PDFs, empty states.
+  Typographic marks (`✓ ✗ ✕`, arrows) are allowed; colour emoji are not.
+- **Only exception:** outbound LINE Notify message bodies (`lineNotifyService.ts`) — LINE is a
+  chat surface, and Thai users expect the alert glyph there.
+- **Icons:** Lucide only, 1.5px stroke. Every icon earns its place: navigation, status, and
+  icon-only buttons. No decorative icons above headings.
+- Enforced by `npm run lint:ui`.
+
+## 15. Token Law
+
+- **No hex literals in `.tsx`.** Colours come from `var(--token)` or a status class.
+- Status palette is single-source: `--moving #34A853` · `--idle #FBBC04` ·
+  `--stopped #EA4335` · `--offline #5F6368` · `--unlinked #BDC1C6`.
+  `index.css` defines them; `tailwind.config.js` mirrors them; nothing else declares them.
+- Radius: 4px controls · 6px cards/modals · 12px maximum.
+- Motion: 100–150ms ease-out. Never animate size, never bounce.
 
 ---
 
@@ -303,8 +398,8 @@ NEVER use: 3D charts, area charts (use line), bubble charts
 const CHART_COLORS = {
   moving:  '#34A853',
   idle:    '#FBBC04',
-  stopped: '#9AA0A6',
-  offline: '#EA4335',
+  stopped: '#EA4335',
+  offline: '#5F6368',
   primary: '#1A73E8',
   secondary: '#FA7B17',
 }
@@ -801,3 +896,86 @@ function TestConnectionButton({ storageKey }: { storageKey: string }) {
 - Motion: 150–250ms for UI transitions; sheets spring in, fade out 200ms; skeleton pulse 600ms.
 - Haptics: `selectionAsync` on toggles (pin, replay play/pause).
 - Live data: WebSocket `/api/socket` merges into `['positions','current']`; polling 30s while connected, 10s fallback when down. Devices/positions fall back to a last-known cache offline (cleared on logout).
+
+---
+
+## 24. Layering Law (enforced) — 2026-11-07
+
+> Audit finding: 28 of 45 pages imported `@/services/*` directly, six pages wrote
+> business records into `localStorage`, and 11 admin screens called `fetch()`
+> inline. The UI layer had become the persistence layer. This section is the rule
+> that prevents the next occurrence; `scripts/check-ui-conventions.mjs` enforces
+> the mechanical parts.
+
+### The only permitted data path
+
+```
+Page / Component            render only — no fetch, no storage, no status math
+   ↓
+Hook  (src/hooks/)          React Query wrapper; owns cache keys + invalidation
+   ↓
+Service (src/services/)     business rules; throws ServiceError, never returns null-on-error
+   ↓
+Client (lib/*Client.ts)     transport: traccarClient (Basic auth) · httpClient (our backend) · supabaseClient
+```
+
+Never skip a layer in either direction.
+
+### Rules
+
+1. **No `fetch(` in `src/pages/**` or `src/components/**`.** Use a service + hook.
+   Mechanical exceptions are listed in `RAW_FETCH_ALLOWLIST` and that list may
+   only shrink.
+2. **No business records in `localStorage`.** Records go through
+   `services/recordRepository.ts` (Supabase, with a documented local fallback).
+   Genuine UI preferences (column order, dismissed banners, recent searches) may
+   use local storage and must be listed in `LOCALSTORAGE_ALLOWLIST`.
+3. **One error contract.** Services extend `BaseService`; failures throw
+   `ServiceError` carrying a Thai `userMessage`. Pages render
+   `userMessageOf(error)` — never a raw `error.message`.
+4. **Domain rules live in `src/domain/`.** `Vehicle` is the fleet entity; it
+   delegates status to `lib/vehicleStatus.ts` (still the single source of truth)
+   and exposes `toSnapshot()` for list rows. Screens must not re-derive speed,
+   staleness or status labels.
+5. **Destructive confirmation uses `ConfirmDialog`.** `window.confirm` is banned
+   (`no-window-confirm`).
+6. **Logging goes through `lib/logger.ts`.** `console.*` is forbidden in
+   `services/`, `hooks/` and `lib/`. `debug`/`info` are dev-only; never log raw
+   coordinates (PDPA).
+7. **Status palette is locked.** `marker`/chip colours for moving, idle, stopped,
+   offline and unlinked must equal DESIGN.md §2 exactly, in every app and every
+   sprite module. `status-palette-lock` fails the build otherwise. This rule
+   exists because the palette drifted three separate times.
+
+### Service style (one of two, never a third)
+
+```ts
+// Read/write records
+export class DriversService extends BaseService {
+  readonly name = 'driversService';
+  list() { return this.query('list drivers', () => traccarClient.get(...)); }
+}
+export default new DriversService();
+
+// Stateless transport wrapper (Traccar REST)
+export const traccarService = { getDevices: async () => ... };
+```
+
+Bare exported functions with ad-hoc try/catch are not accepted for new code.
+
+### Backend (api-gateway)
+
+- `app.ts` builds the Express app (testable, no listen); `server.ts` owns env,
+  listen and signals.
+- Every route chain is `route → middleware/auth → middleware/validate → handler`.
+- Handlers throw; `handle()` converts `ValidationError` to 400 and forwards the
+  rest to the central error handler.
+- Cross-tenant reads require `requireRole('superadmin')`; tenant-scoped reads
+  verify `caller.id === tenantId` for `tenant_admin`.
+
+### Enforcement
+
+`npm run lint:ui` runs in CI before the build and fails on: emoji, raw `<table>`,
+hex in UI primitives, duplicate primitives, raw `fetch` in the UI layer,
+`window.confirm`, business `localStorage` in the UI layer, and status-palette
+drift.

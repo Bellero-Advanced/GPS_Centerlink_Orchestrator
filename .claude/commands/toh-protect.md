@@ -43,7 +43,7 @@ User: /toh-protect
 |     +- .toh/memory/agents-log.md  (agent activity)          |
 |                                                             |
 |  1. READ Skills                                             |
-|     +- ~/.toh/skills/security-engineer/SKILL.md             |
+|     +- ~/.claude/skills/security-engineer/SKILL.md             |
 |                                                             |
 |  2. LEVEL 1: Quick Check                                    |
 |     |- Hardcoded secrets                                    |
@@ -246,4 +246,4 @@ Excluded:
 
 ## Agent Reference
 
-Read full skill at: `.toh/skills/security-engineer/SKILL.md`
+Read full skill at: `.claude/skills/security-engineer/SKILL.md`

@@ -18,9 +18,9 @@ Core principles:
 
 ```css
 /* Vehicle Status Colors — NEVER change these, users internalize them */
---color-moving: #22c55e;      /* green-500 — vehicle moving */
---color-idle: #f59e0b;        /* amber-400 — engine on, stopped */
---color-stopped: #ef4444;     /* red-400 — engine off (RED, per 2026-07-02 swap) */
+--color-moving: #34A853;      /* green — vehicle moving */
+--color-idle: #FBBC04;        /* amber — engine on, stopped */
+--color-stopped: #EA4335;     /* red — engine off (RED, per 2026-07-02 swap) */
 --color-offline: #5F6368;     /* grey — no signal */
 --color-unlinked: #BDC1C6;    /* light grey — registered but never reported GPS */
 --color-towing: #8b5cf6;      /* violet-500 — moving without ignition (alert!) */
@@ -100,13 +100,23 @@ type AlertSeverity = 'critical' | 'warning' | 'info' | 'success';
                       | [Selected vehicle bar (bottom center)]
 ```
 
-### List Pages (Fleet, Alerts, Reports)
+### List Pages (Fleet, Drivers, Trailers, Users, Audit Log)
+Every list page is the same component — `DataTable` from `@/components/ui/data-table`,
+driven by `useListController`. Never hand-roll a table.
+
 ```
 [Page Header: title + action button]
-[Search bar + filters]
-[Data table with fixed headers, sticky first column]
-[Pagination or infinite scroll for > 100 items]
+[DataTable]
+  toolbar:  search · filters · column actions · (bulk counter when rows selected)
+  header:   [☐] column headers (click = sort, aria-sort) [⋯]
+  rows:     [☐] cells … [⋯ overflow menu]
+  footer:   "แสดง x–y จาก n" · page size 15/25/50 · prev/next
+[ConfirmDialog for destructive bulk actions]
 ```
+
+Required on every list: search, per-column filters with removable chips, sort with Thai
+collation, row select, select-all/deselect with indeterminate state, bulk action bar,
+row overflow menu, pagination, and loading / empty / error states.
 
 ### Detail Pages (Vehicle detail, Driver detail)
 ```
@@ -174,7 +184,8 @@ Always provide: Map | Satellite | Traffic toggle (3 buttons top-right of map)
 - **Marker movement**: CSS transition on lat/lng changes → smooth vehicle gliding
 - **Status changes**: Instant (no animation — safety info must appear immediately)
 - **Panel transitions**: 250ms ease-out slide
-- **Loading**: Skeleton screens, not spinners for main content
+- **Loading**: Skeleton screens, not spinners for main content (`TableSkeleton` inside tables)
+- **Emoji**: none in the product UI — typographic marks only. See DESIGN.md §14
 - **Reduce motion**: Respect `prefers-reduced-motion` always
 
 ## Dark Mode

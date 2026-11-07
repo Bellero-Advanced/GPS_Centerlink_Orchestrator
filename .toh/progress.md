@@ -247,3 +247,42 @@ LEARNING: POST api.expo.dev/v2/builds returns 404 — the old /admin Build butto
 2026-10-24 03:36 T506 done — CHECK_OK: tsc 0, eslint 0
 2026-10-24 03:36 T507 done — CHECK_OK: mobile pushed (2800fee9), no CI workflow
 2026-10-24 03:36 ALL PHASES COMPLETE — 27/27 tasks done
+2026-11-06 T001-T028 queued — plan approved
+2026-11-06 15:55 T001 done — CHECK_OK: vitest include=src/** -> 11 files / 124 tests pass
+2026-11-06 16:00 T002 done — CHECK_OK: CI build.yml runs npm test before build
+2026-11-06 16:05 T003 done — CHECK_OK: lint:ui 235 files, 0 violations (4 new rules live)
+2026-11-06 18:10 T004 done — CHECK_OK: AppErrorBoundary mounted at root in main.tsx, tsc 0
+2026-11-06 18:16 T005 done — CHECK_OK: 98 console.* -> logger seam, tsc 0, 124 tests pass
+2026-11-06 18:40 T006 done — deleted Layout.tsx (778) + KeyboardShortcutsModal; 0 importers verified
+2026-11-06 18:42 T007 done — deleted ReportsPageV2/V3 + src/.toh. ReportsTable KEPT: 3 live report components import it
+2026-11-06 18:44 T008 done — deleted ui/{select,form,radio-group,phone-mockups-1}+utils; DateTimeRangePicker added to barrel
+2026-11-06 18:50 T009 partial — ReportsPage KEPT: V1 has 7 tabs vs Unified 2 (parity NOT met). Route renamed reports-v1 -> reports-full
+2026-11-06 18:52 CHECK_OK Phase 2: npm run build exit 0; 228 files lint:ui clean; tsc 0 errors
+LEARNING: verify importers before deleting — plan claimed ReportsTable dead, it had 3 live consumers
+2026-11-06 19:30 T010 done — services/httpClient.ts (typed fetch seam, ApiError, 401->logout, abort)
+2026-11-06 19:40 T011 done — hooks/useAdmin.ts; admin AuditLog+RBAC Roles moved off raw fetch (allowlist -2)
+2026-11-06 19:55 T012 done — services/mapSearchService.ts (Nominatim+OSRM); LiveMapPage+RoutePlanner now abortable (allowlist -2)
+2026-11-07 01:10 T013 done — ScoringPage: MOCK_DRIVERS removed; real events + summary-report distance; empty state added
+2026-11-07 01:35 T014 done — services/recordRepository.ts + hooks/useRecords.ts + 7 Supabase tables; 6 pages off localStorage
+2026-11-07 01:36 CHECK_OK Phase 3: tsc 0 · 124 tests · lint:ui 234 files 0 violations · build exit 0
+LEARNING: domain types must be extracted before persistence — pages had divergent vocabularies (upcoming vs ok) and an `icon: React.ElementType` field that cannot be serialised
+2026-11-07 02:10 T015 done — api-gateway split: app.ts (routes) + server.ts (process); index.ts deleted
+2026-11-07 02:15 T016 done — middleware/auth.ts (Traccar session verify + roles) + middleware/validate.ts
+2026-11-07 02:25 T017 done — routes/tenants.ts (overview/users/devices, scoped by role); dead tenantAssignmentService deleted (234 LOC)
+2026-11-07 02:30 T018 done — routes/admin.ts (audit+stats+roles+user roles) + infrastructure/postgres/init-admin.sql
+2026-11-07 02:35 T019 done — api-gateway/test/run.ts: 10 route-contract tests pass; wired into CI
+2026-11-07 02:40 CHECK_OK Phase 4: gateway tsc 0 · 10/10 tests · web tsc 0 · nginx admin block verified before catch-all
+LEARNING: docker-entrypoint-initdb.d only runs on first init — idempotent SQL needs an explicit apply script
+2026-11-07 03:00 T020 done — src/domain/Vehicle.ts + 7 unit tests; delegates to computeVehicleStatus (no rule duplication)
+2026-11-07 03:05 T021 done — services/BaseService.ts (query/mutate/unwrap + ServiceError) + 6 tests
+2026-11-07 03:30 T022 done — DLTPage 1880 -> 1004 LOC; 6 components extracted to components/dlt/ (BatchStatus, DltKpi, ConnectionHealth, MasterfileRegisterModal, TimeDiagPanel, GpsModelsTab)
+2026-11-07 03:35 T024 done — 5 hand-rolled toLocaleString('th-TH') date sites -> lib/timezone.ts (Bangkok-explicit)
+2026-11-07 03:40 T023 PARTIAL — pages >500 LOC: 20 remaining (was 20). DLTPage off the list. ReportsPage/SettingsPage/FleetPage/LiveMapPage/TeamPage still need splitting.
+2026-11-07 03:45 CHECK_OK Phase 5 (partial): tsc 0 · 137 tests · lint:ui 240 files · build exit 0
+LEARNING: splitting a 1400-LOC page is not a mechanical edit — it needs a per-page read. Budget separately.
+2026-11-07 04:00 T025 done — DLT creds memory-only; localStorage keeps non-secret fields. 4 tests prove the password never hits disk
+2026-11-07 04:10 T026 done — RLS audit: dlt_manual_overrides + dlt_transmission_logs had NO RLS. 20261107000000_rls_hardening.sql + migrations/README.md
+2026-11-07 04:25 T027 done — web/mobile drift: mobile had old Tailwind palette, web sprites too, mobile formatSpeed missing Math.abs. Parity tests in both apps
+2026-11-07 04:30 T028 done — DESIGN.md §24 Layering Law; CLAUDE.md UI System + Layering sections; memory active/components updated
+2026-11-07 04:35 CHECK_OK final: web tsc 0 · 162 tests · lint:ui 241 files 0 · build exit 0 · gateway tsc 0 + 10 tests · mobile tsc 0 + 57 tests
+LEARNING: literal hex comparisons in a linter must match the declaration form — sprite maps use `{ fill: '#…' }`, not a flat string

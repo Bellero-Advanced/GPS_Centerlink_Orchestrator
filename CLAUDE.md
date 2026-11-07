@@ -235,6 +235,34 @@ terraform output traccar_vm_ip   # Get server IP for DNS
 - Services never called from pages/components directly — always via hooks
 - `traccarClient.ts` is the only place that imports Axios — hooks call services, services call traccarClient
 
+### UI System (enforced — see DESIGN.md §10–§15, §24)
+- **Every record list uses `DataTable`** (`src/components/ui/data-table.tsx`) driven by
+  `useListController`. Never write a raw `<table>` in a page.
+- **Check `src/components/ui/index.ts` first.** If a primitive exists, extend it — do not fork.
+  Creating a duplicate requires deleting the original in the same PR.
+- **No emoji in the product UI.** LINE message bodies are the only exception.
+  Typographic marks (✓ ✗ ✕) are fine. Icons: Lucide only, only where they add meaning.
+- **No hex literals in `.tsx`.** Colours come from `var(--token)` or a status class.
+- Verify with `npm run lint:ui` — it fails the build on drift.
+
+### Layering (enforced — DESIGN.md §24)
+```
+Page → Hook (React Query) → Service → Client   — never skip a layer
+```
+- **No `fetch()` in `src/pages/**` or `src/components/**`.** Add a service + hook.
+  The shrink-only allowlist lives in `scripts/check-ui-conventions.mjs`.
+- **No business records in `localStorage`.** Use `services/recordRepository.ts`
+  (Supabase). Local storage is for UI preferences only.
+- **Services extend `BaseService`** and throw `ServiceError` with a Thai
+  `userMessage`. Pages render `userMessageOf(error)`.
+- **Domain rules live in `src/domain/`.** `Vehicle` owns status/speed/labels via
+  `lib/vehicleStatus.ts`. Screens must not recompute them.
+- **`window.confirm` is banned** — use `ConfirmDialog`.
+- **`console.*` is banned in services/hooks/lib** — use `lib/logger.ts`.
+  Never log raw coordinates (PDPA).
+- **Status palette is locked** to §2 values in every sprite/chip module —
+  `status-palette-lock` in `lint:ui` fails the build otherwise.
+
 ### Map Performance
 - **< 100 vehicles**: Regular Leaflet `L.divIcon` markers
 - **100-500**: Add `react-leaflet-cluster` (marker clustering)
@@ -246,7 +274,9 @@ terraform output traccar_vm_ip   # Get server IP for DNS
 - Status colors are fixed and must NEVER change (users internalize them). Roles were
   deliberately swapped on 2026-07-02 (web `cc155eb` "ดับเครื่อง=แดง, ออฟไลน์=เทา") — a parked
   car with the engine off is RED, a silent car is GREY:
-  - Moving: `#22c55e` (green) · Idle: `#f59e0b` (amber) · Stopped: `#ef4444` (red) · Offline: `#5F6368` (grey) · Unlinked: `#BDC1C6` (light grey)
+  - Moving: `#34A853` (green) · Idle: `#FBBC04` (amber) · Stopped: `#EA4335` (red) · Offline: `#5F6368` (grey) · Unlinked: `#BDC1C6` (light grey)
+  - Single source: `bellerox-gps-web/src/index.css` (`--moving/--idle/--stopped/--offline`) →
+    `tailwind.config.js` status colors must mirror them exactly. `DESIGN.md` §2 is the contract.
 - LINE Notify for Thai alerts (not email) — see `lineNotifyService.ts`
 - Longdo Map API for Thai address geocoding
 

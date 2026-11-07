@@ -1,48 +1,100 @@
 # 🎯 Active Work
 
-**Status:** ✅ DLT Manual Override — DEPLOYED TO PRODUCTION
+**Status:** ✅ Clean Architecture & OOP Remediation — COMPLETED (2026-11-07)
+**Plan:** `.toh/plan.md` (Status: done)
 
-**Last Completed:** 2026-09-21 15:30 ICT
+## What shipped (28 tasks · 6 phases)
 
-**What Was Done (full deployment):**
-- ✅ Migrations applied to Supabase prod (zenfuxlykduaxrsnhmlq):
-  - `dlt_manual_overrides` + `dlt_transmission_log` tables created
-  - Fixed: dropped invalid FK to `tc_devices` (Traccar is a separate DB)
-  - Fixed: added `updated_at` column + trigger, `created_by` default, RLS write policies
-  - Fixed: `pg_net` extension added (was missing — cron's net.http_post needs it)
-- ✅ Cron job `send-dlt-batch-60s` active, fires every 60s → HTTP 200 confirmed
-- ✅ Edge Functions deployed (all ACTIVE):
-  - `send-dlt-batch` (--no-verify-jwt, called by cron)
-  - `overdue-checker`
-  - `payment-reconcile`
-- ✅ Frontend aligned with real schema (commit 4076dfb):
-  - useCreateOverride: removed non-existent `speed` col + GENERATED `is_active` write, added `created_by`
-  - useStopOverride: only sets `stopped_at` (is_active is generated)
-  - useTransmissionHistory: fixed col names `batch`/`response`
-- ✅ CI green: tsc + lint + build pass, deployed to Cloudflare Pages
+### Phase 1 — Truth & guardrails
+- `npm test` went from **exit 1 → exit 0** (vitest was collecting
+  `api-gateway/test/thaiAdmin.test.ts`, which has no suite). Now `include: ['src/**/*.test.{ts,tsx}']`.
+- CI (`.github/workflows/build.yml`) runs `npm test`, `lint:ui`, **and** the
+  api-gateway type-check + route tests before the build.
+- `scripts/check-ui-conventions.mjs` gained 4 rules: `no-raw-fetch`,
+  `no-window-confirm`, `no-page-persistence`, `status-palette-lock`.
+- `src/components/AppErrorBoundary.tsx` mounted at the root — the SPA can no
+  longer blank-screen on a render error.
+- `src/lib/logger.ts` — one logging seam; **98 `console.*` calls** in
+  services/hooks/lib migrated. `debug`/`info` are dev-only (PDPA: no raw coords).
 
-**Migration tracking note:** billing/payment migrations were applied out-of-band
-(no tracking table). Backfilled `supabase_migrations.schema_migrations` with those
-4 versions so `db push` only applies new ones.
+### Phase 2 — Delete before building
+- Removed **2,073 LOC of dead code**: `layout/Layout.tsx` (778, 0 importers),
+  `ReportsPageV2/V3`, `ui/{select,form,radio-group,phone-mockups-1}`,
+  `services/tenantAssignmentService.ts` (234, 0 importers, called endpoints that
+  never existed), `src/.toh/plan.md`.
+- **Kept** `components/reports/ReportsTable.tsx` — the plan claimed it was dead;
+  it has 3 live consumers. Verification before deletion is now a standing rule.
+- `/reports-v1` renamed `/reports-full` — it is the 7-tab superset, not an older copy.
 
-**Verified live:**
-- `curl POST send-dlt-batch` → `{"message":"No active overrides"}` HTTP 200
-- `cron.job_run_details` → succeeded every minute
-- `net._http_response` → status 200
+### Phase 3 — One data path
+- `services/httpClient.ts` — typed fetch seam for our own backend (ApiError,
+  401→logout, abortable).
+- `hooks/useAdmin.ts` — admin audit + RBAC off raw `fetch`.
+- `services/mapSearchService.ts` — Nominatim + OSRM out of
+  `LiveMapPage`/`RoutePlanner`, now cached and abortable.
+- `ScoringPage` — **`MOCK_DRIVERS` removed**; real events + summary-report
+  distance; honest empty state; `ℹ` glyph replaced with a Lucide icon.
+- `services/recordRepository.ts` + `hooks/useRecords.ts` +
+  `supabase/migrations/20261106000000_operational_records.sql` — **7 tables**;
+  Fuel / Maintenance / Inspection / Dispatch / Predictive / AlertRules no longer
+  use localStorage as a database.
 
-**Just Completed:** 2026-09-21 16:45 ICT — DLT Manual page design polish ✅
-- Full-screen layout (เอา container padding ออก)
-- Color-fill UI (ใช้ fill-block pattern + surface tokens แทน border cards)
-- rounded-sm ทุก component (tabs, inputs, buttons, tables)
-- SearchSelect สำหรับ dropdown รถ (ค้นหาได้ + แสดง IMEI)
-- Commit: `08fcbcd` · CI: green ✅ · Deploy: Cloudflare Pages success
+### Phase 4 — Backend completion
+- `api-gateway` split into `app.ts` (routes) + `server.ts` (process).
+- `middleware/auth.ts` — Traccar session verification → `superadmin` /
+  `tenant_admin` / `user`; `middleware/validate.ts` — typed param parsing.
+- `routes/admin.ts` — `/api/admin/audit`, `/audit/stats`, `/roles`,
+  `/users/:id/roles` (these were **guaranteed 404s** before).
+- `routes/tenants.ts` — `/api/tenants/overview`, `/:id/users`, `/:id/devices`.
+- `infrastructure/postgres/init-admin.sql` — audit + RBAC tables, seeded roles
+  and permissions; `scripts/apply-admin-schema.sh` applies it (initdb only runs once).
+- nginx routes `^/api/(admin|tenants)` to the gateway before the Traccar catch-all.
+- `api-gateway/test/run.ts` — 10 route-contract tests (401 on every protected
+  route, 404 shape, Thai geocoder).
 
-**Just Completed:** 2026-09-25 — Timezone +7h fix ✅ (Traccar per-device tz + 3.9M-row backfill + web d43004a)
+### Phase 5 — Domain model & decomposition
+- `src/domain/Vehicle.ts` — the fleet entity; delegates to `computeVehicleStatus`
+  (no rule duplication), exposes `toSnapshot()` / `counts()` / `byAttention()`.
+  7 unit tests.
+- `src/services/BaseService.ts` — `query`/`mutate`/`unwrap` + `ServiceError`
+  with a Thai `userMessage`. 6 unit tests.
+- `DLTPage.tsx` **1,880 → 1,004 LOC**; 6 components extracted to
+  `components/dlt/` (`BatchStatus`, `DltKpi`, `ConnectionHealth`,
+  `MasterfileRegisterModal`, `TimeDiagPanel`, `GpsModelsTab`).
+- 5 hand-rolled `toLocaleString('th-TH')` date sites → `lib/timezone.ts`
+  (Bangkok-explicit; the old form followed the *machine* timezone).
 
-**Just Completed:** 2026-09-25 — Reports on TimescaleDB ✅ (plan completed)
-- geocoder.onRequest=false (trips 7d 96s→0.2s) · nginx rate limit per real IP · Redis removed · tc_positions_ts archive (3.5GB→314MB, forever) · fleet.segments 213/213 · /api/fleet (fleet 7d 0.6s) · mobile nav 4 items · log rotation
-- web 31a7b80 (CI green, deployed) · infra fff40fa · VM live
+### Phase 6 — Security & parity
+- **T025** — DLT credentials no longer written to `localStorage`
+  (`services/dltService.ts`). Non-secret fields persist; username/password live
+  in memory + Traccar user attributes. Legacy rows are scrubbed on read.
+  4 tests assert the password never reaches disk.
+- **T026** — RLS audit found `dlt_manual_overrides` and `dlt_transmission_logs`
+  with **no RLS at all** (GPS coordinates + operator identity, readable with the
+  publishable key). `supabase/migrations/20261107000000_rls_hardening.sql` fixes
+  those plus `cl_slot_cleanup_log`; `supabase/migrations/README.md` documents the
+  anon/authenticated/service_role model.
+- **T027** — web↔mobile drift fixed: mobile `STATUS_COLOR` still used the old
+  Tailwind palette, `vehicleSprites.ts` on web too, and mobile `formatSpeed` /
+  `formatDistance` lacked `Math.abs` (negative speeds). Both apps now pin the
+  same contract via matching `unitsParity.test.ts` tables.
 
-**Next Work:** monitor `tz-audit.sql` weekly · 10 pre-existing failing web tests (vehicleStatus/FloatingVehiclePanel/positionOwnership)
+## Verification (all run at close-out)
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` (web) | 0 errors |
+| `npx tsc --noEmit` (api-gateway) | 0 errors |
+| `npx tsc --noEmit` (mobile) | 0 errors |
+| `npm run build` (web) | exit 0 |
+| `npm test` (web) | **162 passed** (15 files) |
+| `npm test` (api-gateway) | **10 passed** |
+| `npx jest` (mobile) | **57 passed** |
+| `npm run lint` | 0 errors, 42 pre-existing warnings |
+| `npm run lint:ui` | 241 files, 0 violations |
 
-**Plan Status:** completed ✅ (`.toh/plan.md`) · แผนเก่า → `archive/plan-2026-09-24-delete-user.md`
+## Carried forward
+- **T023 partial** — 20 pages still >500 LOC
+  (`ReportsPage` 1411, `SettingsPage` 1147, `FleetPage` 1107, `LiveMapPage` 1040,
+  `TeamPage` 1014, `DLTPage` 1004, …). Each needs its own read; not mechanical.
+- 42 ESLint `any` warnings, 37 of them in `lib/reportGenerators.ts`.
+- CI submodule checkout still needs `PAT_TOKEN` ([[ci-pat-token-blocker]]).

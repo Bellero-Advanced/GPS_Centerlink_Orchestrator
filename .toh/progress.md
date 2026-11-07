@@ -286,3 +286,13 @@ LEARNING: splitting a 1400-LOC page is not a mechanical edit — it needs a per-
 2026-11-07 04:30 T028 done — DESIGN.md §24 Layering Law; CLAUDE.md UI System + Layering sections; memory active/components updated
 2026-11-07 04:35 CHECK_OK final: web tsc 0 · 162 tests · lint:ui 241 files 0 · build exit 0 · gateway tsc 0 + 10 tests · mobile tsc 0 + 57 tests
 LEARNING: literal hex comparisons in a linter must match the declaration form — sprite maps use `{ fill: '#…' }`, not a flat string
+2026-11-07 08:19 PUSH web 81de6a9 · mobile 74e5d768 · infra 4364164 · root 02b0af3
+2026-11-07 08:24 CI run 42355019580: success (2m37s) — type-check, lint, lint:ui, unit tests, gateway tests, build, Cloudflare Pages deploy
+2026-11-07 08:24 DEPLOYED https://b29def70.bellerox-gps.pages.dev
+2026-11-07 17:00 T023 continued — ReportsPage 1411->415 (7 tabs -> components/reports/tabs + ReportTable shell)
+2026-11-07 17:05 T023 continued — SettingsPage 1147->332 (3 sections -> components/settings/sections + settingsShared)
+2026-11-07 17:10 T023 continued — TeamPage 1014->676 (2 modals -> components/team + teamShared)
+2026-11-07 17:10 LINT CAUGHT REAL VIOLATION: LINE fetch + token localStorage moved with the component -> routed through lineNotifyService (getStoredToken/setStoredToken/loadGroupTokens + sendLineNotify)
+2026-11-07 17:12 CHECK_OK: tsc 0 · 162 tests · lint 0 errors · lint:ui 256 files · build exit 0
+2026-11-07 17:12 T023 status — 18 pages remain >500 LOC (was 20). The four largest (Fleet 1107, LiveMap 1040, DLT 1002, TripReplay 897) need a full read before splitting; deferred.
+2026-11-07 10:04 PUSH web 0d8bd26 · CI run 42362139469 success · deployed

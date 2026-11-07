@@ -92,9 +92,26 @@
 | `npm run lint` | 0 errors, 42 pre-existing warnings |
 | `npm run lint:ui` | 241 files, 0 violations |
 
+## Page decomposition progress (T023)
+Three more pages split after the first push (commit `0d8bd26`):
+
+| Page | Before | After | Extracted to |
+|---|---|---|---|
+| `ReportsPage` | 1,411 | **415** | `components/reports/tabs/*` (7 tabs) + `ReportTable.tsx` |
+| `SettingsPage` | 1,147 | **332** | `components/settings/sections/*` + `settingsShared.tsx` |
+| `TeamPage` | 1,014 | **676** | `components/team/{CreateUserModal,AssignGroupsPanel}` + `teamShared.ts` |
+
+The linter earned its keep here: the LINE token storage and the Notify POST
+moved into a component with the JSX, and `no-raw-fetch` / `no-page-persistence`
+failed the build. Both now go through `services/lineNotifyService.ts`.
+
 ## Carried forward
-- **T023 partial** — 20 pages still >500 LOC
-  (`ReportsPage` 1411, `SettingsPage` 1147, `FleetPage` 1107, `LiveMapPage` 1040,
-  `TeamPage` 1014, `DLTPage` 1004, …). Each needs its own read; not mechanical.
+- **T023 remaining** — 18 pages still >500 LOC. The four largest need a full read
+  before splitting, not a mechanical move: `FleetPage` 1107, `LiveMapPage` 1040,
+  `DLTPage` 1002, `TripReplayPage` 897. Then `NotificationsPage` 894,
+  `VehicleDetailPage` 777, `DriversPage` 695, `TrailersPage` 661,
+  `admin/TenantDetailPage` 658, `AccountSettingsPage` 652, `DashboardPage` 634,
+  `FuelPage` 623, `ScoringPage` 581, `BillingPage` 558,
+  `EmailReportSettingsPage` 532, `AlertsPage` 517, `MaintenancePage` 503.
 - 42 ESLint `any` warnings, 37 of them in `lib/reportGenerators.ts`.
 - CI submodule checkout still needs `PAT_TOKEN` ([[ci-pat-token-blocker]]).

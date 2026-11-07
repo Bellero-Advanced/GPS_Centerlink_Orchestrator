@@ -296,3 +296,10 @@ LEARNING: literal hex comparisons in a linter must match the declaration form �
 2026-11-07 17:12 CHECK_OK: tsc 0 · 162 tests · lint 0 errors · lint:ui 256 files · build exit 0
 2026-11-07 17:12 T023 status — 18 pages remain >500 LOC (was 20). The four largest (Fleet 1107, LiveMap 1040, DLT 1002, TripReplay 897) need a full read before splitting; deferred.
 2026-11-07 10:04 PUSH web 0d8bd26 · CI run 42362139469 success · deployed
+2026-11-07 10:20 DEPLOY admin schema -> production Traccar Postgres (5 tables, 3 roles, 17 permissions)
+2026-11-07 10:24 DEPLOY api-gateway image bellerox-gps-api:new -> /api/admin/* + /api/tenants/* live
+2026-11-07 10:27 DEPLOY nginx config: location ^/api/(admin|tenants) -> bellerox_api (reload, no restart)
+2026-11-07 10:39 FIX stale container api-gateway-old kept the DNS-cached IP 172.22.0.4 -> removed + nginx reload
+2026-11-07 10:40 VERIFIED through Cloudflare: /api/admin/{audit,roles} + /api/tenants/overview -> 401 (was 404)
+2026-11-07 10:41 VERIFIED auth ordering: no creds 401, bad creds 401, bad creds + bad param 401 (auth before validation)
+LEARNING: docker rename keeps the old container's network IP; nginx caches upstream DNS for the worker lifetime -> remove the old container and reload nginx
